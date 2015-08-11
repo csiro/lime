@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+tar czvf lime.tgz README.md src/*.cc src/Makefile include/lime/*.h
