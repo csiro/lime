@@ -12,7 +12,7 @@ void _limeCrash (std::stringstream& str);
 void _limeProgress (std::stringstream& str);
 void _limeAssert (bool assertion, const char* file, int line);
 
-#define limeLog(X) {_limeErrorLine << X; _limeLog(_limeErrorLine);}
+#define limeLog(X) {_limeErrorLine << X.str(); _limeLog(_limeErrorLine);}
 #define limeWarning(X) {_limeErrorLine << X; _limeWarning(_limeErrorLine);}
 #define limeCrash(X) {_limeErrorLine << X; _limeCrash(_limeErrorLine);}
 #define limeProgress(X) {_limeErrorLine << X; _limeProgress(_limeErrorLine);}
