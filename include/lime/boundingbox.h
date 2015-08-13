@@ -1,5 +1,5 @@
-#ifndef ONYX_BOUNDINGBOX_H
-#define ONYX_BOUNDINGBOX_H
+#ifndef LIME_BOUNDINGBOX_H
+#define LIME_BOUNDINGBOX_H
 
 /**
  *  Defines a rectagle, in terms of lower-left (ll) and upper-right (ur)
@@ -23,9 +23,9 @@ namespace lime {
         void enclose (const lime::Point* loc);
 
         bool contains(const lime::Point* loc) const;
-    
+
         void display (std::ostream&) const;
-    
+
     protected:
         lime::Point ll_;
         lime::Point ur_;
