@@ -27,8 +27,9 @@ namespace lime {
         void display (std::ostream&) const;
 
     protected:
-        lime::Point ll_;
-        lime::Point ur_;
+
+        Point ll_;
+        Point ur_;
     };
 
     std::ostream& operator<< (std::ostream&, const BoundingBox&);

@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-namespace lime {
-    
+namespace lime
+{
     class Point
     {
     public:
@@ -16,7 +16,7 @@ namespace lime {
         void setX (double x) {x_ = x;}
         void setY (double y) {y_ = y;}
         void set (double x, double y) {x_ = x; y_ = y;}
-    
+
         double x() const {return x_;}
         double y() const {return y_;}
 
@@ -30,9 +30,9 @@ namespace lime {
             x_ = other.x_; y_ = other.y_; return *this;
         }
         bool  operator<(const Point& point) const;
-    
+
         void display (std::ostream&) const;
-    
+
     private:
         double x_;
         double y_;

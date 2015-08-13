@@ -2,8 +2,8 @@
 // Auto-updated timestamp
 #define TIMESTAMP "Time-stamp: <2 Apr 2014 12:18:04>"
 
-#include <assert.h>
-#include <math.h>
+#include <cassert>
+#include <cmath>
 
 #include "lime/line.h"
 

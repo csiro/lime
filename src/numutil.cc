@@ -2,7 +2,7 @@
 // Auto-updated timestamp
 #define TIMESTAMP "Time-stamp: <23 Jun 2015 16:14:12>"
 
-#include <math.h>
+#include <cmath>
 
 #include "lime/numutil.h"
 

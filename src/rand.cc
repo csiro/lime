@@ -8,7 +8,7 @@
 
 #include <algorithm>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 #include <time.h>
 
 #include "lime/rand.h"

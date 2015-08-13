@@ -6,8 +6,8 @@
 
 #include <iostream>
 #include <fstream>
-#include <assert.h>
-#include <math.h>
+#include <cassert>
+#include <cmath>
 
 #include "lime/dig.h"
 #include "lime/point.h"
