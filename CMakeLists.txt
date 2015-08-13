@@ -18,3 +18,4 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(CMAKE_BUILD_TYPE "Release")
 
 add_subdirectory(src)
+add_subdirectory(test)
