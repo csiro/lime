@@ -1,7 +1,6 @@
 include_directories(${PROJECT_INCLUDE_DIR})
 
-file(GLOB HDR ${PROJECT_INCLUDE_DIR}/*.h)
 file(GLOB SRC *.cc)
 
-add_executable(limetest ${SRC} ${HDR})
+add_executable(limetest ${SRC})
 target_link_libraries(limetest lime)
