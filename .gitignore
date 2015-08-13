@@ -29,3 +29,7 @@
 
 # Other stuff
 Makefile.depend.*
+
+# CMake
+bin
+build
