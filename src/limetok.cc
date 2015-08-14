@@ -5,7 +5,7 @@
 /** String tokeniser */
 
 #include <ctype.h>
-#include <assert.h>
+#include <cassert>
 
 #include "lime/limetok.h"
 #include "lime/strutil.h"

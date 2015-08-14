@@ -3,7 +3,7 @@
 #define TIMESTAMP "Time-stamp: <2 Apr 2014 13:42:02>"
 
 #include <stdio.h>
-#include <math.h>
+#include <cmath>
 
 #ifndef M_PI
 #define M_PI (3.14159265359)

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <assert.h>
+#include <cassert>
 #include <ctime>
 
 #include "lime/debug.h"

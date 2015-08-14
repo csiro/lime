@@ -2,7 +2,7 @@
 // Auto-updated timestamp
 #define TIMESTAMP "Time-stamp: <22 May 2013 12:02:14>"
 
-#include <assert.h>
+#include <cassert>
 
 #include "lime/activeobject.h"
 #include "lime/scheduler.h"
