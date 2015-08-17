@@ -83,7 +83,11 @@ namespace lime {
         int wakeTime_;
     };
 
-    std::ostream& operator<< (std::ostream&, const ActiveObject&);
+    /** Output operator.
+        @param os stream to write to
+        @param o object to print
+     */
+    std::ostream& operator<< (std::ostream& os, const ActiveObject& o);
 
 }
 

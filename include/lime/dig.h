@@ -15,7 +15,7 @@
 
 namespace lime {
 
-    class Point;
+    struct Point;
 
     class Dig
     {

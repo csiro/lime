@@ -13,31 +13,31 @@ using namespace lime;
 double
 Point::distTo (double x, double y) const
 {
-    double dX = x_ - x;
-    double dY = y_ - y;
+    double dX = this->x - x;
+    double dY = this->y - y;
     return sqrt (dX * dX + dY * dY);
 }
 
 double
 Point::distTo (const Point* other) const
 {
-    return distTo (other->x(), other->y());
+    return distTo (other->x, other->y);
 }
 
 void
 Point::display (std::ostream& out) const
 {
-    out << "(" << x_ << "," << y_ << ")";
+    out << "(" << x << "," << y << ")";
 }
 
 bool 
 Point::operator<(const Point& point) const
 {
-    if (point.x_ < x_) {
+    if (point.x < x) {
         return true;
     }
-    else if (point.x_ == x_) {
-        if (point.y_ < y_) {
+    else if (point.x == x) {
+        if (point.y < y) {
             return true;
         }
     }

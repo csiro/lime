@@ -11,11 +11,11 @@
 
 /** Lime string utilities */
 
-#include <lime/geomutil.h>
-#include <lime/numutil.h>
+#include "lime/geomutil.h"
+#include "lime/numutil.h"
 
-#include <lime/point.h>
-#include <lime/line.h>
+#include "lime/point.h"
+#include "lime/line.h"
 
 using namespace lime;
 
@@ -64,9 +64,9 @@ lime::interpolate (
     const Point* a, const Point* b, double frac, Point* result
 )
 {
-    result->set (
-        a->x() + (b->x() - a->x()) * frac,
-        a->y() + (b->y() - a->y()) * frac
+    result->set(
+        a->x + (b->x - a->x) * frac,
+        a->y + (b->y - a->y) * frac
     );
     return result;
 }
@@ -79,8 +79,8 @@ lime::invInterpolate (
     const Point* a, const Point* b, const Point* c
 )
 {
-    double fx = (c->x() - a->x()) / (b->x() - a->x());
-    double fy = (c->y() - a->y()) / (b->y() - a->y());
+    double fx = (c->x - a->x) / (b->x - a->x);
+    double fy = (c->y - a->y) / (b->y - a->y);
     double f = limeMin (fx, fy);
     
     return f;
@@ -95,8 +95,8 @@ lime::add (
 )
 {
     result->set (
-        from->x() + vec->x() * dist,
-        from->y() + vec->y() * dist
+        from->x + vec->x * dist,
+        from->y + vec->y * dist
     );
     return result;
 }
@@ -118,9 +118,9 @@ lime::add (
 Point*
 lime::unitVec (const Point* from, const Point* to, Point* vec)
 {
-    vec->set (to->x() - from->x(), to->y() - from->y());
+    vec->set (to->x - from->x, to->y - from->y);
     double len = vec->distTo (0.0, 0.0);
-    vec->set (vec->x()/len, vec->y()/len);
+    vec->set (vec->x/len, vec->y/len);
     return vec;
 }
 
@@ -128,7 +128,7 @@ lime::unitVec (const Point* from, const Point* to, Point* vec)
 Point*
 lime::scale (Point* pt, double scale)
 {
-    pt->set (pt->x() * scale, pt->y() * scale);
+    pt->set (pt->x * scale, pt->y * scale);
     return pt;
 }
 
@@ -146,8 +146,8 @@ lime::closestPoint (
     double y1 = line->y1();
     double x2 = line->x2();
     double y2 = line->y2();
-    double x3 = target->x();
-    double y3 = target->y();
+    double x3 = target->x;
+    double y3 = target->y;
     double len = line->p1()->distTo (line->p2());
     if (len < 0.00000001) {
         return result->copy (line->p1());
@@ -201,9 +201,9 @@ double
 lime::angle (const Point* a, const Point* b, const Point* c)
 {
     double theta1 =
-        atan2 (a->y() - b->y(), a->x() - b->x());
+        atan2 (a->y - b->y, a->x - b->x);
     double theta2 =
-        atan2 (c->y() - b->y(), c->x() - b->x());
+        atan2 (c->y - b->y, c->x - b->x);
 
     double theta = theta1 - theta2;
     if (theta < 0)
@@ -257,7 +257,7 @@ lime::greatCircleDistMetres (const Point* from, const Point* to)
 {
     return
         greatCircleDistMetres (
-            from->x(), from->y(), to->x(), to->y()
+            from->x, from->y, to->x, to->y
         );
 }
 
