@@ -5,15 +5,11 @@
 
 namespace lime {
 
-    /**
-        A class representing active objects in a simulation.
-
-        Active objects can by in state ACTIVE, in which case they wake every
-        time unit. Otherwise they wake when scheduled. If IDLE, they are not
-        currently scheduled to wake.
-
-        Objects are scheduled for wake-up using wakeAt or wakeAfter. The virtual
-        method 'run' is called when the object wakes.
+    /** A class representing active objects in a simulation. Active objects can
+        by in state ACTIVE, in which case they wake every time unit. Otherwise
+        they wake when scheduled. If IDLE, they are not currently scheduled to
+        wake. Objects are scheduled for wake-up using wakeAt or wakeAfter. The
+        virtual method 'run' is called when the object wakes.
     */
     class ActiveObject
     {
@@ -89,6 +85,6 @@ namespace lime {
 
     std::ostream& operator<< (std::ostream&, const ActiveObject&);
 
-} // namespace
+}
 
 #endif

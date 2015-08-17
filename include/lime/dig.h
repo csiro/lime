@@ -35,7 +35,7 @@ namespace lime {
         void circle (double x, double y, int diam, bool filled = false);
         void circle (const lime::Point* p, int diam, bool filled = false);
         // set colour using red/blue/green - doubles in range 0 - 1
-        void rgb (double r, double g, double b); 
+        void rgb (double r, double g, double b);
         // set colour using blue-red scale, 0 to max
         void colourScaleBR (double val, double max);
         // set colour using red-only scale, 0 to max
@@ -64,13 +64,15 @@ namespace lime {
         std::ostream& outFile() {return out;}
 
         void display (std::ostream&) const;
-    
+
     protected:
         std::ofstream out;
         int currStyle;
     };
 
     std::ostream& operator<< (std::ostream&, const Dig&);
+
+    typedef std::shared_ptr<Dig> DigPtr;
 
 } //namespace
 

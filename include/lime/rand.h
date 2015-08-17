@@ -1,20 +1,18 @@
 #ifndef LIME_RAND_H
 #define LIME_RAND_H
-// 
-// 
-//                       R A N D . H
-//                       ===========
-//
-// Random number generator class
-//
 
 #include <iostream>
 
 namespace lime {
 
+    /** Class for generating pseudo-random numbers in various distributions. */
     class Rand
     {
     public:
+
+        /** Constructor.
+            @param seed seed for the pseud-random number generator.
+         */
         Rand (int seed = 0);
         virtual ~Rand ();
 
@@ -34,7 +32,7 @@ namespace lime {
         double rnd (int n);
 
         int seed;
-    
+
         // Data for rnd
         double* r3;
         double *r30ptr, *r3kptr, *r3ptr;
@@ -43,7 +41,7 @@ namespace lime {
     };
 
     std::ostream& operator<< (std::ostream&, const Rand&);
-    
+
 } //namespace
 
 #endif // RAND_H
