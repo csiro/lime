@@ -299,19 +299,6 @@ Rand::exponential (double mean)
     return standardExponential() * mean;
 }
 
-void
-Rand::display (std::ostream& out) const
-{
-    out << "Rand";
-}
-
-ostream&
-operator<< (ostream& out, const Rand& rand)
-{
-    rand.display (out);
-    return out;
-}
-
 /*
 #include <iostream.h>
 main ()

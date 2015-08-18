@@ -3,10 +3,12 @@
 
 #include <iostream>
 
+#include "lime/displayable.h"
+
 namespace lime
 {
     /** A class representing a 2-dimensional point. */
-    struct Point
+    struct Point : public Displayable
     {
         /** Default constructor.
             @remarks initialises the point at the origin (0,0).
@@ -57,7 +59,7 @@ namespace lime
         /** Display method.
             @param os the stream onto which this object must be "displayed".
          */
-        void display (std::ostream&) const;
+        void display (std::ostream& os = std::cout) const override;
 
         /** The x-coordinate. */
         double x;
@@ -66,11 +68,6 @@ namespace lime
         double y;
     };
 
-    /** Output operator. 
-        @param os stream to write to
-        @param o object to print
-     */
-    std::ostream& operator<< (std::ostream& os, const Point& o);
 }
 
 #endif

@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "lime/displayable.h"
+
 namespace lime {
 
     /** A class representing active objects in a simulation. Active objects can
@@ -11,7 +13,7 @@ namespace lime {
         wake. Objects are scheduled for wake-up using wakeAt or wakeAfter. The
         virtual method 'run' is called when the object wakes.
     */
-    class ActiveObject
+    class ActiveObject : public Displayable
     {
     public:
 
@@ -23,10 +25,19 @@ namespace lime {
         };
 
         /** Constructor. */
-        ActiveObject();
+        ActiveObject() : state_(IDLE), wakeTime_(-1) { }
 
         /** Destructor. */
-        virtual ~ActiveObject();
+        virtual ~ActiveObject()
+        {
+            idlize();
+        }
+        
+        /** Set object to wake at every time step. */
+        void activate ()
+        {
+            Scheduler::activate (this);
+        }
 
         /** Returns the wake time.
             @remark only sensible if State == IN_QUEUE.
@@ -36,22 +47,28 @@ namespace lime {
         /** Returns activation state. */
         const State& activeObjectState() const { return state_; }
 
-        /** Set object to wake at every time step. */
-        void activate ();
-
         /** Set object to wake now. */
         void wake () { wakeAfter (0); }
 
         /** @copydoc Scheduler::idlize() */
-        void idlize ();
+        void idlize ()
+        {
+            Scheduler::idlize (this);
+        }
 
         /** Schedule object to wake at a given time.
             @param atTime time step at which the object will be awaken.
          */
-        void wakeAt (int atTime);
+        void wakeAt (int atTime)
+        {
+            Scheduler::schedule (atTime, this);
+        }
 
         /** Reschedule after an elapsed time */
-        void wakeAfter (int deltaS);
+        void wakeAfter (int deltaS)
+        {
+            Scheduler::schedule (Scheduler::currTime() + deltaS, this);
+        }
 
         /** Set state and wake time ** only Scheduler may call this ** */
         void updateActiveObj (State state, int wakeTime = -1)
@@ -63,11 +80,6 @@ namespace lime {
             @param state new state of the object.
          */
         void setActiveObjState (State state) { state_ = state; }
-
-        /** Virtual display method.
-            @param os the stream onto which this object must be "displayed".
-         */
-        virtual void display (std::ostream& os) const = 0;
 
         /** Virtual procedure run when the object is woken.
             @param currTime the current time step.
@@ -82,12 +94,6 @@ namespace lime {
         /** When will I wake again (-1 if not set). */
         int wakeTime_;
     };
-
-    /** Output operator.
-        @param os stream to write to
-        @param o object to print
-     */
-    std::ostream& operator<< (std::ostream& os, const ActiveObject& o);
 
 }
 

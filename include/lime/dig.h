@@ -12,12 +12,14 @@
 #include <fstream>
 #include <string>
 
+#include "lime/displayable.h"
+
 
 namespace lime {
 
     struct Point;
 
-    class Dig
+    class Dig : public Displayable
     {
     public:
         Dig(const char* filename, bool append = false);
@@ -63,14 +65,12 @@ namespace lime {
         void close ();
         std::ostream& outFile() {return out;}
 
-        void display (std::ostream&) const;
+        void display (std::ostream&) const override;
 
     protected:
         std::ofstream out;
         int currStyle;
     };
-
-    std::ostream& operator<< (std::ostream&, const Dig&);
 
     typedef std::shared_ptr<Dig> DigPtr;
 

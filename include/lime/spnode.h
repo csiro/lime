@@ -12,8 +12,12 @@ namespace lime {
     class SPNode
     {
     public:
-        SPNode(int cost);
-        virtual ~SPNode();
+        SPNode(int cost) :
+            cost_(cost),
+            parent_(NULL)
+        { }
+        
+        virtual ~SPNode() { }
         
         int cost() const {return cost_;}
         void setCost (int cost) {cost_ = cost;}

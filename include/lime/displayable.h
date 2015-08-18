@@ -16,6 +16,7 @@ namespace lime {
             @param os output stream to print to
          */
         virtual void display(std::ostream& os = std::cout) const = 0;
+        
     };
     
     /** Output operator.

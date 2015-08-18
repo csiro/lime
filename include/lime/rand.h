@@ -3,10 +3,12 @@
 
 #include <iostream>
 
+#include "lime/displayable.h"
+
 namespace lime {
 
     /** Class for generating pseudo-random numbers in various distributions. */
-    class Rand
+    class Rand : public Displayable
     {
     public:
 
@@ -26,7 +28,10 @@ namespace lime {
         double standardExponential ();
         double exponential (double mean);
 
-        void display (std::ostream&) const;
+        void display (std::ostream& os = std::cout) const override
+        {
+            os << "Rand";
+        }
 
     private:
         double rnd (int n);
@@ -39,8 +44,6 @@ namespace lime {
         double r1, s, t, rmc, rm;
         long iw, i, ic, id, ir, ikt;
     };
-
-    std::ostream& operator<< (std::ostream&, const Rand&);
 
 } //namespace
 

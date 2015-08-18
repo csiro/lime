@@ -54,16 +54,8 @@ LockFile::releaseLock()
 }
 
 void
-LockFile::display (std::ostream& out) const
+LockFile::display (std::ostream& os) const
 {
-    out << "Lockfile " << lockFilename_;
+    os << "Lockfile " << lockFilename_;
 }
 
-// ------------------------
-
-std::ostream&
-operator<< (std::ostream& out, const LockFile& lf)
-{
-    lf.display (out);
-    return out;
-}

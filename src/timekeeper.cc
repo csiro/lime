@@ -63,16 +63,8 @@ TimeKeeper::hasTimeLeft() const
 }
 
 void
-TimeKeeper::display (ostream& out) const
+TimeKeeper::display (ostream& os) const
 {
-    out << "Elapsed time " << elapsedTimeSecs() << " secs";
+    os << "Elapsed time " << elapsedTimeSecs() << " secs";
 }
 
-// ------------------------
-
-ostream&
-operator<< (ostream& out, const lime::TimeKeeper& timeKeeper)
-{
-    timeKeeper.display (out);
-    return out;
-}

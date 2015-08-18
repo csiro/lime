@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "lime/point.h"
+#include "lime/displayable.h"
 
 namespace lime {
 
@@ -12,7 +13,7 @@ namespace lime {
         locations. Can be modified to enclose a new location, and used to
         test a location for inclusion.
      */
-    class BoundingBox
+    class BoundingBox : public Displayable
     {
     public:
 
@@ -28,15 +29,14 @@ namespace lime {
         void enclose (const lime::Point* loc);
 
         bool contains(const lime::Point* loc) const;
-
-        void display (std::ostream&) const;
+        
+        void display (std::ostream& os = std::cout) const override;
 
     protected:
 
         Point ll_;
         Point ur_;
     };
-
-    std::ostream& operator<< (std::ostream&, const BoundingBox&);
 }
+
 #endif

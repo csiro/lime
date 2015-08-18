@@ -45,15 +45,8 @@ Stat::variance() const
 }
 
 void
-Stat::display (std::ostream& out) const
+Stat::display (std::ostream& os) const
 {
-    out << "Stat, mean " << mean();
-}
-
-ostream&
-lime::operator<< (ostream& out, const Stat& stat)
-{
-    stat.display (out);
-    return out;
+    os << "Stat, mean " << mean();
 }
 

@@ -4,10 +4,11 @@
 #include <iostream>
 
 #include "lime/point.h"
+#include "lime/displayable.h"
 
 namespace lime {
     
-    class Line
+    class Line : public Displayable
     {
     public:
         Line() : p1_(), p2_() {}
@@ -28,14 +29,15 @@ namespace lime {
 
         double length () const {return p1_.distTo(&p2_);}
 
-        void display (std::ostream&) const;
+        void display (std::ostream& os = std::cout) const override
+        {
+            os << p1_ << "-" << p2_;
+        }
     
     private:
         Point p1_;
         Point p2_;
     };
-
-    std::ostream& operator<< (std::ostream&, const Line&);
 }
 
 #endif

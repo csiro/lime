@@ -25,9 +25,9 @@ Point::distTo (const Point* other) const
 }
 
 void
-Point::display (std::ostream& out) const
+Point::display (std::ostream& os) const
 {
-    out << "(" << x << "," << y << ")";
+    os << "(" << x << "," << y << ")";
 }
 
 bool 
@@ -43,11 +43,3 @@ Point::operator<(const Point& point) const
     }
     return false;
 }
-
-ostream&
-lime::operator<< (ostream& out, const Point& point)
-{
-    point.display (out);
-    return out;
-}
-

@@ -9,9 +9,11 @@
 #include <iostream>
 #include <sys/times.h>
 
+#include "lime/displayable.h"
+
 namespace lime {
 
-    class TimeKeeper
+    class TimeKeeper : public Displayable
     {
     public:
         /** Create a TimeKeeper - used to time a process. No time limit
@@ -41,15 +43,13 @@ namespace lime {
         int timeLimit() const {return timeLimitS_;}
 	void setTimeLimit(int timeLimitS) { timeLimitS_ = timeLimitS; }
 
-        void display (std::ostream&) const;
+        void display (std::ostream& os = std::cout) const override;
     
     protected:
         struct tms start_;
         long ticksPerSec_;
         int timeLimitS_;
     };
-
-    std::ostream& operator<< (std::ostream&, const TimeKeeper&);
 
 } //namespace
 

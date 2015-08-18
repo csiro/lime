@@ -61,12 +61,3 @@ BoundingBox::display (ostream& out) const
 {
     out << "[" << ll_ << " - " << ur_ << "]";
 }
-
-// ------------------------
-
-ostream&
-operator<< (ostream& out, const BoundingBox& box)
-{
-    box.display (out);
-    return out;
-}

@@ -20,7 +20,6 @@
 namespace lime {
 
     class ActiveObject;
-
     typedef std::list<ActiveObject*> ActiveObjectList;
     typedef std::list<ActiveObject*>::iterator ActiveObjectIter;
 
@@ -51,7 +50,7 @@ namespace lime {
         /** Prematurely suspend the simulation */
         static void suspend() {suspend_ = true;}
 
-        static void display (std::ostream& out);
+        static void display (std::ostream& os = std::cout);
     
     protected:
         /** Terminate the simulation*/
