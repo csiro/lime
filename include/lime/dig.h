@@ -17,7 +17,7 @@
 
 namespace lime {
 
-    struct Point;
+    class Point;
 
     class Dig : public Displayable
     {

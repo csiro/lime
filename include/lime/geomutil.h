@@ -3,7 +3,7 @@
 
 namespace lime {
 
-    struct Point;
+    class Point;
     class Line;
     
     double dist (double x1, double y1, double x2, double y2);

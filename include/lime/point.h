@@ -8,25 +8,43 @@
 namespace lime
 {
     /** A class representing a 2-dimensional point. */
-    struct Point : public Displayable
+    class Point : public Displayable
     {
+    public:
+        
         /** Default constructor.
             @remarks initialises the point at the origin (0,0).
          */
-        Point() : x(0), y(0) { }
+        Point() : x_(0), y_(0) { }
         
         /** Constructor.
             @param x the x-coordinate
             @param y the y-coordinate
          */
-        Point (double x, double y) : x(x), y(y) { }
+        Point (double x, double y) : x_(x), y_(y) { }
         
         /** Resets both coordinates at once. */
         void set(double x, double y)
         {
-            this->x = x;
-            this->y = y;
+            x_ = x;
+            y_ = y;
         }
+        
+        /** Read x. */
+        const double& getX() const { return x_; }
+        
+        /** Read y. */
+        const double& getY() const { return y_; }
+        
+        /** Update x.
+            @param x new value of x
+         */
+        void setX(const double& x) { x_ = x; }
+        
+        /** Update y.
+            @param y new value of y
+         */
+        void setY(const double& y) { y_ = y; }
         
         /** Computes the distance from a set of coordinates.
             @param x the x-coordinate
@@ -61,11 +79,13 @@ namespace lime
          */
         void display (std::ostream& os = std::cout) const override;
 
+    private:
+        
         /** The x-coordinate. */
-        double x;
+        double x_;
         
         /** The y-coordinate. */
-        double y;
+        double y_;
     };
 
 }

@@ -91,7 +91,7 @@ ConfigReader::~ConfigReader ()
 {
     if (filename_ != NULL)
         delete [] filename_;
-    for (ItemIter iter = items_.begin(); iter != items_.end(); ++iter) {
+    for (auto iter = items_.begin(); iter != items_.end(); ++iter) {
         delete *iter;
     }
     if (used_ != NULL)
@@ -99,7 +99,7 @@ ConfigReader::~ConfigReader ()
 }
 
 void
-ConfigReader::readInt (const char* key, int& val)
+ConfigReader::readInt (const char* key, int& val) const
 {
     const char* strVal = valFor (key);
     if (strVal == NULL) // Not there
@@ -109,7 +109,7 @@ ConfigReader::readInt (const char* key, int& val)
 }
 
 void
-ConfigReader::readLong (const char* key, long& val)
+ConfigReader::readLong (const char* key, long& val) const
 {
     const char* strVal = valFor (key);
     if (strVal == NULL) // Not there
@@ -119,7 +119,7 @@ ConfigReader::readLong (const char* key, long& val)
 }
 
 void
-ConfigReader::readDouble (const char* key, double& val)
+ConfigReader::readDouble (const char* key, double& val) const
 {
     const char* strVal = valFor (key);
     if (strVal == NULL) // Not there
@@ -129,7 +129,7 @@ ConfigReader::readDouble (const char* key, double& val)
 }
 
 void
-ConfigReader::readBool (const char* key, bool& val)
+ConfigReader::readBool (const char* key, bool& val) const
 {
     const char* strVal = valFor (key);
     if (strVal == NULL) // Not there
@@ -146,7 +146,7 @@ ConfigReader::readBool (const char* key, bool& val)
 }
 
 void
-ConfigReader::readString (const char* key, const char** val)
+ConfigReader::readString (const char* key, const char** val) const
 {
     const char* strVal = valFor (key);
     if (strVal == NULL) // Not there
@@ -218,7 +218,7 @@ ConfigReader::close()
 }
 
 const char*
-ConfigReader::valFor(const char* key)
+ConfigReader::valFor(const char* key) const
 {
     const char* val = NULL;
     for (size_t i = 0; i < items_.size(); i++) {

@@ -22,10 +22,10 @@ namespace lime {
     
         const Point* p1() const {return &p1_;}
         const Point* p2() const {return &p2_;}
-        double x1() const {return p1_.x;}
-        double y1() const {return p1_.y;}
-        double x2() const {return p2_.x;}
-        double y2() const {return p2_.y;}
+        double x1() const {return p1_.getX();}
+        double y1() const {return p1_.getY();}
+        double x2() const {return p2_.getX();}
+        double y2() const {return p2_.getY();}
 
         double length () const {return p1_.distTo(&p2_);}
 

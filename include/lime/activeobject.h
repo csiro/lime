@@ -85,6 +85,9 @@ namespace lime {
             @param currTime the current time step.
          */
         virtual void run (int currTime) = 0;
+        
+        /** @copydoc Displayable::display(std::ostream&) */
+        virtual void display (std::ostream& os = std::cout) const = 0;
 
     protected:
 
