@@ -9,23 +9,23 @@ using namespace lime;
 void
 BoundingBox::enclose (const Point* loc)
 {
-    if (loc->getX() < ll_.getX())
-        ll_.setX(loc->getX());
-    if (loc->getY() < ll_.getY())
-        ll_.setY(loc->getY());
-    if (loc->getX() > ur_.getX())
-        ur_.setX(loc->getX());
-    if (loc->getY() > ur_.getY())
-        ur_.setY(loc->getY());
+    if (loc->x() < ll_.y())
+        ll_.setX(loc->x());
+    if (loc->y() < ll_.y())
+        ll_.setY(loc->y());
+    if (loc->x() > ur_.x())
+        ur_.setX(loc->x());
+    if (loc->y() > ur_.y())
+        ur_.setY(loc->y());
 }
 
 bool
 BoundingBox::contains(const Point* loc) const
 {
     return
-        (loc->getX() >= ll_.getX()) &&
-        (loc->getY() >= ll_.getY()) &&
-        (loc->getX() <= ur_.getX()) &&
-        (loc->getY() <= ur_.getY()
+        (loc->x() >= ll_.x()) &&
+        (loc->y() >= ll_.y()) &&
+        (loc->x() <= ur_.x()) &&
+        (loc->y() <= ur_.y()
     );
 }

@@ -65,8 +65,8 @@ lime::interpolate (
 )
 {
     result->set(
-        a->getX() + (b->getX() - a->getX()) * frac,
-        a->getY() + (b->getY() - a->getY()) * frac
+        a->x() + (b->x() - a->x()) * frac,
+        a->y() + (b->y() - a->y()) * frac
     );
     return result;
 }
@@ -79,8 +79,8 @@ lime::invInterpolate (
     const Point* a, const Point* b, const Point* c
 )
 {
-    double fx = (c->getX() - a->getX()) / (b->getX() - a->getX());
-    double fy = (c->getY() - a->getY()) / (b->getY() - a->getY());
+    double fx = (c->x() - a->x()) / (b->x() - a->x());
+    double fy = (c->y() - a->y()) / (b->y() - a->y());
     return limeMin (fx, fy);
 }
 
@@ -93,8 +93,8 @@ lime::add (
 )
 {
     result->set (
-        from->getX() + vec->getX() * dist,
-        from->getY() + vec->getY() * dist
+        from->x() + vec->x() * dist,
+        from->y() + vec->y() * dist
     );
     return result;
 }
@@ -116,9 +116,9 @@ lime::add (
 Point*
 lime::unitVec (const Point* from, const Point* to, Point* vec)
 {
-    vec->set (to->getX() - from->getX(), to->getY() - from->getY());
+    vec->set (to->x() - from->x(), to->y() - from->y());
     double len = vec->distTo (0.0, 0.0);
-    vec->set (vec->getX()/len, vec->getY()/len);
+    vec->set (vec->x()/len, vec->y()/len);
     return vec;
 }
 
@@ -126,7 +126,7 @@ lime::unitVec (const Point* from, const Point* to, Point* vec)
 Point*
 lime::scale (Point* pt, double scale)
 {
-    pt->set (pt->getX() * scale, pt->getY() * scale);
+    pt->set (pt->x() * scale, pt->y() * scale);
     return pt;
 }
 
@@ -144,8 +144,8 @@ lime::closestPoint (
     double y1 = line->y1();
     double x2 = line->x2();
     double y2 = line->y2();
-    double x3 = target->getX();
-    double y3 = target->getY();
+    double x3 = target->x();
+    double y3 = target->y();
     double len = line->p1()->distTo (line->p2());
     if (len < 0.00000001) {
         return result->copy (line->p1());
@@ -199,9 +199,9 @@ double
 lime::angle (const Point* a, const Point* b, const Point* c)
 {
     double theta1 =
-        atan2 (a->getY() - b->getY(), a->getX() - b->getX());
+        atan2 (a->y() - b->y(), a->x() - b->x());
     double theta2 =
-        atan2 (c->getY() - b->getY(), c->getX() - b->getX());
+        atan2 (c->y() - b->y(), c->x() - b->x());
 
     double theta = theta1 - theta2;
     if (theta < 0)
@@ -255,7 +255,7 @@ lime::greatCircleDistMetres (const Point* from, const Point* to)
 {
     return
         greatCircleDistMetres (
-            from->getX(), from->getY(), to->getX(), to->getY()
+            from->x(), from->y(), to->x(), to->y()
         );
 }
 

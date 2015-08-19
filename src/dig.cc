@@ -89,7 +89,7 @@ Dig::circle (double x, double y, int diam, bool filled)
 void
 Dig::circle (const lime::Point* p, int diam, bool filled)
 {
-    circle (p->getX(), p->getY(), diam, filled);
+    circle (p->x(), p->y(), diam, filled);
 }
 
 void
@@ -161,7 +161,7 @@ Dig::labelPoint (double x, double y, string label)
 void
 Dig::labelPoint (const lime::Point* p, string label)
 {
-    labelPoint (p->getX(), p->getY(), label);
+    labelPoint (p->x(), p->y(), label);
 }
 
 void
@@ -193,7 +193,7 @@ Dig::moveTo (double x, double y)
 void
 Dig::moveTo (const lime::Point* p)
 {
-    moveTo (p->getX(), p->getY());
+    moveTo (p->x(), p->y());
 }
 
 void
@@ -205,7 +205,7 @@ Dig::drawTo (double x, double y)
 void
 Dig::drawTo (const lime::Point* p)
 {
-    drawTo (p->getX(), p->getY());
+    drawTo (p->x(), p->y());
 }
 
 void
@@ -223,7 +223,7 @@ Dig::drawDistinctTo (double x, double y)
 void
 Dig::drawDistinctTo (const lime::Point* point)
 {
-    drawDistinctTo (point->getX(), point->getY());
+    drawDistinctTo (point->x(), point->y());
 }
 
 void

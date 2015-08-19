@@ -31,10 +31,10 @@ namespace lime
         }
         
         /** Read x. */
-        const double& getX() const { return x_; }
+        const double& x() const { return x_; }
         
         /** Read y. */
-        const double& getY() const { return y_; }
+        const double& y() const { return y_; }
         
         /** Update x.
             @param x new value of x
