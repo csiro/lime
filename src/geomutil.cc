@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <2 Apr 2014 13:42:02>"
-
 #include <stdio.h>
 #include <cmath>
 

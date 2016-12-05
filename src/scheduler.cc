@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <21 May 2013 11:08:17>"
-
 #include <cassert>
 
 #include "lime/error.h"

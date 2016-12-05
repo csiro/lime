@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <25 May 2015 16:28:55>"
-
 #include <cctype>
 #include <string.h>
 #include <ctype.h>
@@ -208,4 +204,12 @@ lime::itoa (int val)
     static char buffer[25];
     sprintf (buffer, "%d", val);
     return buffer;
+}
+
+std::string
+lime::itostr (int val)
+{
+    char buffer[100];
+    sprintf (buffer, "%d", val);
+    return std::string(buffer);
 }

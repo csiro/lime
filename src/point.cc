@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <3 Jun 2015 17:49:12>"
-
 #include <cassert>
 #include <cmath>
 

@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <4 Oct 2013 17:02:38>"
-
 #include <iostream>
 #include <fcntl.h>
 #include <cerrno>

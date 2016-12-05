@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <25 May 2015 16:21:59>"
-
 #include <iostream>
 #include <algorithm>
 

@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <23 Jun 2015 11:33:26>"
-
 /** Write a file to display stuff using the "Dig" program */
 
 #include <iostream>

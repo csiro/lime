@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <28 May 2013 11:42:28>"
-
 /** Implement the "location" methods */
 
 #include <unistd.h>

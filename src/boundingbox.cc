@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <10 Jun 2015 23:51:47>"
-
 #include "lime/boundingbox.h"
 
 using namespace lime;

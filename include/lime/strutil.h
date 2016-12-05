@@ -65,6 +65,7 @@ namespace lime {
     extern char* fmtDayTime (int secs);
 /** Return integer as char* */
     extern char* itoa (int val);
+    extern std::string itostr (int val);
 
 } // namespace
 

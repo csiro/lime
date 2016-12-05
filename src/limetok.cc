@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <16 May 2013 10:52:31>"
-
 /** String tokeniser */
 
 #include <ctype.h>

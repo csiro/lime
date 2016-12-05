@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <20 Feb 2013 11:28:52>"
-
 #include <cassert>
 
 #include "lime/shortestpath.h"
