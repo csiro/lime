@@ -213,3 +213,11 @@ lime::itostr (int val)
     sprintf (buffer, "%d", val);
     return std::string(buffer);
 }
+
+std::string
+lime::dtostr (double val)
+{
+    char buffer[100];
+    sprintf (buffer, "%g", val);
+    return std::string(buffer);
+}

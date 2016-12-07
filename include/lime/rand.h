@@ -1,5 +1,4 @@
-#ifndef LIME_RAND_H
-#define LIME_RAND_H
+#pragma once
 
 #include <iostream>
 
@@ -47,4 +46,3 @@ namespace lime {
 
 } //namespace
 
-#endif // RAND_H

@@ -1,5 +1,4 @@
-#ifndef LIME_POINT_H
-#define LIME_POINT_H
+#pragma once
 
 #include <iostream>
 
@@ -90,4 +89,3 @@ namespace lime
 
 }
 
-#endif

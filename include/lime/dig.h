@@ -1,5 +1,4 @@
-#ifndef LIME_DIG_H
-#define LIME_DIG_H
+#pragma once
 
 /**
  *  Defines a dig distance or time that depends on the order of
@@ -77,4 +76,3 @@ namespace lime {
 
 } //namespace
 
-#endif

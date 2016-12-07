@@ -1,5 +1,4 @@
-#ifndef LIME_SCHEDULER_H
-#define LIME_SCHEDULER_H
+#pragma once
 
 #include <iostream>
 #include <list>
@@ -84,4 +83,3 @@ namespace lime {
 
 } // namespace
 
-#endif

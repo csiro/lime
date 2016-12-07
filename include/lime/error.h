@@ -1,5 +1,4 @@
-#ifndef LIME_ERROR_H
-#define LIME_ERROR_H
+#pragma once
 
 #include <sstream>
 
@@ -18,4 +17,3 @@ void _limeAssert (bool assertion, const char* file, int line);
 #define limeProgress(X) {_limeErrorLine << X; _limeProgress(_limeErrorLine);}
 #define limeAssert(X) {_limeAssert(X,__FILE__,__LINE__);}
 
-#endif

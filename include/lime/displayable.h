@@ -1,5 +1,4 @@
-#ifndef LIME_DISPLAYABLE_H
-#define LIME_DISPLAYABLE_H
+#pragma once
 
 #include <iostream>
 
@@ -27,4 +26,3 @@ namespace lime {
 
 }
 
-#endif

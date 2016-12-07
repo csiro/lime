@@ -1,5 +1,4 @@
-#ifndef LIME_DEBUG_H
-#define LIME_DEBUG_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -63,4 +62,3 @@ private:
 
 #endif // NDEBUG
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef LIME_NUMUTIL_H
-#define LIME_NUMUTIL_H
+#pragma once
 
 /** Max and min functions - c is all over the place with these */
 int limeMax (int a, int b);
@@ -22,4 +21,3 @@ bool limeDblEqual (double a, double b);
 /** Are all entries inthe array zero? */
 bool allZero (const long* arr, int n);
 
-#endif

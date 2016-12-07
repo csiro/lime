@@ -1,5 +1,4 @@
-#ifndef LIME_GEOMUTIL_H
-#define LIME_GEOMUTIL_H
+#pragma once
 
 namespace lime {
 
@@ -82,4 +81,3 @@ namespace lime {
 
 } // namespace
 
-#endif

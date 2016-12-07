@@ -1,5 +1,4 @@
-#ifndef LIME_TOK_H
-#define LIME_TOK_H
+#pragma once
 
 /**
  * Tokenize a string safely - without the sttic storage used by strtok
@@ -55,4 +54,3 @@ protected:
 };
 
 
-#endif

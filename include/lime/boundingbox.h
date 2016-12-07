@@ -1,5 +1,4 @@
-#ifndef LIME_BOUNDINGBOX_H
-#define LIME_BOUNDINGBOX_H
+#pragma once
 
 #include <cstring>
 #include <iostream>
@@ -72,4 +71,3 @@ namespace lime {
     };
 }
 
-#endif

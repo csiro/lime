@@ -1,5 +1,4 @@
-#ifndef LIME_CONFIGREADER_H
-#define LIME_CONFIGREADER_H
+#pragma once
 
 #include <vector>
 
@@ -136,4 +135,3 @@ namespace lime
     };
 }
 
-#endif

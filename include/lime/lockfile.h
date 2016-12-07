@@ -1,5 +1,4 @@
-#ifndef LIME_LOCKFILE_H
-#define LIME_LOCKFILE_H
+#pragma once
 
 #include "lime/displayable.h"
 
@@ -24,4 +23,3 @@ namespace lime {
     };
 }
 
-#endif

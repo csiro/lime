@@ -1,5 +1,4 @@
-#ifndef LIME_STRUTIL_H
-#define LIME_STRUTIL_H
+#pragma once
 
 #include <string.h>
 #include <string>
@@ -66,7 +65,7 @@ namespace lime {
 /** Return integer as char* */
     extern char* itoa (int val);
     extern std::string itostr (int val);
+    extern std::string dtostr (double val);
 
 } // namespace
 
-#endif

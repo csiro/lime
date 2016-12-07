@@ -1,5 +1,4 @@
-#ifndef LIME_ACTIVEOBJECT_H
-#define LIME_ACTIVEOBJECT_H
+#pragma once
 
 #include <iostream>
 
@@ -100,4 +99,3 @@ namespace lime {
 
 }
 
-#endif
