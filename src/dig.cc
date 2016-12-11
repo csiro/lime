@@ -161,21 +161,28 @@ Dig::labelPoint (const lime::Point* p, string label)
 }
 
 void
-Dig::showMessage (string message, string message2)
+Dig::showMessage (const char* message, const char* message2)
 {
     out << "T \"" << message;
-    out << message2;
+    if (message2 != NULL)
+        out << " " << message2;
     out << "\"" << endl;
 }
 
 void
-Dig::showMessage (string message, int i)
+Dig::showMessage (string message)
+{
+    out << "T \"" << message << "\"" << endl;
+}
+
+void
+Dig::showMessage (const char* message, int i)
 {
     out << "T \"" << message << i << "\"" << endl;
 }
 
 void
-Dig::showMessage (string message, double d)
+Dig::showMessage (const char* message, double d)
 {
     out << "T \"" << message << d << "\"" << endl;
 }
@@ -238,11 +245,21 @@ Dig::box (double x1, double y1, double x2, double y2, int c)
 }
 
 void
+Dig::xTic (double x, const char* label)
+{
+    out << "XT " << x << " \"" << label << "\"" << endl;
+}
+void
 Dig::xTic (double x, string label)
 {
     out << "XT " << x << " \"" << label << "\"" << endl;
 }
 
+void
+Dig::yTic (double y, const char* label)
+{
+    out << "YT " << y << " \"" << label << "\"" << endl;
+}
 void
 Dig::yTic (double y, string label)
 {

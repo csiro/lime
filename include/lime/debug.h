@@ -57,7 +57,8 @@ private:
 
 #define DEBUG(X,Y) {if (Debug::doDebug(X)){Debug::debugFile() << Y << std::endl; Debug::debugFile().flush();}}
 #define DEBUGT(X,Y) {if (lime::Scheduler::currTime() >= Debug::startTime()) DEBUG(X,lime::fmtTime(lime::Scheduler::currTime()) << " " << Y);}
-#define DEBUG_ARR(X,M,A,N) {if (Debug::doDebug(X)){Debug::debugFile()<<M;for(int idebug_=0;idebug_<N;idebug_++)Debug::debugFile() << A[idebug_] << " ";Debug::debugFile()<< endl; Debug::debugFile().flush();}}
+#define DEBUG_ARR(X,M,A,N) {if (Debug::doDebug(X)){Debug::debugFile()<<M;for(auto idebug_=0;idebug_<N;idebug_++)Debug::debugFile() << A[idebug_] << " ";Debug::debugFile()<< endl; Debug::debugFile().flush();}}
+#define DEBUG_VEC(X,M,A) {if (Debug::doDebug(X)){Debug::debugFile()<<M;for(size_t idebug_=0;idebug_<A.size();idebug_++)Debug::debugFile() << A[idebug_] << " ";Debug::debugFile()<< endl; Debug::debugFile().flush();}}
 #define DEBUG_NL(X,Y) {if (Debug::doDebug(X)){Debug::debugFile() << Y;}}
 
 #endif // NDEBUG
