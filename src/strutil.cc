@@ -1,4 +1,6 @@
 #include <cctype>
+#include <iomanip>
+#include <sstream>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -9,6 +11,7 @@
 #include "lime/strutil.h"
 
 using namespace lime;
+using namespace std;
 
 char*
 lime::strdup (const char* str)
@@ -98,6 +101,29 @@ lime::todayStr (char* buffer, size_t bufferLen)
     else 
         strftime (buffer, bufferLen, "%T %d/%m/%Y", tmp);
     return buffer;
+}
+
+/** Return a formated time string */
+std::string
+lime::todayString ()
+{
+    time_t t = time(NULL);
+    struct tm *tim;
+    tim = localtime(&t);
+
+    if (tim == NULL)
+        return string("Error obtaining time");
+
+    std::ostringstream str;
+    str <<
+        setw(2) << setfill('0') << tim->tm_mday << "/" <<
+        setw(2) << setfill('0') << tim->tm_mon << "/" <<
+        setw(2) << setfill('0') << 1900 + tim->tm_year << " " << 
+        setw(2) << setfill('0') << tim->tm_hour << ":" <<
+        setw(2) << setfill('0') << tim->tm_min << ":" <<
+        setw(2) << setfill('0') << tim->tm_sec;
+
+    return str.str();
 }
 
 

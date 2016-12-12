@@ -17,6 +17,8 @@ namespace lime {
     int strncasecmp (const char* a, const char*b, int n);
 /** Return current time as a formated time string */
     char* todayStr (char* buffer, size_t bufferLen);
+/** Return current time as a formated time string */
+    std::string todayString ();
 
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after

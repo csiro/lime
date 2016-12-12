@@ -23,11 +23,25 @@ Dig::~Dig ()
 }
 
 void
+Dig::title (const char* title)
+{
+    out << "H \"" << title << "\"" << endl;
+    out << "S 1" << endl;
+    currStyle = 1;
+}
+
+void
 Dig::title (string title)
 {
     out << "H \"" << title << "\"" << endl;
     out << "S 1" << endl;
     currStyle = 1;
+}
+
+void
+Dig::xLabel (const char* label)
+{
+    out << "X \"" << label << "\"" << endl;
 }
 
 void
@@ -37,9 +51,21 @@ Dig::xLabel (string label)
 }
 
 void
+Dig::yLabel (const char* label)
+{
+    out << "Y \"" << label << "\"" << endl;
+}
+
+void
 Dig::yLabel (string label)
 {
     out << "Y \"" << label << "\"" << endl;
+}
+
+void
+Dig::label (const char* label_)
+{
+    out << "L \"" << label_ << "\"" << endl;
 }
 
 void
@@ -147,11 +173,25 @@ Dig::colourScaleR (double val, double max)
 }
 
 void
+Dig::labelPoint (double x, double y, const char* label)
+{
+    out << "LP " << x << " " << y <<
+        " \"" << label << "\"" << endl;
+    
+}
+
+void
 Dig::labelPoint (double x, double y, string label)
 {
     out << "LP " << x << " " << y <<
         " \"" << label << "\"" << endl;
     
+}
+
+void
+Dig::labelPoint (const lime::Point* p, const char* label)
+{
+    labelPoint (p->x(), p->y(), label);
 }
 
 void

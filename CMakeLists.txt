@@ -17,5 +17,9 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
 set(CMAKE_BUILD_TYPE "Release")
 
+set (LASTBUILD_DIR ${PROJECT_SOURCE_DIR}/src)
+set (LASTBUILD_CMD ${PROJECT_SOURCE_DIR}/util/lastbuildc)
+set (LASTBUILD_CC ${LASTBUILD_DIR}/lastbuild.cc)
+
 add_subdirectory(src)
 add_subdirectory(test)

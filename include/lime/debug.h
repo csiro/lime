@@ -34,7 +34,8 @@ public:
         Debug::filename_ = filename;
     }
     static void setStartTime (int startTime);
-    
+
+    static const char* keys() {return key_;}
     static bool doDebug (char);
     static std::ostream& debugFile();
     static int startTime() {return startTime_;}
