@@ -1,10 +1,12 @@
 #include <cctype>
 #include <algorithm>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <stdio.h>
 #include <stdio.h>
 
 /** Lime string utilities */
@@ -130,7 +132,9 @@ lime::todayString ()
 string
 lime::toUpper (string str)
 {
-    std::transform(str.begin(), str.end(),str.begin(), ::toupper);
+    for (char& c : str) {
+        c = toupper (c);
+    }
     return str;
 }
 
