@@ -1,4 +1,5 @@
 #include <cctype>
+#include <algorithm>
 #include <iomanip>
 #include <sstream>
 #include <string.h>
@@ -125,6 +126,14 @@ lime::todayString ()
 
     return str.str();
 }
+
+string
+lime::toUpper (string str)
+{
+    std::transform(str.begin(), str.end(),str.begin(), ::toupper);
+    return str;
+}
+
 
 
 /** Replace extension (if present) with given one.
