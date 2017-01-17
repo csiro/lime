@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <assert.h>
 
 #include "lime/scheduler.h"
 #include "lime/strutil.h"
@@ -47,12 +48,16 @@ private:
     static int startTime_;
 };
 
+// Keep the compiler happy about unused vars
+#define USE(X) {(void)X;}
+
 #ifdef NDEBUG
 
 #define DEBUG(X,Y) {}
 #define DEBUGT(X,Y) {}
 #define DEBUG_NL(X,Y) {}
 #define DEBUG_ARR(X,M,A,N) {}
+#define DEBUG_VEC(X,M,A) {}
 
 #else
 

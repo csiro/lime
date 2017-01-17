@@ -15,5 +15,8 @@ void _limeAssert (bool assertion, const char* file, int line);
 #define limeWarning(X) {_limeErrorLine << X; _limeWarning(_limeErrorLine);}
 #define limeCrash(X) {_limeErrorLine << X; _limeCrash(_limeErrorLine);}
 #define limeProgress(X) {_limeErrorLine << X; _limeProgress(_limeErrorLine);}
+#ifdef NDEBUG
+#define limeAssert(X) {if(X){}} // Use the expression to keep the compiler happy
+#else
 #define limeAssert(X) {_limeAssert(X,__FILE__,__LINE__);}
-
+#endif
