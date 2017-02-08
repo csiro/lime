@@ -69,6 +69,7 @@ namespace lime {
 /** Return integer as char* */
     extern char* itoa (int val);
     extern std::string itostr (int val);
+    extern std::string ltostr (long val);
     extern std::string dtostr (double val);
 
 } // namespace

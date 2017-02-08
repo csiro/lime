@@ -254,6 +254,14 @@ lime::itostr (int val)
 }
 
 std::string
+lime::ltostr (long val)
+{
+    char buffer[100];
+    sprintf (buffer, "%ld", val);
+    return std::string(buffer);
+}
+
+std::string
 lime::dtostr (double val)
 {
     char buffer[100];
