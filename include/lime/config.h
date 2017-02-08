@@ -2,6 +2,7 @@
 
 #include <map>
 #include <vector>
+#include <memory>
 
 namespace lime
 {
@@ -93,5 +94,7 @@ namespace lime
 
         KeyMap map_;
     };
+
+    using ConfigPtr = std::shared_ptr<Config>;
 }
 
