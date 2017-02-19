@@ -1,11 +1,14 @@
+#include <string>
 #include <iostream>
 #include <algorithm>
+#include <cctype>
 
 #include <lime/config.h>
 #include <lime/strutil.h>
 #include <lime/reader.h>
 #include <lime/limetok.h>
 #include <lime/error.h>
+#include <lime/debug.h>
 
 /** Give acccess to a config file */
 
@@ -37,32 +40,79 @@ void
 Config::read (string filename)
 {
     filename_ = filename;
-    
-    Reader reader (filename);
+
+    ifstream ifs (filename);
+    if (!ifs.is_open())
+        limeCrash (string("Can't open config file ") + filename);
 
     // Create a list of Config items (i.e. key/value pairs)
-    LimeTok ltok;
-    char* line;
     int lineNum = 0;
-    while ((line = reader.getLine()) != NULL) {
+    string line;
+    while (std::getline(ifs, line)) {
         lineNum++;
-        ltok.tokenise (line);
 
-        char* key = reader.nextStr(ltok);
-        char* val = reader.nextStr(ltok);
-
-        if (key == NULL)
+        // Skip leading blanks
+        auto keyStart = line.begin();
+        while (keyStart != line.end()) {
+            if (!isspace (*keyStart))
+                break;
+            keyStart++;
+        }
+        if (keyStart == line.end()) // Blank line
             continue;
-        if (*key == '#') // Comment
-            continue;
-
-        if (val == NULL)
+        
+        // Find first blank, '=' or ':'
+        auto keyEnd = keyStart + 1;
+        while (keyEnd != line.end()) {
+            if (isspace (*keyEnd) || *keyEnd == ':' || *keyEnd == '=')
+                break;
+            keyEnd++;
+        }
+        
+        // Find first non-blank
+        auto valStart = keyEnd;
+        if (valStart != line.end())
+            valStart++;
+        while (valStart != line.end()) {
+            if (!isspace (*valStart))
+                break;
+            valStart++;
+        }
+        bool quotedString = false;
+        if (valStart != line.end() && *valStart == '\"') {
+            quotedString = true;
+            valStart++;
+        }
+        if (valStart == line.end()) // Empty val
             limeCrash (
                 "Bad format in config file at line " << lineNum <<
                 " of " << filename
             );
+            
+        auto valEnd = valStart + 1;
+        while (valEnd != line.end()) {
+            if (quotedString) {
+                // Look for close quote
+                if (*valEnd == '\"')
+                    break;
+            }
+            else if (isspace(*valEnd))
+                break;
+            valEnd++;
+        }
+
+        string key(keyStart, keyEnd);
+        string val(valStart, valEnd);
         
-        map_[toUpper(string(key))] = string(val);
+        if (key[0] == '#') // Comment
+            continue;
+
+        if (val.length() == 0)
+            limeCrash (
+                "Bad format in config file at line " << lineNum <<
+                " of " << filename
+            );
+        map_[toUpper(key)] = val;
     }
 }
 
