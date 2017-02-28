@@ -29,10 +29,10 @@ Config::Config () :
 }
 
 void
-Config::setDefaults (vector<const char*> defaults)
+Config::setDefaults (vector<string> defaults)
 {
     for (auto str : defaults) {
-        addItem (string (str));
+        addItem (str);
     }
 }
 

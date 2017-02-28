@@ -25,7 +25,7 @@ namespace lime
         void read (std::string filename);
         void read (const char* filename) {read (std::string(filename));}
         
-        void setDefaults (std::vector<const char*> defaults);
+        void setDefaults (std::vector<std::string> defaults);
         
         /** Add items after reading file */
         void addItem (std::string key, std::string val);
