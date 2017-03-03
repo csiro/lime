@@ -21,6 +21,8 @@ namespace lime {
     std::string todayString ();
 /** Converts a string to upper case IN SITU. Returns the str argument */
     std::string toUpper (std::string str);
+/** Converts a string to lower case IN SITU. Returns the str argument */
+    std::string toLower (std::string str);
 
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after

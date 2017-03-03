@@ -74,6 +74,19 @@ limeMin (long a, long b, long c)
     return c;
 }
 
+template<typename T>
+T limeMin (std::vector<T> vec)
+{
+    if (vec.size() == 0)
+        return 0;
+    T theMin = vec[0];
+    for (auto i : vec)
+        if (i < theMin)
+            theMin = i;
+    return theMin;
+}
+
+
 /** Round a to the nearest r */
 int
 limeRound (int a, int r)

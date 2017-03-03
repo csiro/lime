@@ -138,7 +138,14 @@ lime::toUpper (string str)
     return str;
 }
 
-
+string
+lime::toLower (string str)
+{
+    for (char& c : str) {
+        c = tolower (c);
+    }
+    return str;
+}
 
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after

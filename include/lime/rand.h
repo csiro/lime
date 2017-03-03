@@ -20,7 +20,8 @@ namespace lime {
         void setSeed (int n);
         int getSeed () const {return seed;}
         int generateSeed () {return 1 + uniform0n_1(8189);}
-        double uniform01 () {return rnd (0);};
+        bool coinToss () {return rnd (0) < 0.5;}
+        double uniform01 () {return rnd (0);}
         int uniform0n_1 (int n);
         double normal01 ();
         double normal (double mean, double sdev);

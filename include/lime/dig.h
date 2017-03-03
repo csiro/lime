@@ -40,6 +40,12 @@ namespace lime {
         void colourMark (int c, int m);
         void circle (double x, double y, int diam, bool filled = false);
         void circle (const lime::Point* p, int diam, bool filled = false);
+        void scaledCircle (
+            double x, double y, 
+            double val, double minVal, double maxVal,
+            int minSizePixels, int maxSizePixels,
+            bool filled = false
+        );
         // set colour using red/blue/green - doubles in range 0 - 1
         void rgb (double r, double g, double b);
         // set colour using blue-red scale, 0 to max

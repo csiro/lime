@@ -19,16 +19,18 @@ namespace lime {
         /** Default contructor. */
         BoundingBox() :
             ll_(0, 0),
-            ur_(0, 0)
+            ur_(0, 0),
+            isEmpty_(true)
         { }
-
+        
         /** Constructor. 
             @param ll lower-left corner
             @param ur upper-right corner
          */
         BoundingBox(const lime::Point* ll, const lime::Point* ur)  :
             ll_(*ll),
-            ur_(*ur)
+            ur_(*ur),
+            isEmpty_(false)
         { }
 
         /** (Virtual) destructor. */
@@ -42,6 +44,7 @@ namespace lime {
         {
             ll_ = *ll;
             ur_ = *ur;
+            isEmpty_ = false;
         }
         
         /** Add a point to the bounding box, possibly enlarging the box to
@@ -58,7 +61,10 @@ namespace lime {
         /** @copydoc Displayable::display(std::ostream&) */
         void display (std::ostream& os = std::cout) const override
         {
-            os << "[" << ll_ << " - " << ur_ << "]";
+            if (isEmpty_)
+                os << "[empty]";
+            else
+                os << "[" << ll_ << " - " << ur_ << "]";
         }
 
     protected:
@@ -68,6 +74,9 @@ namespace lime {
             
         /** Upper-right corner. */
         Point ur_;
+
+        /** Have I been initialised? */
+        bool isEmpty_;
     };
 }
 

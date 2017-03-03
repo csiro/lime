@@ -17,6 +17,12 @@ Dig::Dig (const char* filename, bool append) :
 {
 }
 
+Dig::Dig (string filename, bool append) :
+    out (filename, ofstream::out | (append ? ofstream::app : ofstream::trunc)),
+    currStyle(0)
+{
+}
+
 Dig::~Dig ()
 {
     out.close();
@@ -112,6 +118,18 @@ void
 Dig::circle (const lime::Point* p, int diam, bool filled)
 {
     circle (p->x(), p->y(), diam, filled);
+}
+
+void
+Dig::scaledCircle (
+    double x, double y, 
+    double val, double minVal, double maxVal,
+    int minSizePixels, int maxSizePixels, bool filled
+)
+{
+    double frac = (val - minVal) / (maxVal - minVal);
+    int diam = (int) (minSizePixels + frac * (maxSizePixels - minSizePixels));
+    circle (x, y, diam , filled);
 }
 
 void
