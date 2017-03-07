@@ -13,20 +13,18 @@
 
 using namespace lime;
 
-LockFile::LockFile (const char* filename) :
+LockFile::LockFile (std::string filename) :
     fd_(0),
-    lockFilename_ (new char [strlen (filename) + 10])
+    lockFilename_ (filename + ".lck")
 {
-    sprintf (lockFilename_, "%s.lck", filename);
-    
-    fd_ = open (lockFilename_, O_WRONLY | O_CREAT | O_EXCL, 0666);
+    fd_ = open (lockFilename_.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
     
     while (fd_ < 0 && errno == EEXIST) {
         // the file already exist; another process is 
         // holding the lock
         limeProgress ("Waiting for lock on file " << filename);
         sleep (1);
-        fd_ = open (lockFilename_, O_WRONLY | O_CREAT | O_EXCL, 0666);
+        fd_ = open (lockFilename_.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
     }
     if (fd_ < 0) {
         limeWarning ("File lock failed for file " << filename);
@@ -37,7 +35,6 @@ LockFile::~LockFile ()
 {
     if (fd_ > 0) 
         releaseLock();
-    delete [] lockFilename_;
 }
 
 void
@@ -46,7 +43,7 @@ LockFile::releaseLock()
     if (fd_ > 0)
         close (fd_);
     fd_ = 0;
-    remove (lockFilename_);
+    remove (lockFilename_.c_str());
 }
 
 void
