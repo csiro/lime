@@ -7,8 +7,6 @@
 #include "lime/limetok.h"
 #include "lime/strutil.h"
 
-using namespace lime;
-
 LimeTok::LimeTok () :
     bufferLen_(0),
     buffer_(0),
@@ -172,13 +170,13 @@ LimeTok::nextBool(bool& error)
             return false;
         else if (strcmp (tok, "1") == 0)
             return true;
-        else if (strcasecmp (tok, "f") == 0)
+        else if (lime::strcasecmp (tok, "f") == 0)
             return false;
-        else if (strcasecmp (tok, "t") == 0)
+        else if (lime::strcasecmp (tok, "t") == 0)
             return true;
-        else if (strcasecmp (tok, "false") == 0)
+        else if (lime::strcasecmp (tok, "false") == 0)
             return false;
-        else if (strcasecmp (tok, "true") == 0)
+        else if (lime::strcasecmp (tok, "true") == 0)
             return true;
     }
     error = true;
