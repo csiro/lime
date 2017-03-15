@@ -91,7 +91,7 @@ Reader::getLine()
 bool
 Reader::matches (const char* a, const char* b) const
 {
-    return strcmp (a, b) == 0;
+    return a != NULL && b != NULL && strcmp (a, b) == 0;
 }
 
 double

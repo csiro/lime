@@ -22,6 +22,11 @@ namespace lime
          */
         Point (double x, double y) : x_(x), y_(y) { }
         
+        /** Copy constructor.
+            @param other the point to be copied
+         */
+        Point (const Point& other) : x_(other.x_), y_(other.y_) { }
+        
         /** Resets both coordinates at once. */
         void set(double x, double y)
         {

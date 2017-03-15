@@ -1,6 +1,7 @@
 /** String tokeniser */
 
 #include <ctype.h>
+#include <stdlib.h>
 #include <cassert>
 
 #include "lime/limetok.h"
@@ -122,6 +123,88 @@ LimeTok::nextToken(const char* delim, bool skipLeadingDelim)
         upto_++; // Ready for next time
     }
     return curr_;
+}
+
+/** Return the next token as an integer.
+    Sets 'error' to true if there was a problem.
+    Assumes space delimiters
+*/
+int 
+LimeTok::nextInt(bool& error)
+{
+    char* tok = nextToken (spaceOrTab(), true);
+    if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
+        error = true;
+        return 0;
+    }
+    return atoi (tok);
+}
+
+
+/** Return the next token as an double.
+    Sets 'error' to true if there was a problem.
+    Assumes space delimiters
+*/
+double 
+LimeTok::nextDouble(bool& error)
+{
+    char* tok = nextToken (spaceOrTab(), true);
+    if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
+        error = true;
+        return 0.0;
+    }
+    return atof (tok);
+}
+
+
+/** Return the next token as an boolean.
+    Legal bools are (ignoring case): 0, 1, t, f, true, false
+    Sets 'error' to true if the token was not in this set.
+    Assumes space delimiters
+*/
+bool
+LimeTok::nextBool(bool& error)
+{
+    char* tok = nextToken (spaceOrTab(), true);
+    if (tok != NULL) {
+        if (strcmp (tok, "0") == 0)
+            return false;
+        else if (strcmp (tok, "1") == 0)
+            return true;
+        else if (strcasecmp (tok, "f") == 0)
+            return false;
+        else if (strcasecmp (tok, "t") == 0)
+            return true;
+        else if (strcasecmp (tok, "false") == 0)
+            return false;
+        else if (strcasecmp (tok, "true") == 0)
+            return true;
+    }
+    error = true;
+    return false;
+}
+
+/** Return the next token as a C string.
+    Assumes space delimiters
+*/
+char*
+LimeTok::nextString()
+{
+    return nextToken (spaceOrTab(), true);
+}
+
+/** Return the next token as an std::string.
+    Assumes space delimiters
+*/
+std::string
+LimeTok::nextStdString(bool& error)
+{
+    char* tok = nextToken (spaceOrTab(), true);
+    if (tok == NULL) {
+        error = true;
+        return std::string("");
+    }
+    return std::string(tok);
 }
 
 
