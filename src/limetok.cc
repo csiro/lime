@@ -7,6 +7,7 @@
 #include "lime/limetok.h"
 #include "lime/strutil.h"
 
+using namespace lime;
 
 LimeTok::LimeTok () :
     bufferLen_(0),
