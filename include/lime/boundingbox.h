@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "lime/point.h"
-#include "lime/displayable.h"
+#include "lime/box.h"
 
 namespace lime {
 
@@ -12,14 +12,13 @@ namespace lime {
         locations. Can be modified to enclose a new location, and used to
         test a location for inclusion.
      */
-    class BoundingBox : public Displayable
+    class BoundingBox : public Box
     {
     public:
 
         /** Default contructor. */
         BoundingBox() :
-            ll_(0, 0),
-            ur_(0, 0),
+            Box(),
             isEmpty_(true)
         { }
         
@@ -28,13 +27,18 @@ namespace lime {
             @param ur upper-right corner
          */
         BoundingBox(const lime::Point* ll, const lime::Point* ur)  :
-            ll_(*ll),
-            ur_(*ur),
+            Box (ll, ur),
             isEmpty_(false)
         { }
 
-        /** (Virtual) destructor. */
-        virtual ~BoundingBox() { }
+        /** Constructor. 
+            @param ll(x,y) lower-left corner x and y
+            @param ur(x,y) upper-right corner x and y
+         */
+        BoundingBox(double llx, double lly, double urx, double ury)  :
+            Box (llx, lly, urx, ury),
+            isEmpty_(false)
+        { }
 
         /** Set both corners at the same time. 
             @param ll lower-left corner
@@ -42,8 +46,7 @@ namespace lime {
          */
         void set (const lime::Point* ll, const lime::Point* ur)
         {
-            ll_ = *ll;
-            ur_ = *ur;
+            Box::set (ll, ur);
             isEmpty_ = false;
         }
         
@@ -52,11 +55,17 @@ namespace lime {
             @param loc new Point to add
          */
         void enclose (const lime::Point* loc);
+        void enclose (const lime::Box* box);
 
         /** Check whether a point is enclosed in the bounding box.
             @param loc Point to check
          */
         bool contains(const lime::Point* loc) const;
+
+        /** Expand the box by some proportion.
+            porportion 1.1 is a 10% expansion, 1.0 is the same box
+         */
+        void expand (double proportion);
         
         /** @copydoc Displayable::display(std::ostream&) */
         void display (std::ostream& os = std::cout) const override
@@ -68,13 +77,6 @@ namespace lime {
         }
 
     protected:
-
-        /** Lower-left corner. */
-        Point ll_;
-            
-        /** Upper-right corner. */
-        Point ur_;
-
         /** Have I been initialised? */
         bool isEmpty_;
     };

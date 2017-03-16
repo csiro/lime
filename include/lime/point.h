@@ -34,6 +34,13 @@ namespace lime
             y_ = y;
         }
         
+        /** Traslate by given delta . */
+        void translate (double deltaX, double deltaY)
+        {
+            x_ += deltaX;
+            y_ += deltaY;
+        }
+        
         /** Read x. */
         const double& x() const { return x_; }
         
