@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "lime/scheduler.h"
 #include "lime/displayable.h"
 
 namespace lime {

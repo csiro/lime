@@ -147,6 +147,24 @@ lime::toLower (string str)
     return str;
 }
 
+char*
+lime::toUpper (char* str)
+{
+    for (char* c = str; *c != 0; c++) {
+        *c = toupper (*c);
+    }
+    return str;
+}
+
+char*
+lime::toLower (char* str)
+{
+    for (char* c = str; *c != 0; c++) {
+        *c = tolower (*c);
+    }
+    return str;
+}
+
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after
       the last "/" in filename (if present)

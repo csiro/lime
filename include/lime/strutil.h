@@ -23,6 +23,11 @@ namespace lime {
     std::string toUpper (std::string str);
 /** Converts a string to lower case IN SITU. Returns the str argument */
     std::string toLower (std::string str);
+    
+/** Converts a string to upper case IN SITU. Returns the str argument */
+    char* toUpper (char* str);
+/** Converts a string to lower case IN SITU. Returns the str argument */
+    char* toLower (char* str);
 
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after

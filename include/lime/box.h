@@ -48,6 +48,9 @@ namespace lime {
         Point* ur() {return &ur_;}
         const Point* ur() const {return &ur_;}
 
+        double width() const {return ur_.x() - ll_.x();}
+        double height() const {return ur_.y() - ll_.y();}
+
         /** Set both corners at the same time. 
             @param ll lower-left corner
             @param ur upper-right corner

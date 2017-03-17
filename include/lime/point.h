@@ -85,6 +85,12 @@ namespace lime
          */
         bool  operator<(const Point& point) const;
 
+        const Point& operator=(const Point& other) {
+            x_ = other.x_;
+            y_ = other.y_;
+            return *this;
+        }
+        
         /** Display method.
             @param os the stream onto which this object must be "displayed".
          */
@@ -98,6 +104,7 @@ namespace lime
         /** The y-coordinate. */
         double y_;
     };
-
+    
+    std::ostream& operator<< (std::ostream&, const Point&);
 }
 

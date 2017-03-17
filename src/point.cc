@@ -35,3 +35,10 @@ Point::operator<(const Point& point) const
         return true;
     return false;
 }
+
+std::ostream&
+lime::operator<< (ostream& out, const Point& p)
+{
+    p.display (out);
+    return out;
+}
