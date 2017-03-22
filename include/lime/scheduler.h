@@ -26,7 +26,7 @@ namespace lime {
     {
     public:
         /** Initialise the simulation. Must be called first */
-        static void initialise(int eventQueueSize);
+        static void initialise(int eventQueueSize, std::string logFilename = "");
 
         /** Schedule the object to be run at a particular time */
         static void schedule (int atTime, ActiveObject* obj);
@@ -42,9 +42,12 @@ namespace lime {
         /** Return the current time in the simulation */
         static int currTime() {return currTime_;}
 
+        static size_t numEvents (int time) {return events_[time % size_].size();}
+
         /** This is the main routine that takes over and runs the simulation */
         static void runSimulation(int startTime, int endTime);
 
+        static std::ofstream* logFile() {return logFile_;}
         
         /** Prematurely suspend the simulation */
         static void suspend() {suspend_ = true;}
@@ -76,10 +79,14 @@ namespace lime {
         /** A flag to prematurely suspend the simulation */
         static bool suspend_;
 
+        static std::ofstream* logFile_;
+
     private:
         Scheduler() {}
         virtual ~Scheduler() {}
     };
+
+#define SIMLOG(X) {if (Scheduler::logFile() != NULL) {*Scheduler::logFile() << Scheduler::currTime() << " " << X << std::endl;}}
 
 } // namespace
 
