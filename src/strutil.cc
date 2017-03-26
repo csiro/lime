@@ -245,7 +245,7 @@ lime::fmtDayTime (int secs, char* buffer)
     secs -= hh * (60 * 60);
     int mm = secs / 60;
     secs -= mm * 60;
-    sprintf (buffer, "%d %2.2d:%22.d:%2.2d", days, hh, mm, secs);
+    sprintf (buffer, "%3dd %2.2d:%2.2d:%2.2d", days, hh, mm, secs);
     return buffer;
 }
 
