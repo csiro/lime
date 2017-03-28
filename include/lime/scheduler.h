@@ -26,7 +26,9 @@ namespace lime {
     {
     public:
         /** Initialise the simulation. Must be called first */
-        static void initialise(int eventQueueSize, std::string logFilename = "");
+        static void initialise(
+            int eventQueueSize, std::ofstream* logFile = NULL
+        );
 
         /** Schedule the object to be run at a particular time */
         static void schedule (int atTime, ActiveObject* obj);

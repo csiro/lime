@@ -45,8 +45,12 @@ namespace lime {
         
         Point* ll() {return &ll_;}
         const Point* ll() const {return &ll_;}
+        double llx() {return ll_.x();}
+        double lly() {return ll_.y();}
         Point* ur() {return &ur_;}
         const Point* ur() const {return &ur_;}
+        double urx() {return ur_.x();}
+        double ury() {return ur_.y();}
 
         double width() const {return ur_.x() - ll_.x();}
         double height() const {return ur_.y() - ll_.y();}

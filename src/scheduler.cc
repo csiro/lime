@@ -18,15 +18,13 @@ bool Scheduler::suspend_ = false;
 std::ofstream* Scheduler::logFile_ = NULL;
 
 void
-Scheduler::initialise(int eventQueueSize, std::string logFilename)
+Scheduler::initialise(int eventQueueSize, std::ofstream* logFile)
 {
     size_ = eventQueueSize;
     currTime_ = 0;
     suspend_ = false;
     events_ = new std::list<ActiveObject*>[size_];
-    if (logFilename.size() > 0) {
-        logFile_ = new ofstream (logFilename);
-    }
+    logFile_ = logFile;
 }
 
 void
