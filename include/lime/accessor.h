@@ -6,30 +6,32 @@
  *  Defines a way of accessing values based on an enumuermaion of the fields
  */
 
-namespace lime {
+namespace lime
+{
+  class Accessor
+  {
+  public:
 
-    union ValueType {
-        long longVal;
-        unsigned long ulongVal;
-        double doubleVal;
-        
-        operator long&() {return longVal;}
-        operator unsigned long&() {return ulongVal;}
-        operator double&() {return doubleVal;}
+    union ValueType
+    {
+      long longVal;
+      unsigned long ulongVal;
+      double doubleVal;
+
+      operator long&() {return longVal;}
+      operator unsigned long&() {return ulongVal;}
+      operator double&() {return doubleVal;}
     };
 
     template<typename T>
-    class Accessor
+    T& get(const std::vector<ValueType>::size_type& field)
     {
-    public:
-        template<typename X>
-        X& get(T field) {
-            if (field >= val_.size())
-                val_.resize(field + 1);
-            return (X&) val_[field];
-        }
+      if (field >= val_.size())
+        val_.resize(field + 1);
+      return (T&) val_[field];
+    }
 
-    private:
-        std::vector<ValueType> val_;
-    };
+  private:
+    std::vector<ValueType> val_;
+  };
 }
