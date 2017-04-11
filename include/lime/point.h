@@ -1,5 +1,4 @@
-#ifndef LIME_POINT_H
-#define LIME_POINT_H
+#pragma once
 
 #include <iostream>
 
@@ -23,11 +22,23 @@ namespace lime
          */
         Point (double x, double y) : x_(x), y_(y) { }
         
+        /** Copy constructor.
+            @param other the point to be copied
+         */
+        Point (const Point& other) : x_(other.x_), y_(other.y_) { }
+        
         /** Resets both coordinates at once. */
         void set(double x, double y)
         {
             x_ = x;
             y_ = y;
+        }
+        
+        /** Traslate by given delta . */
+        void translate (double deltaX, double deltaY)
+        {
+            x_ += deltaX;
+            y_ += deltaY;
         }
         
         /** Read x. */
@@ -74,6 +85,12 @@ namespace lime
          */
         bool  operator<(const Point& point) const;
 
+        const Point& operator=(const Point& other) {
+            x_ = other.x_;
+            y_ = other.y_;
+            return *this;
+        }
+        
         /** Display method.
             @param os the stream onto which this object must be "displayed".
          */
@@ -87,7 +104,7 @@ namespace lime
         /** The y-coordinate. */
         double y_;
     };
-
+    
+    std::ostream& operator<< (std::ostream&, const Point&);
 }
 
-#endif

@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <23 Jun 2015 11:33:26>"
-
 /** Write a file to display stuff using the "Dig" program */
 
 #include <iostream>
@@ -21,9 +17,23 @@ Dig::Dig (const char* filename, bool append) :
 {
 }
 
+Dig::Dig (string filename, bool append) :
+    out (filename, ofstream::out | (append ? ofstream::app : ofstream::trunc)),
+    currStyle(0)
+{
+}
+
 Dig::~Dig ()
 {
     out.close();
+}
+
+void
+Dig::title (const char* title)
+{
+    out << "H \"" << title << "\"" << endl;
+    out << "S 1" << endl;
+    currStyle = 1;
 }
 
 void
@@ -35,15 +45,33 @@ Dig::title (string title)
 }
 
 void
+Dig::xLabel (const char* label)
+{
+    out << "X \"" << label << "\"" << endl;
+}
+
+void
 Dig::xLabel (string label)
 {
     out << "X \"" << label << "\"" << endl;
 }
 
 void
+Dig::yLabel (const char* label)
+{
+    out << "Y \"" << label << "\"" << endl;
+}
+
+void
 Dig::yLabel (string label)
 {
     out << "Y \"" << label << "\"" << endl;
+}
+
+void
+Dig::label (const char* label_)
+{
+    out << "L \"" << label_ << "\"" << endl;
 }
 
 void
@@ -90,6 +118,18 @@ void
 Dig::circle (const lime::Point* p, int diam, bool filled)
 {
     circle (p->x(), p->y(), diam, filled);
+}
+
+void
+Dig::scaledCircle (
+    double x, double y, 
+    double val, double minVal, double maxVal,
+    int minSizePixels, int maxSizePixels, bool filled
+)
+{
+    double frac = (val - minVal) / (maxVal - minVal);
+    int diam = (int) (minSizePixels + frac * (maxSizePixels - minSizePixels));
+    circle (x, y, diam , filled);
 }
 
 void
@@ -151,11 +191,25 @@ Dig::colourScaleR (double val, double max)
 }
 
 void
+Dig::labelPoint (double x, double y, const char* label)
+{
+    out << "LP " << x << " " << y <<
+        " \"" << label << "\"" << endl;
+    
+}
+
+void
 Dig::labelPoint (double x, double y, string label)
 {
     out << "LP " << x << " " << y <<
         " \"" << label << "\"" << endl;
     
+}
+
+void
+Dig::labelPoint (const lime::Point* p, const char* label)
+{
+    labelPoint (p->x(), p->y(), label);
 }
 
 void
@@ -165,21 +219,28 @@ Dig::labelPoint (const lime::Point* p, string label)
 }
 
 void
-Dig::showMessage (string message, string message2)
+Dig::showMessage (const char* message, const char* message2)
 {
     out << "T \"" << message;
-    out << message2;
+    if (message2 != NULL)
+        out << " " << message2;
     out << "\"" << endl;
 }
 
 void
-Dig::showMessage (string message, int i)
+Dig::showMessage (string message)
+{
+    out << "T \"" << message << "\"" << endl;
+}
+
+void
+Dig::showMessage (const char* message, int i)
 {
     out << "T \"" << message << i << "\"" << endl;
 }
 
 void
-Dig::showMessage (string message, double d)
+Dig::showMessage (const char* message, double d)
 {
     out << "T \"" << message << d << "\"" << endl;
 }
@@ -242,11 +303,21 @@ Dig::box (double x1, double y1, double x2, double y2, int c)
 }
 
 void
+Dig::xTic (double x, const char* label)
+{
+    out << "XT " << x << " \"" << label << "\"" << endl;
+}
+void
 Dig::xTic (double x, string label)
 {
     out << "XT " << x << " \"" << label << "\"" << endl;
 }
 
+void
+Dig::yTic (double y, const char* label)
+{
+    out << "YT " << y << " \"" << label << "\"" << endl;
+}
 void
 Dig::yTic (double y, string label)
 {

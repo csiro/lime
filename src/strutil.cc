@@ -1,11 +1,12 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <25 May 2015 16:28:55>"
-
 #include <cctype>
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <stdio.h>
 #include <stdio.h>
 
 /** Lime string utilities */
@@ -13,6 +14,7 @@
 #include "lime/strutil.h"
 
 using namespace lime;
+using namespace std;
 
 char*
 lime::strdup (const char* str)
@@ -104,6 +106,64 @@ lime::todayStr (char* buffer, size_t bufferLen)
     return buffer;
 }
 
+/** Return a formated time string */
+std::string
+lime::todayString ()
+{
+    time_t t = time(NULL);
+    struct tm *tim;
+    tim = localtime(&t);
+
+    if (tim == NULL)
+        return string("Error obtaining time");
+
+    std::ostringstream str;
+    str <<
+        setw(2) << setfill('0') << tim->tm_mday << "/" <<
+        setw(2) << setfill('0') << tim->tm_mon << "/" <<
+        setw(2) << setfill('0') << 1900 + tim->tm_year << " " << 
+        setw(2) << setfill('0') << tim->tm_hour << ":" <<
+        setw(2) << setfill('0') << tim->tm_min << ":" <<
+        setw(2) << setfill('0') << tim->tm_sec;
+
+    return str.str();
+}
+
+string
+lime::toUpper (string str)
+{
+    for (char& c : str) {
+        c = toupper (c);
+    }
+    return str;
+}
+
+string
+lime::toLower (string str)
+{
+    for (char& c : str) {
+        c = tolower (c);
+    }
+    return str;
+}
+
+char*
+lime::toUpper (char* str)
+{
+    for (char* c = str; *c != 0; c++) {
+        *c = toupper (*c);
+    }
+    return str;
+}
+
+char*
+lime::toLower (char* str)
+{
+    for (char* c = str; *c != 0; c++) {
+        *c = tolower (*c);
+    }
+    return str;
+}
 
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after
@@ -185,7 +245,7 @@ lime::fmtDayTime (int secs, char* buffer)
     secs -= hh * (60 * 60);
     int mm = secs / 60;
     secs -= mm * 60;
-    sprintf (buffer, "%d %2.2d:%22.d:%2.2d", days, hh, mm, secs);
+    sprintf (buffer, "%3dd %2.2d:%2.2d:%2.2d", days, hh, mm, secs);
     return buffer;
 }
 
@@ -208,4 +268,28 @@ lime::itoa (int val)
     static char buffer[25];
     sprintf (buffer, "%d", val);
     return buffer;
+}
+
+std::string
+lime::itostr (int val)
+{
+    char buffer[100];
+    sprintf (buffer, "%d", val);
+    return std::string(buffer);
+}
+
+std::string
+lime::ltostr (long val)
+{
+    char buffer[100];
+    sprintf (buffer, "%ld", val);
+    return std::string(buffer);
+}
+
+std::string
+lime::dtostr (double val)
+{
+    char buffer[100];
+    sprintf (buffer, "%g", val);
+    return std::string(buffer);
 }

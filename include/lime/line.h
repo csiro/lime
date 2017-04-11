@@ -1,5 +1,4 @@
-#ifndef LIME_LINE_H
-#define LIME_LINE_H
+#pragma once
 
 #include <iostream>
 
@@ -40,4 +39,3 @@ namespace lime {
     };
 }
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef LIME_RAND_H
-#define LIME_RAND_H
+#pragma once
 
 #include <iostream>
 
@@ -20,8 +19,9 @@ namespace lime {
 
         void setSeed (int n);
         int getSeed () const {return seed;}
-        int generateSeed () {return uniform0n_1(8190);}
-        double uniform01 () {return rnd (0);};
+        int generateSeed () {return 1 + uniform0n_1(8189);}
+        bool coinToss () {return rnd (0) < 0.5;}
+        double uniform01 () {return rnd (0);}
         int uniform0n_1 (int n);
         double normal01 ();
         double normal (double mean, double sdev);
@@ -47,4 +47,3 @@ namespace lime {
 
 } //namespace
 
-#endif // RAND_H

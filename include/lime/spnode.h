@@ -1,5 +1,4 @@
-#ifndef LIME_SPNODE_H
-#define LIME_SPNODE_H
+#pragma once
 
 /**
    Abstract class for nodes in a shortest path search
@@ -43,4 +42,3 @@ namespace lime {
     };
 }
 
-#endif

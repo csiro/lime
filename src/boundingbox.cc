@@ -1,7 +1,4 @@
 
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <10 Jun 2015 23:51:47>"
-
 #include "lime/boundingbox.h"
 
 using namespace lime;
@@ -9,23 +6,54 @@ using namespace lime;
 void
 BoundingBox::enclose (const Point* loc)
 {
-    if (loc->x() < ll_.y())
-        ll_.setX(loc->x());
-    if (loc->y() < ll_.y())
-        ll_.setY(loc->y());
-    if (loc->x() > ur_.x())
-        ur_.setX(loc->x());
-    if (loc->y() > ur_.y())
-        ur_.setY(loc->y());
+    if (isEmpty_) {
+        Box::set (loc, loc);
+        isEmpty_ = false;
+    }
+    else {
+        if (loc->x() < ll()->x())
+            ll()->setX(loc->x());
+        if (loc->y() < ll()->y())
+            ll()->setY(loc->y());
+        if (loc->x() > ur()->x())
+            ur()->setX(loc->x());
+        if (loc->y() > ur()->y())
+            ur()->setY(loc->y());
+    }
+}
+
+void
+BoundingBox::enclose (const Box* box)
+{
+    enclose (box->ll());
+    enclose (box->ur());
 }
 
 bool
 BoundingBox::contains(const Point* loc) const
 {
+    if (isEmpty_)
+        return false;
     return
-        (loc->x() >= ll_.x()) &&
-        (loc->y() >= ll_.y()) &&
-        (loc->x() <= ur_.x()) &&
-        (loc->y() <= ur_.y()
+        (loc->x() >= ll()->x()) &&
+        (loc->y() >= ll()->y()) &&
+        (loc->x() <= ur()->x()) &&
+        (loc->y() <= ur()->y()
+    );
+}
+
+void
+BoundingBox::expand (double proportion)
+{
+    double wid = ur()->x() - ll()->x();
+    double len = ur()->y() - ll()->y();
+
+    ll()->set (
+        ll()->x() - proportion / 2 * wid,
+        ll()->y() - proportion / 2 * len
+    );
+    ur()->set (
+        ur()->x() + proportion / 2 * wid,
+        ur()->y() + proportion / 2 * len
     );
 }

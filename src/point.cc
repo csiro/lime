@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <3 Jun 2015 17:49:12>"
-
 #include <cassert>
 #include <cmath>
 
@@ -38,4 +34,11 @@ Point::operator<(const Point& point) const
     if (point.x() == x_ && point.y() < y_)
         return true;
     return false;
+}
+
+std::ostream&
+lime::operator<< (ostream& out, const Point& p)
+{
+    p.display (out);
+    return out;
 }

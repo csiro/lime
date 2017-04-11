@@ -1,5 +1,4 @@
-#ifndef LIME_LOCKFILE_H
-#define LIME_LOCKFILE_H
+#pragma once
 
 #include "lime/displayable.h"
 
@@ -12,7 +11,7 @@ namespace lime {
     class LockFile : public Displayable
     {
     public:
-        LockFile(const char* filename);
+        LockFile(const std::string filename);
         virtual ~LockFile();
         void releaseLock();
 
@@ -20,8 +19,7 @@ namespace lime {
 
     private:
         int fd_;
-        char* lockFilename_;
+        std::string lockFilename_;
     };
 }
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef LIME_STRUTIL_H
-#define LIME_STRUTIL_H
+#pragma once
 
 #include <string.h>
 #include <string>
@@ -18,6 +17,17 @@ namespace lime {
     int strncasecmp (const char* a, const char*b, int n);
 /** Return current time as a formated time string */
     char* todayStr (char* buffer, size_t bufferLen);
+/** Return current time as a formated time string */
+    std::string todayString ();
+/** Converts a string to upper case IN SITU. Returns the str argument */
+    std::string toUpper (std::string str);
+/** Converts a string to lower case IN SITU. Returns the str argument */
+    std::string toLower (std::string str);
+    
+/** Converts a string to upper case IN SITU. Returns the str argument */
+    char* toUpper (char* str);
+/** Converts a string to lower case IN SITU. Returns the str argument */
+    char* toLower (char* str);
 
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after
@@ -65,7 +75,9 @@ namespace lime {
     extern char* fmtDayTime (int secs);
 /** Return integer as char* */
     extern char* itoa (int val);
+    extern std::string itostr (int val);
+    extern std::string ltostr (long val);
+    extern std::string dtostr (double val);
 
 } // namespace
 
-#endif

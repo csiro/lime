@@ -1,5 +1,6 @@
-#ifndef LIME_NUMUTIL_H
-#define LIME_NUMUTIL_H
+#pragma once
+
+#include <vector>
 
 /** Max and min functions - c is all over the place with these */
 int limeMax (int a, int b);
@@ -10,6 +11,10 @@ long limeMax (long a, long b);
 long limeMax (long a, long b, long c);
 long limeMin (long a, long b);
 long limeMin (long a, long b, long c);
+
+template<typename T> T limeMin (std::vector<T> vec);
+template<typename T> T limeMax (std::vector<T> vec);
+
 /** Round a to the nearest r */
 int limeRound (int a, int r);
 /** Round a up to the nearest r */
@@ -22,4 +27,3 @@ bool limeDblEqual (double a, double b);
 /** Are all entries inthe array zero? */
 bool allZero (const long* arr, int n);
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef LIME_DIG_H
-#define LIME_DIG_H
+#pragma once
 
 /**
  *  Defines a dig distance or time that depends on the order of
@@ -24,10 +23,14 @@ namespace lime {
     {
     public:
         Dig(const char* filename, bool append = false);
+        Dig(const std::string filename, bool append = false);
         virtual ~Dig();
 
+        void title (const char* title);
         void title (std::string title);
+        void xLabel (const char* label);
         void xLabel (std::string label);
+        void yLabel (const char* label);
         void yLabel (std::string label);
         void style (int style);
         void style (int colour, int mark);
@@ -37,18 +40,28 @@ namespace lime {
         void colourMark (int c, int m);
         void circle (double x, double y, int diam, bool filled = false);
         void circle (const lime::Point* p, int diam, bool filled = false);
+        void scaledCircle (
+            double x, double y, 
+            double val, double minVal, double maxVal,
+            int minSizePixels, int maxSizePixels,
+            bool filled = false
+        );
         // set colour using red/blue/green - doubles in range 0 - 1
         void rgb (double r, double g, double b);
         // set colour using blue-red scale, 0 to max
         void colourScaleBR (double val, double max);
         // set colour using red-only scale, 0 to max
         void colourScaleR (double val, double max);
+        void label (const char* label_);
         void label (std::string label_);
+        void labelPoint (double x, double y, const char* label);
         void labelPoint (double x, double y, std::string label);
+        void labelPoint (const lime::Point* p, const char* label);
         void labelPoint (const lime::Point* p, std::string label);
-        void showMessage (std::string message, std::string message2 = "");
-        void showMessage (std::string message, int i);
-        void showMessage (std::string message, double d);
+        void showMessage (const char* message, const char* message2 = "");
+        void showMessage (std::string message);
+        void showMessage (const char* message, int i);
+        void showMessage (const char* message, double d);
         void moveTo (double x, double y);
         void moveTo (const lime::Point* p);
         void drawTo (double x, double y);
@@ -58,7 +71,9 @@ namespace lime {
         void drawDistinctTo (const lime::Point* point);
         void draw (double x1, double y1, double x2, double y2);
         void box (double x1, double y1, double x2, double y2, int c);
+        void xTic (double x, const char* label);
         void xTic (double x, std::string label);
+        void yTic (double y, const char* label);
         void yTic (double y, std::string label);
         void wait ();
         void wipe ();
@@ -74,7 +89,7 @@ namespace lime {
     };
 
     typedef std::shared_ptr<Dig> DigPtr;
+    typedef Dig* DigRPtr;
 
 } //namespace
 
-#endif

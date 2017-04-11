@@ -1,5 +1,4 @@
-#ifndef LIME_TOK_H
-#define LIME_TOK_H
+#pragma once
 
 /**
  * Tokenize a string safely - without the sttic storage used by strtok
@@ -39,6 +38,31 @@ public:
     /** Return the token from the previous call to nextToken */
     char* currToken() {return curr_;};
 
+    /** Return the next token as an integer.
+        Sets 'error' to true if there was a problem.
+        Assumes space delimiters
+    */
+    int nextInt(bool& error);
+    /** Return the next token as an double.
+        Sets 'error' to true if there was a problem.
+        Assumes space delimiters
+    */
+    double nextDouble(bool& error);
+    /** Return the next token as an boolean.
+        Legal bools are (ignoring case): 0, 1, t, f, true, false
+        Sets 'error' to true if the token was not in this set.
+        Assumes space delimiters
+    */
+    bool nextBool(bool& error);
+    /** Return the next token as a C string.
+        Assumes space delimiters
+    */
+    char* nextString();
+    /** Return the next token as an std::string.
+        Assumes space delimiters
+    */
+    std::string nextStdString(bool& error);
+
     /** Returns a space or tab - for use as a delimiter string */
     const char* spaceOrTab() const {return " 	";}
 
@@ -55,4 +79,3 @@ protected:
 };
 
 
-#endif

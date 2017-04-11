@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <7 Jun 2013 09:42:46>"
-
 /** Utility functions defined in error.h */
 
 #include <iostream>

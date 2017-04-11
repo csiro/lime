@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <1 Apr 2014 11:08:40>"
-
 #include <cassert>
 #include <stdlib.h>
 
@@ -95,7 +91,7 @@ Reader::getLine()
 bool
 Reader::matches (const char* a, const char* b) const
 {
-    return strcmp (a, b) == 0;
+    return a != NULL && b != NULL && strcmp (a, b) == 0;
 }
 
 double

@@ -1,7 +1,3 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <23 Jun 2015 16:14:12>"
-
 #include <cmath>
 
 #include "lime/numutil.h"
@@ -77,6 +73,19 @@ limeMin (long a, long b, long c)
         return b;
     return c;
 }
+
+template<typename T>
+T limeMin (std::vector<T> vec)
+{
+    if (vec.size() == 0)
+        return 0;
+    T theMin = vec[0];
+    for (auto i : vec)
+        if (i < theMin)
+            theMin = i;
+    return theMin;
+}
+
 
 /** Round a to the nearest r */
 int

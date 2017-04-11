@@ -1,5 +1,4 @@
-#ifndef LIME_TIMEKEEPER_H
-#define LIME_TIMEKEEPER_H
+#pragma once
 
 /**
  *  Keeps track of time. Can be used as a count-down timer with a
@@ -53,4 +52,3 @@ namespace lime {
 
 } //namespace
 
-#endif

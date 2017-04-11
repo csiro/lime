@@ -1,5 +1,4 @@
-#ifndef LIME_READER_H
-#define LIME_READER_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -84,4 +83,3 @@ namespace lime {
 
 } //namespace
 
-#endif

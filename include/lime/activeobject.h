@@ -1,8 +1,8 @@
-#ifndef LIME_ACTIVEOBJECT_H
-#define LIME_ACTIVEOBJECT_H
+#pragma once
 
 #include <iostream>
 
+#include "lime/scheduler.h"
 #include "lime/displayable.h"
 
 namespace lime {
@@ -100,4 +100,3 @@ namespace lime {
 
 }
 
-#endif

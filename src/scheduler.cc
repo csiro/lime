@@ -1,8 +1,5 @@
-
-// Auto-updated timestamp
-#define TIMESTAMP "Time-stamp: <21 May 2013 11:08:17>"
-
 #include <cassert>
+#include <fstream>
 
 #include "lime/error.h"
 #include "lime/scheduler.h"
@@ -18,14 +15,16 @@ ActiveObjectList* Scheduler::events_ = 0;
 ActiveObjectList Scheduler::activeList_;
 int Scheduler::currTime_ = 0;
 bool Scheduler::suspend_ = false;
+std::ofstream* Scheduler::logFile_ = NULL;
 
 void
-Scheduler::initialise(int eventQueueSize)
+Scheduler::initialise(int eventQueueSize, std::ofstream* logFile)
 {
     size_ = eventQueueSize;
     currTime_ = 0;
     suspend_ = false;
     events_ = new std::list<ActiveObject*>[size_];
+    logFile_ = logFile;
 }
 
 void
@@ -39,6 +38,10 @@ Scheduler::terminate()
         size_ = 0;
     }
     activeList_.clear();
+    if (logFile_ != NULL) {
+        logFile_->close();
+        delete logFile_;
+    }
 }
 
 /** Wake an object at the given time. If the object is already in-queue,
@@ -99,7 +102,7 @@ Scheduler::runSimulation(int startTime, int endTime)
     
     while (currTime_ <= endTime && !suspend_) {
         DEBUG (
-            's', fmtTime(currTime_) <<
+            's', currTime_ <<
             " Active list has " << activeList_.size() << " elts"
         );
         // Run active list
@@ -109,13 +112,13 @@ Scheduler::runSimulation(int startTime, int endTime)
         // Repeat in case some events have been 
         // added while we've been running
         DEBUG (
-            's', fmtTime(currTime_) <<
+            's', currTime_ <<
             " Event list has " << events_[currTime_ % size_].size() << " elts"
         );
         int numRun = runList (events_[currTime_ % size_], true, false);
         while (numRun != 0) {
             DEBUG (
-                's', fmtTime(currTime_) <<
+                's', currTime_ <<
                 " Event list rerun has " <<
                 events_[currTime_ % size_].size() << " elts"
             );
@@ -134,6 +137,9 @@ Scheduler::runSimulation(int startTime, int endTime)
 int
 Scheduler::runList (ActiveObjectList& origList, bool isTimed, bool preserve)
 {
+    if (origList.size() == 0) // Nothing to run
+        return 0;
+    
     int numRun = 0;
 
     // Copy the list, to avoid invalidating iterators with insertions/deletions

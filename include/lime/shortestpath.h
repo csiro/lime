@@ -1,5 +1,4 @@
-#ifndef LIME_SHORTESTPATH_H
-#define LIME_SHORTESTPATH_H
+#pragma once
 
 #include <set>
 #include <list>
@@ -29,5 +28,4 @@ namespace lime {
     };
 }
     
-#endif
     
