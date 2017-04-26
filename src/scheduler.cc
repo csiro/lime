@@ -51,6 +51,9 @@ Scheduler::terminate()
 void
 Scheduler::schedule (int atTime, ActiveObject* obj)
 {
+    DEBUGT (
+        's', "Schedule " << *obj << " at time " << atTime
+    );
     if (atTime < currTime_) 
         limeCrash (
             "ActiveObject " << *obj << " scheduled in past: " << atTime <<
@@ -101,9 +104,8 @@ Scheduler::runSimulation(int startTime, int endTime)
     currTime_ = startTime;
     
     while (currTime_ <= endTime && !suspend_) {
-        DEBUG (
-            's', currTime_ <<
-            " Active list has " << activeList_.size() << " elts"
+        DEBUGT (
+            's', "Active list has " << activeList_.size() << " elts"
         );
         // Run active list
         runList (activeList_, false, true);
@@ -111,15 +113,13 @@ Scheduler::runSimulation(int startTime, int endTime)
         // Execute the list of scheduled jobs
         // Repeat in case some events have been 
         // added while we've been running
-        DEBUG (
-            's', currTime_ <<
-            " Event list has " << events_[currTime_ % size_].size() << " elts"
+        DEBUGT (
+            's', "Event list has " << events_[currTime_ % size_].size() << " elts"
         );
         int numRun = runList (events_[currTime_ % size_], true, false);
         while (numRun != 0) {
-            DEBUG (
-                's', currTime_ <<
-                " Event list rerun has " <<
+            DEBUGT (
+                's', "Event list rerun has " <<
                 events_[currTime_ % size_].size() << " elts"
             );
             numRun = runList (events_[currTime_ % size_], true, false);

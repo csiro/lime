@@ -7,5 +7,5 @@ using namespace lime;
 void
 Resource::notifyIdle()
 {
-    handler_->notifyIdle ();
+    handler_->notifyIdle (this);
 }
