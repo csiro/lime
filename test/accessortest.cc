@@ -10,7 +10,7 @@ using namespace lime;
 
 enum ValType {ONE, TWO, THREE};
 
-class Test : public Accessor<ValType>
+class Test : public Accessor
 {
 public:
 

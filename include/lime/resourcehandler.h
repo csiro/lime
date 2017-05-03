@@ -11,6 +11,7 @@ namespace lime {
     */
 
     class ActiveObject;
+    class Resource;
 
     class ResourceHandler 
     {
@@ -19,7 +20,7 @@ namespace lime {
         /** Constructor. */
         ResourceHandler () : queue_() {}
 
-        void notifyIdle();
+        void notifyIdle(Resource* resource);
         size_t numInQueue() const {return queue_.size();}
         void addToQueue (ActiveObject* object) {queue_.push_back (object);}
         

@@ -246,6 +246,17 @@ Rand::normal (double mean, double sdev)
 }
 
 double
+Rand::truncNormal (double mean, double sdev, double lb, double ub)
+{
+    double val = normal (mean, sdev);
+    if (val < lb)
+        val = lb;
+    if (val > ub)
+        val = ub;
+    return val;
+}
+
+double
 Rand::standardExponential ()
 {
     // Copied from STATLIB.

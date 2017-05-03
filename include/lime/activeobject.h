@@ -6,6 +6,8 @@
 #include "lime/displayable.h"
 
 namespace lime {
+    
+    class Resource;
 
     /** A class representing active objects in a simulation. Active objects can
         by in state ACTIVE, in which case they wake every time unit. Otherwise
@@ -18,7 +20,7 @@ namespace lime {
     public:
 
         /** An enum defining the possible states of an active object. */
-        enum State {
+        enum AOState {
             IDLE,
             IN_QUEUE,
             ACTIVE
@@ -45,7 +47,7 @@ namespace lime {
         int wakeTime() const { return wakeTime_; }
 
         /** Returns activation state. */
-        const State& activeObjectState() const { return state_; }
+        const AOState& activeObjectState() const { return state_; }
 
         /** Set object to wake now. */
         void wake () { wakeAfter (0); }
@@ -71,7 +73,7 @@ namespace lime {
         }
 
         /** Set state and wake time ** only Scheduler may call this ** */
-        void updateActiveObj (State state, int wakeTime = -1)
+        void updateActiveObj (AOState state, int wakeTime = -1)
         {
             state_ = state;
             wakeTime_ = wakeTime;
@@ -79,12 +81,17 @@ namespace lime {
         /** Set state (used by Scheduler).
             @param state new state of the object.
          */
-        void setActiveObjState (State state) { state_ = state; }
+        void setActiveObjState (AOState state) { state_ = state; }
 
         /** Virtual procedure run when the object is woken.
             @param currTime the current time step.
          */
         virtual void run (int currTime) = 0;
+
+        /** For use with Resources. Override if some ActiveObjects are not
+            compatible with some Resources
+        */
+        virtual bool isCompatible (Resource* resource) {return true;}
         
         /** @copydoc Displayable::display(std::ostream&) */
         virtual void display (std::ostream& os = std::cout) const = 0;
@@ -92,7 +99,7 @@ namespace lime {
     protected:
 
         /** Activation state. */
-        State state_;
+        AOState state_;
 
         /** When will I wake again (-1 if not set). */
         int wakeTime_;

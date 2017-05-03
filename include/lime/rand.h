@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cfloat>
 
 #include "lime/displayable.h"
 
@@ -25,6 +26,7 @@ namespace lime {
         int uniform0n_1 (int n);
         double normal01 ();
         double normal (double mean, double sdev);
+        double truncNormal (double mean, double sdev, double lb, double ub = DBL_MAX);
         double standardExponential ();
         double exponential (double mean);
 

@@ -5,11 +5,14 @@
 using namespace lime;
 
 void
-ResourceHandler::notifyIdle()
+ResourceHandler::notifyIdle(Resource* resource)
 {
-    if (queue_.size() > 0) {
-        auto object = queue_.front();
-        queue_.pop_front();
-        object->wake();
+    for (auto iter = queue_.begin(); iter != queue_.end(); ++iter) {
+        auto object = *iter;
+        if (object->isCompatible (resource)) {
+            queue_.erase (iter);
+            object->wake();
+            break;
+        }
     }
 }
