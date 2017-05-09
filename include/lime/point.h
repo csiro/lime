@@ -34,6 +34,13 @@ namespace lime
             y_ = y;
         }
         
+        /** Resets both coordinates at once. */
+        void set(const Point* other)
+        {
+            x_ = other->x_;
+            y_ = other->y_;
+        }
+        
         /** Traslate by given delta . */
         void translate (double deltaX, double deltaY)
         {
