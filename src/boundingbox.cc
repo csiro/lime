@@ -4,22 +4,29 @@
 using namespace lime;
 
 void
-BoundingBox::enclose (const Point* loc)
+BoundingBox::enclose (double x, double y)
 {
     if (isEmpty_) {
-        Box::set (loc, loc);
+        Point ll (x, y);
+         Box::set (&ll, &ll);
         isEmpty_ = false;
     }
     else {
-        if (loc->x() < ll()->x())
-            ll()->setX(loc->x());
-        if (loc->y() < ll()->y())
-            ll()->setY(loc->y());
-        if (loc->x() > ur()->x())
-            ur()->setX(loc->x());
-        if (loc->y() > ur()->y())
-            ur()->setY(loc->y());
+        if (x < ll()->x())
+            ll()->setX(x);
+        if (y < ll()->y())
+            ll()->setY(y);
+        if (x > ur()->x())
+            ur()->setX(x);
+        if (y > ur()->y())
+            ur()->setY(y);
     }
+}
+
+void
+BoundingBox::enclose (const Point* loc)
+{
+    enclose (loc->x(), loc->y());
 }
 
 void
