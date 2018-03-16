@@ -1,6 +1,7 @@
 /** Implement the "location" methods */
 
 #include <unistd.h>
+#include <math.h>
 
 #include "lime/timekeeper.h"
 #include "lime/debug.h"
@@ -43,7 +44,7 @@ TimeKeeper::elapsedTimeSecs() const
     struct tms curr;
     times(&curr);
 
-    return (double)(curr.tms_utime - start_.tms_utime) / ticksPerSec_;
+    return round ((double)(curr.tms_utime - start_.tms_utime) / ticksPerSec_);
 }
 
 double
