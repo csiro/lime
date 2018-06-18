@@ -19,8 +19,9 @@ namespace lime {
         virtual ~Rand ();
 
         void setSeed (int n);
+        static int maxSeed() {return 8190;}
         int getSeed () const {return seed;}
-        int generateSeed () {return 1 + uniform0n_1(8189);}
+        int generateSeed () {return 1 + uniform0n_1(maxSeed()-1);}
         bool coinToss () {return rnd (0) < 0.5;}
         double uniform01 () {return rnd (0);}
         int uniform0n_1 (int n);
