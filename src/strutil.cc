@@ -293,3 +293,11 @@ lime::dtostr (double val)
     sprintf (buffer, "%g", val);
     return std::string(buffer);
 }
+
+const char
+lime::whirlygig (int k)
+{
+    //static const char* shape = "-/|\\";
+    static const char* shape = "pbdq";
+    return shape[k % 4];
+}
