@@ -252,20 +252,20 @@ lime::fmtDayTime (int secs, char* buffer)
 char*
 lime::fmtTime (int secs)
 {
-    static char buffer[20];
+    static char buffer[100];
     return lime::fmtTime (secs, buffer);
 }
 char*
 lime::fmtDayTime (int secs)
 {
-    static char buffer[20];
+    static char buffer[100];
     return lime::fmtDayTime (secs, buffer);
 }
 
 char*
 lime::itoa (int val)
 {
-    static char buffer[25];
+    static char buffer[100];
     sprintf (buffer, "%d", val);
     return buffer;
 }

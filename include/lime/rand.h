@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cfloat>
+#include <math.h>
 
 #include "lime/displayable.h"
 
@@ -27,6 +28,9 @@ namespace lime {
         int uniform0n_1 (int n);
         double normal01 ();
         double normal (double mean, double sdev);
+        double logNormal (double mean, double sdev) {
+            return exp (normal (mean, sdev));
+        }
         double truncNormal (double mean, double sdev, double lb, double ub = DBL_MAX);
         double standardExponential ();
         double exponential (double mean);
