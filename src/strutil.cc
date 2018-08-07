@@ -265,7 +265,7 @@ lime::fmtDayTime (int secs)
 char*
 lime::itoa (int val)
 {
-    static char buffer[25];
+    static char buffer[100];
     sprintf (buffer, "%d", val);
     return buffer;
 }
@@ -292,4 +292,12 @@ lime::dtostr (double val)
     char buffer[100];
     sprintf (buffer, "%g", val);
     return std::string(buffer);
+}
+
+const char
+lime::whirlygig (int k)
+{
+    //static const char* shape = "-/|\\";
+    static const char* shape = "pbdq";
+    return shape[k % 4];
 }

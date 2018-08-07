@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cfloat>
+#include <math.h>
 
 #include "lime/displayable.h"
 
@@ -19,13 +20,17 @@ namespace lime {
         virtual ~Rand ();
 
         void setSeed (int n);
+        static int maxSeed() {return 8190;}
         int getSeed () const {return seed;}
-        int generateSeed () {return 1 + uniform0n_1(8189);}
+        int generateSeed () {return 1 + uniform0n_1(maxSeed()-1);}
         bool coinToss () {return rnd (0) < 0.5;}
         double uniform01 () {return rnd (0);}
         int uniform0n_1 (int n);
         double normal01 ();
         double normal (double mean, double sdev);
+        double logNormal (double mean, double sdev) {
+            return exp (normal (mean, sdev));
+        }
         double truncNormal (double mean, double sdev, double lb, double ub = DBL_MAX);
         double standardExponential ();
         double exponential (double mean);
