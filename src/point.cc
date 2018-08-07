@@ -7,31 +7,37 @@ using namespace std;
 using namespace lime;
 
 double
-Point::distTo (double x, double y) const
+Point::distTo (double x, double y, double z) const
 {
     double dX = this->x() - x;
     double dY = this->y() - y;
-    return sqrt (dX * dX + dY * dY);
+    double dZ = this->z() - z;
+    return sqrt (dX * dX + dY * dY + dZ * dZ);
 }
 
 double
 Point::distTo (const Point* other) const
 {
-    return distTo (other->x(), other->y());
+    return distTo (other->x(), other->y(), other->z());
 }
 
 void
 Point::display (std::ostream& os) const
 {
-    os << "(" << x_ << "," << y_ << ")";
+    os << "(" << x_ << "," << y_;
+    if (z_ != 0.0)
+        os << "," << z_;
+    os << ")";
 }
 
 bool 
-Point::operator<(const Point& point) const
+Point::operator<(const Point& other) const
 {
-    if (point.x() < x_)
+    if (other.x() < x_)
         return true;
-    if (point.x() == x_ && point.y() < y_)
+    if (other.x() == x_ && other.y() < y_)
+        return true;
+    if (other.x() == x_ && other.y() == y_ && other.z() < z_)
         return true;
     return false;
 }

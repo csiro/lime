@@ -18,6 +18,7 @@
 namespace lime {
 
     class Point;
+    class Box;
 
     class Dig : public Displayable
     {
@@ -71,6 +72,8 @@ namespace lime {
         void drawDistinctTo (const lime::Point* point);
         void draw (double x1, double y1, double x2, double y2);
         void box (double x1, double y1, double x2, double y2, int c);
+        void box (const lime::Box* box, int c);
+        void boxOutline (const lime::Box* box);
         void xTic (double x, const char* label);
         void xTic (double x, std::string label);
         void yTic (double y, const char* label);
@@ -80,6 +83,11 @@ namespace lime {
         void waitAndWipe ();
         void close ();
         std::ostream& outFile() {return out;}
+
+        // Constants from the Dig program
+        int numStdColours() const {return 11;}
+        int numStdMarks() const {return 10;}
+        int numStdStrokes() const {return 3;}
 
         void display (std::ostream&) const override;
 

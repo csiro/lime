@@ -36,19 +36,6 @@ BoundingBox::enclose (const Box* box)
     enclose (box->ur());
 }
 
-bool
-BoundingBox::contains(const Point* loc) const
-{
-    if (isEmpty_)
-        return false;
-    return
-        (loc->x() >= ll()->x()) &&
-        (loc->y() >= ll()->y()) &&
-        (loc->x() <= ur()->x()) &&
-        (loc->y() <= ur()->y()
-    );
-}
-
 void
 BoundingBox::expand (double proportion)
 {
@@ -64,3 +51,17 @@ BoundingBox::expand (double proportion)
         ur()->y() + proportion / 2 * len
     );
 }
+
+bool
+BoundingBox::contains(const Point* loc) const
+{
+    if (isEmpty_)
+        return false;
+    return
+        (loc->x() >= ll()->x()) &&
+        (loc->y() >= ll()->y()) &&
+        (loc->x() <= ur()->x()) &&
+        (loc->y() <= ur()->y()
+    );
+}
+

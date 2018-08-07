@@ -43,17 +43,30 @@ namespace lime {
             ur_(urx, ury)
         { }
         
+        Box(const Box& other)  :
+            ll_(*other.ll()),
+            ur_(*other.ur())
+        { }
+
+        Box& operator=(const Box& other) {
+            ll_ = other.ll_;
+            ur_ = other.ur_;
+            return *this;
+        }
+        
         Point* ll() {return &ll_;}
         const Point* ll() const {return &ll_;}
-        double llx() {return ll_.x();}
-        double lly() {return ll_.y();}
+        double llx() const {return ll_.x();}
+        double lly() const {return ll_.y();}
         Point* ur() {return &ur_;}
         const Point* ur() const {return &ur_;}
-        double urx() {return ur_.x();}
-        double ury() {return ur_.y();}
+        double urx() const {return ur_.x();}
+        double ury() const {return ur_.y();}
 
         double width() const {return ur_.x() - ll_.x();}
         double height() const {return ur_.y() - ll_.y();}
+
+        bool overlaps (const Box* other) const;
 
         /** Set both corners at the same time. 
             @param ll lower-left corner
@@ -63,6 +76,11 @@ namespace lime {
         {
             ll_ = *ll;
             ur_ = *ur;
+        }
+        void set (double llx, double lly, double urx, double ury)
+        {
+            ll_.set (llx, lly);
+            ur_.set (urx, ury);
         }
         
         void centre (Point& pt)

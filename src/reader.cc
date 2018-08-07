@@ -118,7 +118,11 @@ Reader::nextBool (LimeTok& ltok) const
     char* str = nextStr(ltok);
     if (str == NULL)
         return false;
-    if ((lime::strcasecmp (str, "true") == 0) || matches (str, "1"))
+    if (
+        (lime::strcasecmp (str, "t") == 0) ||
+        (lime::strcasecmp (str, "true") == 0) ||
+        matches (str, "1")
+    )
         return true;
     return false;
 }

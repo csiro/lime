@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 #include <cctype>
 
 #include <lime/config.h>
@@ -112,14 +113,14 @@ Config::read (string filename)
                 "Bad format in config file at line " << lineNum <<
                 " of " << filename
             );
-        map_[toUpper(key)] = val;
+        map_[toLower(key)] = val;
     }
 }
 
 void
 Config::addItem (string key, string val)
 {
-    map_[toUpper (key)] = val;
+    map_[toLower (key)] = val;
 }
 
 void
@@ -131,19 +132,19 @@ Config::addItem (const char* key, const char* val)
 void
 Config::addItem (string key, int val)
 {
-    map_[toUpper (key)] = itostr(val);
+    map_[toLower (key)] = itostr(val);
 }
 
 void
 Config::addItem (string key, long val)
 {
-    map_[toUpper (key)] = ltostr(val);
+    map_[toLower (key)] = ltostr(val);
 }
 
 void
 Config::addItem (string key, double val)
 {
-    map_[toUpper (key)] = dtostr(val);
+    map_[toLower (key)] = dtostr(val);
 }
 
 void
@@ -162,56 +163,65 @@ Config::addItem (string keyVal)
 
 
 int
-Config::getInt (string key, int defaultVal) const
+Config::getInt (string key, int defaultVal) 
 {
     string strVal = valFor (key);
-    if (strVal.length() == 0) // Not there
+    if (strVal.length() == 0) { // Not there
+        // Remember default
+        addItem (key, defaultVal);
         return defaultVal;
+    }
 
     return stoi (strVal);
 }
 int
-Config::getInt (const char* key, int defaultVal) const
+Config::getInt (const char* key, int defaultVal) 
 {
     return getInt (string(key), defaultVal);
 }
 
 long
-Config::getLong (string key, long defaultVal) const
+Config::getLong (string key, long defaultVal)
 {
     string strVal = valFor (key);
-    if (strVal.length() == 0) // Not there
+    if (strVal.length() == 0) { // Not there
+        addItem (key, defaultVal);
         return defaultVal;
+    }
 
     return stol (strVal);
 }
 long
-Config::getLong (const char* key, long defaultVal) const
+Config::getLong (const char* key, long defaultVal)
 {
     return getLong (string(key), defaultVal);
 }
 
 double
-Config::getDouble (string key, double defaultVal) const
+Config::getDouble (string key, double defaultVal)
 {
     string strVal = valFor (key);
-    if (strVal.length() == 0) // Not there
+    if (strVal.length() == 0) { // Not there
+        addItem (key, defaultVal);
         return defaultVal;
+    }
 
     return stod (strVal);
 }
 double
-Config::getDouble (const char* key, double defaultVal) const
+Config::getDouble (const char* key, double defaultVal)
 {
     return getDouble (string(key), defaultVal);
 }
 
 bool
-Config::getBool (string key, bool defaultVal) const
+Config::getBool (string key, bool defaultVal)
 {
-    string strVal = toUpper (valFor (key));
-    if (strVal.length() == 0) // Not there
+    string strVal = toLower (valFor (key));
+    if (strVal.length() == 0) { // Not there
+        addItem (key, defaultVal);
         return defaultVal;
+    }
 
     if (
         strVal.compare ("TRUE") == 0 ||
@@ -223,32 +233,36 @@ Config::getBool (string key, bool defaultVal) const
     return false;
 }
 bool
-Config::getBool (const char* key, bool defaultVal) const
+Config::getBool (const char* key, bool defaultVal)
 {
     return getBool (string(key), defaultVal);
 }
 
 string
-Config::getString (string key, string defaultVal) const
+Config::getString (string key, string defaultVal)
 {
     string strVal = valFor (key);
-    if (strVal.length() == 0) // Not there
+    if (strVal.length() == 0) { // Not there
+        addItem (key, defaultVal);
         return defaultVal;
+    }
     
     return strVal;
 }
 string
-Config::getString (const char* key, string defaultVal) const
+Config::getString (const char* key, string defaultVal)
 {
     return getString (string(key), defaultVal);
 }
 
 int
-Config::getTime (string key, int defaultVal) const
+Config::getTime (string key, int defaultVal)
 {
     string strVal = valFor (key);
-    if (strVal.length() == 0) // Not there
+    if (strVal.length() == 0) { // Not there
+        addItem (key, defaultVal);
         return defaultVal;
+    }
     
     LimeTok ltok (strVal.c_str());
     const char* hhStr = ltok.nextToken (":");
@@ -268,8 +282,9 @@ Config::getTime (string key, int defaultVal) const
     
     return atol (hhStr) * 3600 + atol (mmStr) * 60 + atol (ssStr);
 }
+
 int
-Config::getTime (const char* key, int defaultVal) const
+Config::getTime (const char* key, int defaultVal)
 {
     return getTime (string(key), defaultVal);
 }
@@ -277,9 +292,19 @@ Config::getTime (const char* key, int defaultVal) const
 string
 Config::valFor(string key) const
 {
-    string uKey = toUpper (key);
+    string uKey = toLower (key);
     auto iter = map_.find (uKey);
     if (iter == map_.end())
         return string("");
     return iter->second;
+}
+
+string
+Config::show () const
+{
+    stringstream str;
+    for (auto iter = map_.begin(); iter != map_.end(); ++iter) {
+        str << " " << iter->first << " " << iter->second;
+    }
+    return str.str();
 }

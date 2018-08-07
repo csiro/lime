@@ -7,6 +7,7 @@
 
 #include "lime/dig.h"
 #include "lime/point.h"
+#include "lime/box.h"
 
 using namespace std;
 using namespace lime;
@@ -300,6 +301,24 @@ Dig::box (double x1, double y1, double x2, double y2, int c)
     out << "B " << min(x1, x2) << " " << min (y1, y2) << " " << 
         fabs (x1 - x2) << " " << fabs (y2 - y1) << " " <<
         c << endl;
+}
+
+void
+Dig::box (const Box* box, int c)
+{
+    out << "B " << box->llx() << " " << box->lly() << " " << 
+        box->width() << " " << box->height() << " " <<
+        c << endl;
+}
+
+void
+Dig::boxOutline (const Box* box)
+{
+    out << "M " << box->llx() << " " << box->lly() << endl;
+    out << "D " << box->urx() << " " << box->lly() << endl;
+    out << "D " << box->urx() << " " << box->ury() << endl;
+    out << "D " << box->llx() << " " << box->ury() << endl;
+    out << "D " << box->llx() << " " << box->lly() << endl;
 }
 
 void

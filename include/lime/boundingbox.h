@@ -63,16 +63,16 @@ namespace lime {
         void enclose (const lime::Point* loc);
         void enclose (const lime::Box* box);
 
-        /** Check whether a point is enclosed in the bounding box.
-            @param loc Point to check
-         */
-        bool contains(const lime::Point* loc) const;
-
         /** Expand the box by some proportion.
             porportion 1.1 is a 10% expansion, 1.0 is the same box
          */
         void expand (double proportion);
         
+        /** Check whether a point is enclosed in the box.
+            @param loc Point to check
+         */
+        bool contains(const lime::Point* loc) const;
+
         /** @copydoc Displayable::display(std::ostream&) */
         void display (std::ostream& os = std::cout) const override
         {

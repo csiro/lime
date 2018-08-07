@@ -6,7 +6,7 @@
 
 namespace lime
 {
-    /** A class representing a 2-dimensional point. */
+    /** A class representing a 2 or 3-dimensional point. */
     class Point : public Displayable
     {
     public:
@@ -14,24 +14,26 @@ namespace lime
         /** Default constructor.
             @remarks initialises the point at the origin (0,0).
          */
-        Point() : x_(0), y_(0) { }
+        Point() : x_(0), y_(0), z_(0) { }
         
         /** Constructor.
             @param x the x-coordinate
             @param y the y-coordinate
+            @param z the z-coordinate
          */
-        Point (double x, double y) : x_(x), y_(y) { }
+        Point (double x, double y, double z = 0.0) : x_(x), y_(y), z_(z) {}
         
         /** Copy constructor.
             @param other the point to be copied
          */
-        Point (const Point& other) : x_(other.x_), y_(other.y_) { }
+        Point (const Point& other) : x_(other.x_), y_(other.y_), z_(other.z_) {}
         
         /** Resets both coordinates at once. */
-        void set(double x, double y)
+        void set(double x, double y, double z = 0.0)
         {
             x_ = x;
             y_ = y;
+            z_ = z;
         }
         
         /** Resets both coordinates at once. */
@@ -39,37 +41,47 @@ namespace lime
         {
             x_ = other->x_;
             y_ = other->y_;
+            z_ = other->z_;
         }
         
         /** Traslate by given delta . */
-        void translate (double deltaX, double deltaY)
+        void translate (double deltaX, double deltaY, double deltaZ = 0.0)
         {
             x_ += deltaX;
             y_ += deltaY;
+            z_ += deltaZ;
         }
         
         /** Read x. */
-        const double& x() const { return x_; }
+        const double x() const { return x_; }
         
         /** Read y. */
-        const double& y() const { return y_; }
+        const double y() const { return y_; }
+        
+        /** Read z. */
+        const double z() const { return z_; }
         
         /** Update x.
             @param x new value of x
          */
-        void setX(const double& x) { x_ = x; }
+        void setX(const double x) { x_ = x; }
         
         /** Update y.
             @param y new value of y
          */
-        void setY(const double& y) { y_ = y; }
+        void setY(const double y) { y_ = y; }
+        
+        /** Update z.
+            @param z new value of z
+         */
+        void setZ(const double z) { z_ = z; }
         
         /** Computes the distance from a set of coordinates.
             @param x the x-coordinate
             @param y the y-coordinate
             @return the distance from the given set of coordinates
          */
-        double distTo (double x, double y) const;
+        double distTo (double x, double y, double z = 0.0) const;
         
         /** Computes the distance from a Point.
             @param point the Point to compute the distance from
@@ -95,6 +107,7 @@ namespace lime
         const Point& operator=(const Point& other) {
             x_ = other.x_;
             y_ = other.y_;
+            z_ = other.z_;
             return *this;
         }
         
@@ -110,6 +123,9 @@ namespace lime
         
         /** The y-coordinate. */
         double y_;
+        
+        /** The z-coordinate. */
+        double z_;
     };
     
     std::ostream& operator<< (std::ostream&, const Point&);

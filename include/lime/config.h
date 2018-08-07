@@ -41,29 +41,29 @@ namespace lime
             @param key key of the configuration to retrieve
             @param val reference to the location where the value must be read
          */
-        int getInt (std::string key, int defaultVal = 0) const;
-        int getInt (const char* key, int defaultVal = 0) const;
+        int getInt (std::string key, int defaultVal = 0);
+        int getInt (const char* key, int defaultVal = 0);
         
         /** Get the value of a long, and store it in the passed reference.
             @param key key of the configuration to retrieve
             @param val reference to the location where the value must be read
          */
-        long getLong (std::string key, long defaultVal = 0) const;
-        long getLong (const char* key, long defaultVal = 0) const;
+        long getLong (std::string key, long defaultVal = 0);
+        long getLong (const char* key, long defaultVal = 0);
         
         /** Get the value of a double, and store it in the passed reference.
             @param key key of the configuration to retrieve
             @param val reference to the location where the value must be read
          */
-        double getDouble (std::string key, double defaultVal = 0.0) const;
-        double getDouble (const char* key, double defaultVal = 0.0) const;
+        double getDouble (std::string key, double defaultVal = 0.0);
+        double getDouble (const char* key, double defaultVal = 0.0);
         
         /** Get the value of a bool, and store it in the passed reference.
             @param key key of the configuration to retrieve
             @param val reference to the location where the value must be read
          */
-        bool getBool (std::string key, bool defaultVal = false) const;
-        bool getBool (const char* key, bool defaultVal = false) const;
+        bool getBool (std::string key, bool defaultVal = false);
+        bool getBool (const char* key, bool defaultVal = false);
         
         /** Get the value of a string, and store it in the passed reference.
             @param key key of the configuration to retrieve
@@ -73,17 +73,19 @@ namespace lime
          */
         std::string getString (
             std::string key, std::string defaultVal = std::string("")
-        ) const;
+        );
         std::string getString (
             const char* key, std::string defaultVal = std::string("")
-        ) const;
+        );
         /** Get the value of a time expressed as hh:mm[:ss] or as sss, and store
             in the passed reference.
             @param key key of the configuration to retrieve
             @param val reference to the location where the value must be read
          */
-        int getTime (std::string key, int defaultVal = 0) const;
-        int getTime (const char* key, int defaultVal = 0) const;
+        int getTime (std::string key, int defaultVal = 0);
+        int getTime (const char* key, int defaultVal = 0);
+
+        std::string show () const;
         
     protected:
         std::string valFor(std::string key) const;
