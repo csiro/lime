@@ -22,6 +22,8 @@ namespace lime
             entries_()
         {}
 
+        size_t numEntries() const {return entries_.size();}
+        
         void add (double x, double y) {entries_.push_back (Entry(x, y));}
 
         double valueAt (double x) const;
