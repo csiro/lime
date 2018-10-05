@@ -11,7 +11,7 @@
 #include <cmath>
 #include <time.h>
 
-#include "lime/rand.h"
+#include "lime/rand-old.h"
 
 /*	Portable uniform random number generator.
  *	A portable, good and moderately fast random number generator
