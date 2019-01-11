@@ -224,8 +224,8 @@ Config::getBool (string key, bool defaultVal)
     }
 
     if (
-        strVal.compare ("TRUE") == 0 ||
-        strVal.compare ("T") == 0 ||
+        strVal.compare ("true") == 0 ||
+        strVal.compare ("t") == 0 ||
         strVal.compare ("1") == 0
     )
         return true;
