@@ -44,8 +44,19 @@ TimeKeeper::elapsedTimeSecs() const
     struct tms curr;
     times(&curr);
 
-    return round ((double)(curr.tms_utime - start_.tms_utime) / ticksPerSec_);
+    return (double)(curr.tms_utime - start_.tms_utime) / ticksPerSec_;
 }
+
+long
+TimeKeeper::elapsedTimeTics() const
+{
+    struct tms curr;
+    times(&curr);
+
+    return (long) (curr.tms_utime - start_.tms_utime);
+}
+
+
 
 double
 TimeKeeper::timeLeftSecs() const

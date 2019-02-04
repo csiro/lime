@@ -28,6 +28,9 @@ namespace lime {
         void reset(int newLimit = 0);
         /** Return the elapsed cpu time in seconds */
         double elapsedTimeSecs() const;
+        long elapsedTimeTics() const;
+        long ticksPerSec() const {return ticksPerSec_;}
+
         /** If a time limit was set at creation, returns the number of seconds
             left on the clock
         */
