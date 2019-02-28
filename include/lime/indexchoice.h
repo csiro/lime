@@ -22,9 +22,9 @@ namespace lime {
         IndexChoice(int seed, int size, double initialWeight = (double)0.0);
 
         void setSize(int size, double initialWeight = (double)0.0);
-        double weight (int index) const {return weight_[index];}
         void setWeight (int val, double weight);
         void removeChoice (int val);
+        double weight (int index) const {return weight_[index];}
         double sumWeights() const {return sumWeights_;}
         int numChoices() const {return size_;}
         bool empty() const {return sumWeights_ < 1e-3;}
