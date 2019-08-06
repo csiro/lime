@@ -10,11 +10,18 @@ namespace lime {
     class Displayable
     {
     public:
+
+        /** Override one of the two following methods */
+        virtual std::string name() const {return std::string("");}
         
         /** Prints object on an output stream.
+            Can be overridden to print more detail.
             @param os output stream to print to
          */
-        virtual void display(std::ostream& os = std::cout) const = 0;
+        virtual void display(std::ostream& os = std::cout) const
+        {
+            os << name();
+        }
         
     };
     

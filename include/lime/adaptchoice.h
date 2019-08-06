@@ -46,7 +46,7 @@ namespace lime {
 
         void updateWeights();
 
-        void display (std::ostream& out) const;
+        void display (std::ostream& out) const override;
     
     protected:
         /** The number of choices */

@@ -94,7 +94,7 @@ namespace lime {
         virtual bool isCompatible (Resource* resource) {return true;}
         
         /** @copydoc Displayable::display(std::ostream&) */
-        virtual void display (std::ostream& os = std::cout) const = 0;
+        void display (std::ostream& os = std::cout) const override = 0;
 
     protected:
 

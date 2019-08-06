@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <cassert>
+#include <cctype>
 
 #include "lime/limetok.h"
 #include "lime/strutil.h"
@@ -11,7 +12,7 @@ LimeTok::LimeTok () :
     bufferLen_(0),
     buffer_(0),
     upto_(0),
-    curr_(NULL)
+    curr_()
 {
 }
 
@@ -19,7 +20,7 @@ LimeTok::LimeTok (const char* str) :
     bufferLen_(0),
     buffer_(0),
     upto_(0),
-    curr_(NULL)
+    curr_()
 {
     tokenise (str);
 }
@@ -34,9 +35,10 @@ void
 LimeTok::tokenise (const char* str)
 {
     if (str == NULL) {
-        strcpy (buffer_, "");
+        if (buffer_ != NULL) 
+            strcpy (buffer_, "");
         upto_ = buffer_;
-        curr_ = NULL;
+        curr_ = std::string("");
         return;
     }
     size_t len = strlen (str) + 1;
@@ -50,7 +52,7 @@ LimeTok::tokenise (const char* str)
     }
     strcpy (buffer_, str);
     upto_ = buffer_;
-    curr_ = NULL;
+    curr_ = std::string("");
 }
 
 char*
@@ -93,35 +95,42 @@ LimeTok::handleQuote (char* start)
     return next;
 }
 
-char*
-LimeTok::nextToken(const char* delim, bool skipLeadingDelim)
+const char*
+LimeTok::nextToken(
+    const char* delim, bool skipLeadingDelim, const char* fromSet
+)
 {
-    if (strchr (delim, ' ') != 0)
-        skipLeadingDelim = true;
-    
-    curr_ = NULL;
+    curr_ = std::string("");
     if (upto_ == 0)
         return NULL;
     
-    // Skip leading delimiters, if space is the delim
     if (skipLeadingDelim) {
         while (*upto_ != 0 && strchr (delim, *upto_) != NULL)
             upto_++;
     }
     if (*upto_ == 0)
         return NULL; // All done
-    curr_ = upto_;
-    while (*upto_ != 0 && strchr (delim, *upto_) == NULL) {
+    // Initialise curr_
+    const char* start = upto_;
+    // Advance until we see a delim, and while we ae seeing
+    // the right chars
+    while (
+        *upto_ != 0 &&
+        strchr (delim, *upto_) == NULL &&
+        (fromSet == NULL || strchr (fromSet, *upto_) > 0)
+    ) {
         if (*upto_ == '"') 
             upto_ = handleQuote (upto_);
-        else
+        else 
             upto_ = nextChar (upto_);
     }
-    if (*upto_ != 0) {
-        *upto_ = 0;
-        upto_++; // Ready for next time
-    }
-    return curr_;
+    // Temporarily 0-terminate so we can grab string
+    char tmp = *upto_;
+    *upto_ = 0;
+    curr_.assign (start);
+    *upto_ = tmp;
+
+    return curr_.c_str();
 }
 
 /** Return the next token as an integer.
@@ -131,14 +140,13 @@ LimeTok::nextToken(const char* delim, bool skipLeadingDelim)
 int 
 LimeTok::nextInt(bool& error)
 {
-    char* tok = nextToken (spaceOrTab(), true);
+    const char* tok = nextToken (spaceOrTab(), true, "0123456789+-");
     if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
         error = true;
         return 0;
     }
     return atoi (tok);
 }
-
 
 /** Return the next token as an double.
     Sets 'error' to true if there was a problem.
@@ -147,7 +155,7 @@ LimeTok::nextInt(bool& error)
 double 
 LimeTok::nextDouble(bool& error)
 {
-    char* tok = nextToken (spaceOrTab(), true);
+    const char* tok = nextToken (spaceOrTab(), true, "0123456789+-e.");
     if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
         error = true;
         return 0.0;
@@ -164,7 +172,7 @@ LimeTok::nextDouble(bool& error)
 bool
 LimeTok::nextBool(bool& error)
 {
-    char* tok = nextToken (spaceOrTab(), true);
+    const char* tok = nextToken (spaceOrTab(), true, "01truefalsTRUEFALS");
     if (tok != NULL) {
         if (strcmp (tok, "0") == 0)
             return false;
@@ -183,10 +191,38 @@ LimeTok::nextBool(bool& error)
     return false;
 }
 
+long
+LimeTok::nextTime () 
+{
+    const char* tok = nextToken (spaceOrTab(), true, "0123456789:.");
+    if (tok == NULL)
+        return 0;
+    LimeTok ltok2 (tok);
+
+    const char* hhStr = ltok2.nextToken (":");
+    const char* mmStr = ltok2.nextToken (":");
+    const char* ssStr = ltok2.nextToken (":");
+    int hh = 0;
+    int mm = 0;
+    int ss = 0;
+    if (hhStr == NULL)
+        return 0;
+    if (ssStr == NULL || mmStr == NULL) {
+        // It is a seconds-only time
+        ss = atoi (hhStr);
+    }
+    else {
+        hh = atoi (hhStr);
+        mm = atoi (mmStr);
+        ss = atoi (ssStr);
+    }
+    return hh * 3600 + mm * 60 + ss;
+}
+
 /** Return the next token as a C string.
     Assumes space delimiters
 */
-char*
+const char*
 LimeTok::nextString()
 {
     return nextToken (spaceOrTab(), true);
@@ -198,12 +234,29 @@ LimeTok::nextString()
 std::string
 LimeTok::nextStdString(bool& error)
 {
-    char* tok = nextToken (spaceOrTab(), true);
+    const char* tok = nextToken (spaceOrTab(), true);
     if (tok == NULL) {
         error = true;
         return std::string("");
     }
     return std::string(tok);
+}
+
+char
+LimeTok::nextChar()
+{
+    if (upto_ == 0)
+        return 0;
+    
+    // Skip leading spaces
+    while (*upto_ != 0 && isspace (*upto_))
+        upto_++;
+    
+    if (*upto_ == 0)
+        return 0; // All done
+    // Step upto ready for next call
+    curr_ = upto_;
+    return *upto_++;
 }
 
 

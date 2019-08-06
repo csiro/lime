@@ -51,6 +51,10 @@ private:
 // Keep the compiler happy about unused vars
 #define USE(X) {(void)X;}
 
+namespace lime {
+    unsigned long buildId (std::string dateStr, std::string timeStr);
+}
+
 #ifdef NDEBUG
 
 #define DEBUG(X,Y) {}

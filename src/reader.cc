@@ -6,7 +6,7 @@
 #include "lime/strutil.h"
 #include "lime/reader.h"
 
-#define BUFFER_LEN 10000
+#define BUFFER_LEN 100000
 #define DELIM " 	"
 
 using namespace std;
@@ -66,7 +66,7 @@ Reader::getLine()
         }
         DEBUG ('D', currFrame_->lineNum_ << " >" << buffer_);
         LimeTok ltok (buffer_);
-        char* nextTok = nextStr(ltok);
+        const char* nextTok = ltok.nextString();
 
         if (nextTok != NULL && *nextTok == '@') {
             // File redirection. Open a new file frame
@@ -94,71 +94,16 @@ Reader::matches (const char* a, const char* b) const
     return a != NULL && b != NULL && strcmp (a, b) == 0;
 }
 
-double
-Reader::nextDouble (LimeTok& ltok) const
+void
+Reader::rewind()
 {
-    char* str = nextStr(ltok);
-    if (str == NULL)
-        return (double)0;
-    return atof (str);
-}
-
-long
-Reader::nextInt (LimeTok& ltok) const
-{
-    char* str = nextStr(ltok);
-    if (str == NULL)
-        return 0;
-    return atoi (str);
-}
-
-bool
-Reader::nextBool (LimeTok& ltok) const
-{
-    char* str = nextStr(ltok);
-    if (str == NULL)
-        return false;
-    if (
-        (lime::strcasecmp (str, "t") == 0) ||
-        (lime::strcasecmp (str, "true") == 0) ||
-        matches (str, "1")
-    )
-        return true;
-    return false;
-}
-
-char*
-Reader::nextStr (LimeTok& ltok) const
-{
-    return ltok.nextToken (DELIM);
-}
-
-long
-Reader::nextTime (LimeTok& ltok) const
-{
-    char* tok = nextStr(ltok);
-    if (tok == NULL)
-        return 0;
-    LimeTok ltok2 (tok);
-
-    char* hhStr = ltok2.nextToken (":");
-    char* mmStr = ltok2.nextToken (":");
-    char* ssStr = ltok2.nextToken (":");
-    int hh = 0;
-    int mm = 0;
-    int ss = 0;
-    if (hhStr == NULL)
-        return 0;
-    if (ssStr == NULL || mmStr == NULL) {
-        // It is a seconds-only time
-        ss = atoi (hhStr);
+    while (fileStack_.size() > 1) {
+        delete currFrame_;
+        currFrame_ = fileStack_.front();
+        fileStack_.pop_front();
     }
-    else {
-        hh = atoi (hhStr);
-        mm = atoi (mmStr);
-        ss = atoi (ssStr);
-    }
-    return hh * 3600 + mm * 60 + ss;
+    // Now back in original frame
+    currFrame_->rewind();
 }
 
 void
@@ -194,5 +139,19 @@ bool
 Reader::FileFrame::ok ()
 {
     return in_ != 0 && in_->good();
+}
+
+void
+Reader::FileFrame::rewind ()
+{
+    if (in_ != 0) {
+        if (!in_->good()) {
+            open (filename_);
+        }
+        else {
+            in_->seekg (0, in_->beg);
+            lineNum_ = 0;
+        }
+    }
 }
 

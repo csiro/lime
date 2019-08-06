@@ -24,13 +24,8 @@ namespace lime {
         bool matches (const char* a, const char* b) const;
         bool isListEnd (const char* str) const {return matches (str, "*END*");}
 
-        // The following assume the line returned by getLine()
-        // has been processed using LimeTok ltok (line);
-        double nextDouble (LimeTok& ltok) const;
-        long nextInt (LimeTok& ltok) const;
-        bool nextBool (LimeTok& ltok) const;
-        char* nextStr (LimeTok& ltok) const;
-        long nextTime (LimeTok& ltok) const;
+        // Rewind to start of file
+        void rewind();
 
         // Called by readerError()
         void readerError_ ();
@@ -67,6 +62,7 @@ namespace lime {
             virtual ~FileFrame();
             bool open (const char* filename);
             bool ok ();
+            void rewind ();
         };
 
         typedef std::list<FileFrame*> FileStack;

@@ -10,6 +10,7 @@ using namespace lime;
 #define MIN_FEAT_WEIGHT 0.1
 
 AdaptChoice::AdaptChoice (int numChoice, const AdaptCfg& cfg, int seed) :
+    Displayable(),
     numChoice_(numChoice),
     callCount_(0),
     score_(numChoice, 0.0),

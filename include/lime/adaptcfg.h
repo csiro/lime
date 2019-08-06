@@ -62,7 +62,7 @@ namespace lime {
             segmentLen_ = segmentLen;
         }
         
-        void display (std::ostream& out) const
+        void display (std::ostream& out) const override
         {
             out << "sigma1 " << sigma1_ <<
                 "sigma2 " << sigma2_ << 

@@ -26,8 +26,8 @@ ConfigReader::ConfigReader (const char* filename) :
         lineNum++;
         ltok.tokenise (line);
 
-        char* key = reader.nextStr(ltok);
-        char* val = reader.nextStr(ltok);
+        const char* key = ltok.nextString();
+        const char* val = ltok.nextString();
 
         if (key == NULL)
             continue;
@@ -57,7 +57,7 @@ ConfigReader::ConfigReader (std::vector<const char*>& configs) :
     for (size_t i = 0; i < configs.size(); i++) {
         lineNum++;
         ltok.tokenise (configs[i]);
-        char* key = ltok.nextToken ("=:");
+        const char* key = ltok.nextToken ("=:");
         if (key == NULL)
             continue;
         if (*key == '#') // Comment
@@ -70,7 +70,7 @@ ConfigReader::ConfigReader (std::vector<const char*>& configs) :
             // Value is on the next line
             ltok.tokenise (configs[++i]);
         }
-        char* val = ltok.nextToken (ltok.spaceOrTab());
+        const char* val = ltok.nextToken (ltok.spaceOrTab());
 
         if (val == NULL)
             limeCrash (

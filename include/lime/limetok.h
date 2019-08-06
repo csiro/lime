@@ -27,16 +27,22 @@ public:
     
     /** Return the next token
         Returns a pointer to the next token, or NULL if no more tokens
-        Each call moves to the next token. 
-        If space is a valid separator, skips leading spaces.
+        Each call moves to the next token.
+        If fromSet is non-null, then only advances with chars are in the set.
         The returned string can be modified without affecting the original
         string, or the results of the next call to nextToken
         If double-quote is seen, all delimiters are ignored until the
         closing double-quote is found
     */
-    char* nextToken(const char* delim, bool skipLeadingDelim = false);
+    const char* nextToken(
+        const char* delim, bool skipLeadingDelim = true,
+        const char* fromSet = NULL
+    );
+    
     /** Return the token from the previous call to nextToken */
-    char* currToken() {return curr_;};
+    const char* currToken() {
+        return (curr_.length() == 0) ? NULL : curr_.c_str();
+    }
 
     /** Return the next token as an integer.
         Sets 'error' to true if there was a problem.
@@ -54,15 +60,25 @@ public:
         Assumes space delimiters
     */
     bool nextBool(bool& error);
+    /** Return the next token as a time
+        Assumes space delimiters.
+        Assumes format is hh:mm:ss, or mm:ss, or sss
+    */
+    long nextTime ();
+        
     /** Return the next token as a C string.
         Assumes space delimiters
     */
-    char* nextString();
+    const char* nextString();
     /** Return the next token as an std::string.
         Assumes space delimiters
     */
     std::string nextStdString(bool& error);
 
+    /** Return the next non-space char
+    */
+    char nextChar();
+    
     /** Returns a space or tab - for use as a delimiter string */
     const char* spaceOrTab() const {return " 	";}
 
@@ -75,7 +91,7 @@ protected:
     size_t bufferLen_;
     char* buffer_;
     char* upto_;
-    char* curr_;
+    std::string curr_;
 };
 
 
