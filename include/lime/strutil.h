@@ -79,6 +79,7 @@ namespace lime {
     extern std::string ltostr (long val);
     extern std::string dtostr (double val);
 
+    extern const char otherwhirlygig (int k);
     extern const char whirlygig (int k);
 
 } // namespace

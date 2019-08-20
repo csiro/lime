@@ -29,7 +29,9 @@ bool limeDblEqual (double a, double b);
 /** Are all entries inthe array zero? */
 bool allZero (const long* arr, int n);
 
-/** Return the vector of indexes that sort the given vector input */
+/** Return the vector of indexes that sort the given vector input
+    Vector requires a natural ordering (i.e. operator<)
+ */
 template <typename T>
 std::vector<size_t> sort_indices (const std::vector<T> &v)
 {

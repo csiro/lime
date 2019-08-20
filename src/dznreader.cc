@@ -71,6 +71,7 @@ DznReader::read (
     const char* fldName, std::vector<std::set<int>>& arrayOfSetOfInt
 )
 {
+    DEBUG ('D', "Read array of set of int " << fldName);
     find (fldName);
     expect ('[');
     while (true) {
@@ -81,13 +82,16 @@ DznReader::read (
         }
         bool error = false;
         int val = ltok_.nextInt(error);
+        DEBUG ('D', "    First int " << val << " error " << error);
         if (!error) // error -> empty set - that's OK
             theSet.insert (val);
         while (expect (',', '}') == 1 && !error) { // While seeing commas
             val = ltok_.nextInt(error);
+            DEBUG ('D', "    Next int " << val << " error " << error);
             theSet.insert (val);
         }
         arrayOfSetOfInt.push_back(theSet);
+        DEBUG ('D', "  Finished set of size " << theSet.size());
         if (expect (',', ']') == 2) {
             // We've got the ']' - so we've finished the vector
             break;
@@ -162,10 +166,14 @@ int
 DznReader::expect (const char chr, const char chr2)
 {
     char tok = ltok_.nextChar ();
-    if (tok == chr)
+    if (tok == chr) {
+        DEBUG ('D', "      expect found " << chr);
         return 1;
-    if (chr2 != NO_CHAR && tok == chr2)
+    }
+    if (chr2 != NO_CHAR && tok == chr2) {
+        DEBUG ('D', "      expect found " << chr2);
         return 2;
+    }
     stringstream errStr;
     errStr << "Expected " << chr;
     if (chr2 != 0)

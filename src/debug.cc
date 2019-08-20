@@ -16,17 +16,11 @@ Debug::Debug(const std::string& filename) {Debug::filename_ = filename;}
 void Debug::setKey (const char * key)
 {
     strcpy (Debug::key_, key);
-#ifndef NDEBUG
-    debugFile() << "Debugging: Key " << Debug::key_ << endl;
-#endif
 }
 
 void Debug::setStartTime (int startTime)
 {
     Debug::startTime_ = startTime;
-#ifndef NDEBUG
-    debugFile() << "Debugging: Start Time " << Debug::startTime_ << endl;
-#endif
 }
 
 bool Debug::doDebug (char c)
