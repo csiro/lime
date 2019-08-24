@@ -13,9 +13,9 @@ ProgressBar::progress (int iter, std::string message, bool newBest)
 {
     DEBUG ('a', "Progress: " << iter << " " << message);
     if (iter > 0) 
-        cerr << "\r " << setw(10) << iter;
+        cerr << "\r " << "\e[5C" << setw(5) << iter;
     else {
-        cerr << "\r " << setw(10) << "";
+        cerr << "\r " << "\e[5C" << setw(5) << "";
         iter = lastIter_;
     }
 

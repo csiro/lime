@@ -297,7 +297,7 @@ lime::dtostr (double val)
 const char
 lime::whirlygig (int k)
 {
-    static const char* shape = "-/|\\";
+    static const char* shape = "\\|/-";
     return shape[k % 4];
 }
 const char
