@@ -25,7 +25,7 @@ namespace lime {
     public:
         enum {
             NO_MARK=0, CIRCLE, STAR, SQUARE, CROSS, DOWN_TRIANGLE, 
-            UP_TRIANGLE, FILLED_SQUARE, FILLED_CIRCLE, PLUS
+            UP_TRIANGLE, FILLED_SQUARE, FILLED_CIRCLE, PLUS, BAR
         } Markers;
         enum {
             BLACK =0, BLUE, RED, DARK_GREEN, CYAN, SIENNA, MAGENTA,
