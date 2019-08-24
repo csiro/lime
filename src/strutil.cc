@@ -301,8 +301,30 @@ lime::whirlygig (int k)
     return shape[k % 4];
 }
 const char
-lime::otherwhirlygig (int k)
+lime::pbdqWhirlygig (int k)
 {
     static const char* shape = "pbdq";
     return shape[k % 4];
+}
+
+/** Test if keyboard has been hit */
+#include <sys/select.h>
+int
+lime::kbhit(void)
+{
+    struct timeval tv;
+    fd_set read_fd = {}; // Avoid scan-build false positive report for FD_SET
+    
+    tv.tv_sec=0;
+    tv.tv_usec=0;
+    FD_ZERO(&read_fd);
+    FD_SET(0,&read_fd);
+    
+    if(select(1, &read_fd, NULL, NULL, &tv) == -1)
+        return 0;
+    
+    if(FD_ISSET(0,&read_fd))
+        return 1;
+    
+    return 0;
 }

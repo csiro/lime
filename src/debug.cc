@@ -50,7 +50,7 @@ lime::buildId (string dateStr, string timeStr)
 {
     string mStr = dateStr.substr(0, 3);
     string dStr = dateStr.substr(4, 2);
-    string yStr = dateStr.substr(8, 2);
+    string yStr = dateStr.substr(9, 2);
         
     unsigned long mo = 0;
     if (mStr.compare("Jan") == 0)
