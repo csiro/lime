@@ -7,20 +7,13 @@ namespace lime {
     class ProgressListener 
     {
     public:
-        ProgressListener(int reportIters = 1, int maxIters = 0) :
-            reportIters_(reportIters > 0 ? reportIters : 1),
+        ProgressListener(int maxIters = 0) :
             maxIters_(maxIters)
         {
         }
 
-        int reportIters() const {return reportIters_;}
         int maxIters() const {return maxIters_;}
-    
-        void setIters (int reportIters, int maxIters)
-        {
-            reportIters_ = reportIters > 0 ? reportIters : 1;
-            maxIters_ = maxIters;
-        }
+        void setMaxIters (int maxIters) {maxIters_ = maxIters;}
     
         /** Callback for notifying progress.
             Will print before usual iters if newBest is set.
@@ -32,7 +25,6 @@ namespace lime {
         ) = 0;
     
     protected:
-        int reportIters_;
         int maxIters_;
     };
 

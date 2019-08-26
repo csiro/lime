@@ -13,7 +13,7 @@ namespace lime
         SortPair() : valKey_(), sorted_(false) {}
         
         void add (int val, double key) {
-            assert(!sorted);
+            assert(!sorted_);
             valKey_.push_back (ValKey (val, key));
         }
         
