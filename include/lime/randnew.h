@@ -10,14 +10,14 @@
 namespace lime {
 
     /** Class for generating pseudo-random numbers in various distributions. */
-    class Rand : public Displayable
+    class LimeRand : public Displayable
     {
     public:
 
         /** Constructor.
             @param seed seed for the pseud-random number generator.
          */
-        Rand (int seed = 0);
+        LimeRand (int seed = 0);
 
         void setSeed (int n);
         static int maxSeed() {return INT_MAX;}
@@ -37,7 +37,7 @@ namespace lime {
 
         void display (std::ostream& os = std::cout) const override
         {
-            os << "Rand(" << seed_ <<")";
+            os << "LimeRand(" << seed_ <<")";
         }
 
     private:

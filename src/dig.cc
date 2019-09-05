@@ -8,6 +8,7 @@
 #include "lime/dig.h"
 #include "lime/point.h"
 #include "lime/box.h"
+#include "lime/numutil.h"
 
 using namespace std;
 using namespace lime;
@@ -298,7 +299,7 @@ Dig::draw (double x1, double y1, double x2, double y2)
 void
 Dig::box (double x1, double y1, double x2, double y2, int c)
 {
-    out << "B " << min(x1, x2) << " " << min (y1, y2) << " " << 
+    out << "B " << limeMin(x1, x2) << " " << limeMin (y1, y2) << " " << 
         fabs (x1 - x2) << " " << fabs (y2 - y1) << " " <<
         c << endl;
 }

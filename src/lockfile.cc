@@ -4,7 +4,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string.h>
+
+#ifdef _MSC_VER
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
+
 
 #include <lime/lockfile.h>
 #include <lime/error.h>
@@ -23,7 +29,11 @@ LockFile::LockFile (std::string filename) :
         // the file already exist; another process is 
         // holding the lock
         limeProgress ("Waiting for lock on file " << filename);
-        sleep (1);
+#ifdef _MSC_VER
+        _sleep (1);
+#else
+		sleep(1);
+#endif
         fd_ = open (lockFilename_.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
     }
     if (fd_ < 0) {

@@ -6,7 +6,7 @@
  */
 
 #include <iostream>
-#include <sys/times.h>
+#include <time.h>
 
 #include "lime/displayable.h"
 
@@ -28,8 +28,8 @@ namespace lime {
         void reset(int newLimit = 0);
         /** Return the elapsed cpu time in seconds */
         double elapsedTimeSecs() const;
-        long elapsedTimeTics() const;
-        long ticksPerSec() const {return ticksPerSec_;}
+        clock_t elapsedTimeTics() const;
+        long ticksPerSec() const {return CLOCKS_PER_SEC;}
 
         /** If a time limit was set at creation, returns the number of seconds
             left on the clock
@@ -48,8 +48,7 @@ namespace lime {
         void display (std::ostream& os = std::cout) const override;
     
     protected:
-        struct tms start_;
-        long ticksPerSec_;
+        clock_t start_;
         int timeLimitS_;
     };
 

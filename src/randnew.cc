@@ -22,7 +22,7 @@ using namespace std;
 
 using namespace lime;
 
-Rand::Rand (int seed) :
+LimeRand::LimeRand (int seed) :
     gen_(seed),
     u01_(0.0, 1.0),
     n01_(0.0, 1.0),
@@ -34,32 +34,32 @@ Rand::Rand (int seed) :
 }
 
 
-void Rand::setSeed (int seed)
+void LimeRand::setSeed (int seed)
 {
     seed_ = seed == 0 ? (int) time (0) : seed;
     gen_.seed(seed);
 }
 
 double
-Rand::normal01 () 
+LimeRand::normal01 () 
 {
     return n01_(gen_);
 }
 
 int
-Rand::uniform0n_1 (int n)
+LimeRand::uniform0n_1 (int n)
 {
     return (int) (n * uniform01());
 }
 
 double
-Rand::normal (double mean, double sdev)
+LimeRand::normal (double mean, double sdev)
 {
     return normal01() * sdev + mean;
 }
 
 double
-Rand::truncNormal (double mean, double sdev, double lb, double ub)
+LimeRand::truncNormal (double mean, double sdev, double lb, double ub)
 {
     double val = normal (mean, sdev);
     if (val < lb)
@@ -70,13 +70,13 @@ Rand::truncNormal (double mean, double sdev, double lb, double ub)
 }
 
 double
-Rand::standardExponential ()
+LimeRand::standardExponential ()
 {
     return exp1_(gen_);
 }
 
 double
-Rand::exponential (double mean)
+LimeRand::exponential (double mean)
 {
     return standardExponential() * mean;
 }

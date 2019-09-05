@@ -1,6 +1,9 @@
 /** Implement the "location" methods */
 
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
+
 #include <math.h>
 
 #include "lime/timekeeper.h"
@@ -10,19 +13,15 @@ using namespace std;
 using namespace lime;
 
 TimeKeeper::TimeKeeper () :
-    start_(),
-    ticksPerSec_(sysconf(_SC_CLK_TCK)),
+    start_(clock()),
     timeLimitS_(0)
 {
-    reset();
 }
 
 TimeKeeper::TimeKeeper (int timeLimit) :
-    start_(),
-    ticksPerSec_(sysconf(_SC_CLK_TCK)),
+    start_(clock()),
     timeLimitS_(timeLimit)
 {
-    reset();
 }
 
 TimeKeeper::~TimeKeeper ()
@@ -32,7 +31,7 @@ TimeKeeper::~TimeKeeper ()
 void
 TimeKeeper::reset(int newLimit) 
 {
-    times(&start_);
+    start_ = clock();
     if (newLimit > 0)
         timeLimitS_ = newLimit;
 }
@@ -41,19 +40,13 @@ TimeKeeper::reset(int newLimit)
 double
 TimeKeeper::elapsedTimeSecs() const
 {
-    struct tms curr;
-    times(&curr);
-
-    return (double)(curr.tms_utime - start_.tms_utime) / ticksPerSec_;
+    return (double)(clock() - start_) / CLOCKS_PER_SEC;
 }
 
-long
+clock_t
 TimeKeeper::elapsedTimeTics() const
 {
-    struct tms curr;
-    times(&curr);
-
-    return (long) (curr.tms_utime - start_.tms_utime);
+    return clock() - start_;
 }
 
 

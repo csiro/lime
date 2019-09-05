@@ -308,6 +308,17 @@ lime::pbdqWhirlygig (int k)
 }
 
 /** Test if keyboard has been hit */
+
+#ifdef _MSC_VER
+// This doesn't work on visual c++
+int
+lime::kbhit(void)
+{
+    return 0;
+}
+
+#else
+
 #include <sys/select.h>
 int
 lime::kbhit(void)
@@ -328,3 +339,4 @@ lime::kbhit(void)
     
     return 0;
 }
+#endif

@@ -4,3 +4,4 @@ build
 lib
 *.o
 .fsync
+.vs
