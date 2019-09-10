@@ -25,6 +25,8 @@ int limeRoundUp (int a, int r);
 int limeRoundDown (int a, int r);
 /** Is a within epsilon (= 1e-6) of b? */
 bool limeDblEqual (double a, double b);
+/** Is a within epsilon (= 1e-6) of 0? */
+bool limeIsZero (double a);
 
 /** Are all entries inthe array zero? */
 bool allZero (const long* arr, int n);

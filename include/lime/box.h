@@ -67,6 +67,11 @@ namespace lime {
         double height() const {return ur_.y() - ll_.y();}
 
         bool overlaps (const Box* other) const;
+        bool contains (const Point* point) const {
+            return
+                llx() <= point->x() && point->x() <= urx() &&
+                lly() <= point->y() && point->y() <= ury();
+        }
 
         /** Set both corners at the same time. 
             @param ll lower-left corner

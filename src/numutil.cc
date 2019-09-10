@@ -137,6 +137,12 @@ limeDblEqual (double a, double b)
     return (fabs (a - b) < LIME_EPSILON);
 }
 
+bool limeIsZero (double a)
+{
+    return (fabs (a) < LIME_EPSILON);
+}
+
+
 bool
 allZero (const long* arr, int n)
 {
