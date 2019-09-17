@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 
 /**
  *  Defines a way of accessing values based on field names, or

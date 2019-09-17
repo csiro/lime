@@ -117,7 +117,7 @@ LimeTok::nextToken(
     while (
         *upto_ != 0 &&
         strchr (delim, *upto_) == NULL &&
-        (fromSet == NULL || strchr (fromSet, *upto_) > 0)
+        (fromSet == NULL || (strchr (fromSet, *upto_) != 0))
     ) {
         if (*upto_ == '"') 
             upto_ = handleQuote (upto_);
