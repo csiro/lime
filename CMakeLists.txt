@@ -192,9 +192,21 @@ add_dependencies(tests
 #------------------------------------------------------------------------------#
 # Install
 
-install(TARGETS lime LIBRARY DESTINATION lib)
-install(DIRECTORY ${PROJECT_INCLUDE_DIR}/lime DESTINATION include MESSAGE_NEVER)
-install(TARGETS limetest accessortest boxtest pwltest RUNTIME DESTINATION bin OPTIONAL)
+install(
+    TARGETS lime 
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+install(
+    DIRECTORY ${PROJECT_INCLUDE_DIR}/lime 
+    DESTINATION include 
+    MESSAGE_NEVER
+)
+install(
+    TARGETS limetest accessortest boxtest pwltest 
+    RUNTIME DESTINATION bin 
+    OPTIONAL
+)
 
 install(CODE "MESSAGE(\"\n\
 Lime was successfully installed in '${CMAKE_INSTALL_PREFIX}'. \
