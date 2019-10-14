@@ -36,7 +36,9 @@ builds all the tests whereas the command
 ```
 cmake --build . --target limetest --target boxtest
 ```
-only builds for the lime and box test.
+only builds for the lime and box test. Note that on some system multiple targets
+are not allowed for one build command. In that case, just run a seperate build
+command for each target.
 
 
 ## Builds for Windows using MS Visual Studio C++
