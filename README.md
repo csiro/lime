@@ -61,16 +61,22 @@ configuration parameter will automatically build for `Debug`.
 
 ### Tests
 
-Use the same commands as for Linux distribution and Mac OSX, but additional use
+Use the same commands as for Linux distributions and Mac OSX, but additional use
 the configuration parameter `--config` to specify the build type.
 
 ## Installation
 
 To install the library and tests onto your system after building them, simply 
-run following command inside the build directory.
+run following command inside the build directory for Linux distributions and Mac OSX
 ```
 cmake --build . --target install
 ```
+and 
+```
+cmake --build . --config Release --target install
+```
+for Windows.
+
 The library, the header files, and the executables will be installed in the default
 location on your machine, which are system dependent. If you want to change the 
 default location then specifiy the variable `CMAKE_INSTALL_PREFIX` when setting up
