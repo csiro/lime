@@ -180,6 +180,13 @@ add_executable(pwltest
 )
 target_link_libraries(pwltest lime)
 
+## hilbert 
+add_executable(hilbert
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/hilbert.cc
+)
+target_link_libraries(hilbert lime)
+
 ## Custom target for all tests
 add_custom_target(tests)
 add_dependencies(tests

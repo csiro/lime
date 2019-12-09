@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #include "lime/progresslistener.h"
 #include "lime/timekeeper.h"
@@ -30,4 +31,5 @@ namespace lime {
         double lastReport_;
         TimeKeeper timer_;
     };
+    using ProgressBarPtr = std::shared_ptr<ProgressBar>;
 }

@@ -262,7 +262,7 @@ Dig::moveTo (const lime::Point* p)
 void
 Dig::drawTo (double x, double y)
 {
-    out << "D " << x << " " << y << endl;
+    out << "D " << x << " " << y << endl << flush;
 }
 
 void

@@ -22,6 +22,10 @@ namespace lime {
         void read (const char* fldName, int& val);
         void read (const char* fldName, double& val);
         void read (const char* fldName, std::vector<int>& arrayOfInt);
+        bool readTranslated (
+            const char* fldName, std::vector<int>& arrayOfInt,
+            std::vector<std::string> ids
+        );
         void read (
             const char* fldName, std::vector<std::string>& arrayOfString
         );

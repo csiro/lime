@@ -4,76 +4,6 @@
 
 /** Lime numeric utilities */
 
-#define LIME_EPSILON (1e-6)
-
-int
-limeMax (int a, int b)
-{
-    if (a > b)
-        return a;
-    return b;
-}
-    
-int
-limeMin (int a, int b)
-{
-    if (a < b)
-        return a;
-    return b;
-}
-
-double
-limeMax (double a, double b)
-{
-    if (a > b)
-        return a;
-    return b;
-}
-
-double
-limeMin (double a, double b)
-{
-    if (a < b)
-        return a;
-    return b;
-}
-
-long
-limeMax (long a, long b)
-{
-    if (a > b)
-        return a;
-    return b;
-}
-    
-long
-limeMin (long a, long b)
-{
-    if (a < b)
-        return a;
-    return b;
-}
-
-long
-limeMax (long a, long b, long c)
-{
-    if (a > b && a > c)
-        return a;
-    if (b > c)
-        return b;
-    return c;
-}
-    
-long
-limeMin (long a, long b, long c)
-{
-    if (a < b && a < c)
-        return a;
-    if (b < c)
-        return b;
-    return c;
-}
-
 template<typename T>
 T limeMin (std::vector<T> vec)
 {
@@ -137,11 +67,17 @@ limeDblEqual (double a, double b)
     return (fabs (a - b) < LIME_EPSILON);
 }
 
-bool limeIsZero (double a)
+bool
+limeIsZero (double a)
 {
     return (fabs (a) < LIME_EPSILON);
 }
 
+double
+limeEpsilon()
+{
+    return LIME_EPSILON;
+}
 
 bool
 allZero (const long* arr, int n)

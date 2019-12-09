@@ -300,11 +300,13 @@ Config::valFor(string key) const
 }
 
 string
-Config::show () const
+Config::show (const char* sep) const
 {
     stringstream str;
+    const char* currsep = "";
     for (auto iter = map_.begin(); iter != map_.end(); ++iter) {
-        str << " " << iter->first << " " << iter->second;
+        str << currsep << iter->first << " " << iter->second;
+        currsep = sep;
     }
     return str.str();
 }

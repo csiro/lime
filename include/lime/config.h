@@ -85,7 +85,7 @@ namespace lime
         int getTime (std::string key, int defaultVal = 0);
         int getTime (const char* key, int defaultVal = 0);
 
-        std::string show () const;
+        std::string show (const char* sep = " ") const;
         
     protected:
         std::string valFor(std::string key) const;

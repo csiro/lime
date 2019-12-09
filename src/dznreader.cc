@@ -52,6 +52,30 @@ DznReader::read (const char* fldName, std::vector<int>& arrayOfInt)
     }
 }
 
+bool
+DznReader::readTranslated (
+    const char* fldName, std::vector<int>& arrayOfInt,
+    vector<string> names
+)
+{
+    arrayOfInt.clear();
+    vector<string> strArr;
+    read (fldName, strArr);
+    for (auto str : strArr) {
+        string ustr = toUpper (str);
+        bool found = false;
+        for (unsigned i = 0; i < names.size(); i++) {
+            if (ustr.compare (toUpper (names[i])) == 0) {
+                arrayOfInt.push_back (i);
+                found = true;
+            }
+        }
+        if (!found)
+            return false;
+    }
+    return true;
+}
+
 void
 DznReader::read (const char* fldName, vector<string>& arrayOfString)
 {

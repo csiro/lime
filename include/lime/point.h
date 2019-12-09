@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "lime/numutil.h"
 #include "lime/displayable.h"
 
 namespace lime
@@ -88,6 +89,13 @@ namespace lime
             @return the distance from the Point
          */
         double distTo (const Point* other) const;
+
+        bool equals (double x, double y) const {
+            return limeDblEqual (x, x_) && limeDblEqual (y, y_);
+        }
+        bool equals (const Point* pt) const {
+            return equals (pt->x(), pt->y());
+        }
 
         /** Clones another Point, returns pointer to self.
             @param other Point to copy.

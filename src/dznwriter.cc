@@ -9,22 +9,6 @@
 using namespace std;
 using namespace lime;
 
-DznWriter::DznWriter (const char* filename) :
-    dzn_()
-{
-    dzn_.open (filename, std::ofstream::out);
-    if (!dzn_.good())
-        limeCrash("Can't open DZN file for writing: " << filename);
-}
-
-DznWriter::DznWriter (string filename) :
-    dzn_()
-{
-    dzn_.open (filename, std::ofstream::out);
-    if (!dzn_.good())
-        limeCrash("Can't open DZN file for writing: " << filename);
-}
-
 void
 DznWriter::write (const char* fldName, int val)
 {
@@ -47,6 +31,31 @@ DznWriter::write (const char* fldName, std::vector<int>& arrayOfInt)
             dzn_ << "," << arrayOfInt[i];
     }
     dzn_ << "];" << endl;
+}
+
+void
+DznWriter::write (const char* fldName, std::vector<double>& arrayOfFloat)
+{
+    dzn_ << fldName << " = [";
+    if (arrayOfFloat.size() > 0) {
+        dzn_ << arrayOfFloat[0];
+        for (size_t i = 1; i < arrayOfFloat.size(); i++)
+            dzn_ << "," << arrayOfFloat[i];
+    }
+    dzn_ << "];" << endl;
+}
+
+void
+DznWriter::writeTranslated (
+    const char* fldName, std::vector<int>& arrayOfInt,
+    std::vector<std::string> names
+)
+{
+    vector<string> strArray;
+    for (int i : arrayOfInt) {
+        strArray.push_back (names[i]);
+    }
+    write (fldName, strArray);
 }
 
 void
@@ -97,6 +106,11 @@ DznWriter::write (
     dzn_ << "|];" << endl;
 }
 
+void
+DznWriter::comment (std::string str)
+{
+    dzn_ << "% " << str << endl;
+}
 
 void
 DznWriter::writeIntSet (std::set<int> theSet)

@@ -4,15 +4,41 @@
 #include <numeric>      // std::iota
 #include <algorithm>    // std::sort
 
+#include "lime/constants.h"
+
 /** Max and min functions - c is all over the place with these */
-int limeMax (int a, int b);
-int limeMin (int a, int b);
-double limeMax (double a, double b);
-double limeMin (double a, double b);
-long limeMax (long a, long b);
-long limeMax (long a, long b, long c);
-long limeMin (long a, long b);
-long limeMin (long a, long b, long c);
+template <typename T>
+T limeMax (T a, T b)
+{
+    if (a > b)
+        return a;
+    return b;
+}
+template <typename T>
+T limeMax (T a, T b, T c)
+{
+    if (a > b && a > c)
+        return a;
+    if (b > c)
+        return b;
+    return c;
+}
+template <typename T>
+T limeMin (T a, T b)
+{
+    if (a < b)
+        return a;
+    return b;
+}
+template <typename T>
+T limeMin (T a, T b, T c)
+{
+    if (a < b && a < c)
+        return a;
+    if (b < c)
+        return b;
+    return c;
+}
 
 template<typename T> T limeMin (std::vector<T> vec);
 template<typename T> T limeMax (std::vector<T> vec);
@@ -28,7 +54,10 @@ bool limeDblEqual (double a, double b);
 /** Is a within epsilon (= 1e-6) of 0? */
 bool limeIsZero (double a);
 
-/** Are all entries inthe array zero? */
+/** The epsilon we use for "equality" */
+double limeEpsilon();
+
+/** Are all entries in the array zero? */
 bool allZero (const long* arr, int n);
 
 /** Return the vector of indexes that sort the given vector input
