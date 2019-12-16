@@ -25,11 +25,11 @@ namespace lime {
     public:
         enum {
             NO_MARK=0, CIRCLE, STAR, SQUARE, CROSS, DOWN_TRIANGLE, 
-            UP_TRIANGLE, FILLED_SQUARE, FILLED_CIRCLE, PLUS, BAR
+            UP_TRIANGLE, FILLED_SQUARE, FILLED_CIRCLE, PLUS, BAR, NUM_MARKERS
         } Markers;
         enum {
             BLACK =0, BLUE, RED, DARK_GREEN, CYAN, SIENNA, MAGENTA,
-            CORAL, ORANGE, PINK, CADET_BLUE
+            CORAL, ORANGE, PINK, CADET_BLUE, NUM_COLOURS
         } StyleColours;
 
         Dig(const char* filename, bool append = false);
