@@ -31,6 +31,7 @@ public:
 
     /** Set the debug keys to print to the debug file */
     static void setKey (const char * key);
+    static void setKey (std::string key) {setKey (key.c_str());}
     static void setFilename(const std::string& filename) {
         Debug::filename_ = filename;
     }
