@@ -23,7 +23,9 @@ namespace lime
     struct PairSetComp
     {
         bool operator() (const IntDblPair& a, const IntDblPair& b) const {
-            return a.second < b.second;
+            if (a.second != b.second)
+                return a.second < b.second;
+            return a.first < b.first;
         };
         
     };
