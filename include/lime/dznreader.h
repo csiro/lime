@@ -40,8 +40,8 @@ namespace lime {
     private:
         void find (const char* fldName);
         // Expect particular characters.
-        // Returns 1 if the first char is seen, 
-        int expect (const char chr, const char chr2 = NO_CHAR);
+        // Returns 1-based pos of the char found, or 0 for not present
+        int expect (const char* chars, bool allowEOL = false);
         
         lime::Reader reader_;
         LimeTok ltok_;

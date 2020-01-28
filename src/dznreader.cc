@@ -42,13 +42,14 @@ void
 DznReader::read (const char* fldName, std::vector<int>& arrayOfInt)
 {
     find (fldName);
-    expect ('[');
+    expect ("[");
     bool error = false;
     int val = ltok_.nextInt(error);
-    arrayOfInt.push_back(val);
-    while (expect (',', ']') == 1 && !error) { // While seeing commas
-        val = ltok_.nextInt(error);
+    while (!error) { 
         arrayOfInt.push_back(val);
+        if (expect (",]") != 1) // read the comma
+            break;
+        val = ltok_.nextInt(error);
     }
 }
 
@@ -80,10 +81,10 @@ void
 DznReader::read (const char* fldName, vector<string>& arrayOfString)
 {
     find (fldName);
-    expect ('[');
+    expect ("[");
     string str = ltok_.nextToken (",]", false);
     arrayOfString.push_back(str);
-    while (expect (',', ']') == 1) { // While seeing commas
+    while (expect (",]") == 1) { // While seeing commas
         str = ltok_.nextToken (",]", false);
         // Need to remove spaces ...
         arrayOfString.push_back(str);
@@ -97,10 +98,10 @@ DznReader::read (
 {
     DEBUG ('D', "Read array of set of int " << fldName);
     find (fldName);
-    expect ('[');
+    expect ("[");
     while (true) {
         std::set<int> theSet;
-        if (expect ('{', ']') == 2) {
+        if (expect ("{]") == 2) {
             // We've got the ']' - so we've finished the vector
             break;
         }
@@ -109,14 +110,14 @@ DznReader::read (
         DEBUG ('D', "    First int " << val << " error " << error);
         if (!error) // error -> empty set - that's OK
             theSet.insert (val);
-        while (expect (',', '}') == 1 && !error) { // While seeing commas
+        while (expect (",}") == 1 && !error) { // While seeing commas
             val = ltok_.nextInt(error);
             DEBUG ('D', "    Next int " << val << " error " << error);
             theSet.insert (val);
         }
         arrayOfSetOfInt.push_back(theSet);
         DEBUG ('D', "  Finished set of size " << theSet.size());
-        if (expect (',', ']') == 2) {
+        if (expect (",]") == 2) {
             // We've got the ']' - so we've finished the vector
             break;
         }
@@ -129,10 +130,10 @@ DznReader::read (
 )
 {
     find (fldName);
-    expect ('[');
+    expect ("[");
     while (true) {
         std::vector<int> theVector;
-        if (expect ('|', ']') == 2) {
+        if (expect ("|]") == 2) {
             // We've got the ']' - so we've finished the vector
             break;
         }
@@ -142,7 +143,8 @@ DznReader::read (
         DEBUG ('D', "  Val 0 is " << val << " error " << error);
         if (!error) // 'error' -> empty vector - that's OK
             theVector.push_back(val);
-        while (expect (',', 0) == 1 && !error) { // While seeing commas
+        // While seeing commas or EOL
+        while (expect (",", true) == 1 && !error) { 
             val = ltok_.nextInt(error);
             DEBUG (
                 'D', "  Val " << theVector.size() << " is " << val <<
@@ -158,7 +160,7 @@ DznReader::read (
             readerError (&reader_, "EOF whole processing " << fldName);
         DEBUG ('D', "  line is " << line);
         ltok_.tokenise (line);
-        if (expect (',', '|') == 2) {
+        if (expect (",|") == 2) {
             // we've finished the vector
             break;
         }
@@ -183,26 +185,25 @@ DznReader::find (const char* fldName)
     }
     if (!found)
         readerError (&reader_, "Lost field name " << fldName);
-    expect ('=');
+    expect ("=");
 }
 
 int
-DznReader::expect (const char chr, const char chr2)
+DznReader::expect (const char* chars, bool allowEOL)
 {
+    int pos = 1;
     char tok = ltok_.nextChar ();
-    if (tok == chr) {
-        DEBUG ('D', "      expect found " << chr);
-        return 1;
+    for (const char* c = chars; *c != 0; c++, pos++) {
+        if (tok == *c) {
+            DEBUG ('D', "      expect found " << *c);
+            return pos;
+        }
     }
-    if (chr2 != NO_CHAR && tok == chr2) {
-        DEBUG ('D', "      expect found " << chr2);
-        return 2;
-    }
+    if (allowEOL && tok == 0)
+        return strlen(chars) + 1;
     stringstream errStr;
-    errStr << "Expected " << chr;
-    if (chr2 != 0)
-        errStr << " or " << chr2;
-    errStr << " but got " << tok << "(" << (int)tok << ")";
+    errStr << "Expected one of " << chars << " but got " << tok <<
+        "(" << (int)tok << ")";
     readerError (&reader_, errStr.str());
     return 0;
 }
