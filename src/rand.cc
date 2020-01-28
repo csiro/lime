@@ -84,7 +84,7 @@ Rand::~Rand()
 
 void Rand::setSeed (int seed_)
 {
-    seed = seed_ ? seed_ : ((int) time (0) % 8190);
+    seed = seed_ ? seed_ : 1 + ((int) time (0) % (maxSeed()-1));
     rnd (seed);
 }
 
