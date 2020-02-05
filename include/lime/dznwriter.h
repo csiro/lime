@@ -18,7 +18,8 @@ namespace lime {
         void write (const char* fldName, std::vector<int>& arrayOfInt);
         void write (const char* fldName, std::vector<double>& arrayOfFloat);
         void write (
-            const char* fldName, std::vector<std::string>& arrayOfString
+            const char* fldName, std::vector<std::string>& arrayOfString,
+            const bool quotes = true
         );
         void write (
             const char* fldName, std::vector<std::set<int>>& arrayOfSetOfInt
@@ -30,7 +31,8 @@ namespace lime {
         /** Write the string in position k instead of integer k */
         void writeTranslated (
             const char* fldName, std::vector<int>& arrayOfInt,
-            std::vector<std::string>
+            std::vector<std::string>,
+            const bool quotes = true
         );
         void comment (std::string str);
         

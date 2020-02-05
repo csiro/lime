@@ -48,24 +48,32 @@ DznWriter::write (const char* fldName, std::vector<double>& arrayOfFloat)
 void
 DznWriter::writeTranslated (
     const char* fldName, std::vector<int>& arrayOfInt,
-    std::vector<std::string> names
+    std::vector<std::string> names,
+    const bool quotes
 )
 {
     vector<string> strArray;
     for (int i : arrayOfInt) {
         strArray.push_back (names[i]);
     }
-    write (fldName, strArray);
+    write (fldName, strArray, quotes);
 }
 
 void
-DznWriter::write (const char* fldName, vector<string>& arrayOfString)
+DznWriter::write (const char* fldName, vector<string>& arrayOfString, const bool quotes)
 {
     dzn_ << fldName << " = [";
     if (arrayOfString.size() > 0) {
-        dzn_ << "\"" << arrayOfString[0] << "\"";
-        for (size_t i = 1; i < arrayOfString.size(); i++)
-            dzn_ << ",\"" << arrayOfString[i] << "\"";
+        if (quotes) {
+            dzn_ << "\"" << arrayOfString[0] << "\"";
+            for (size_t i = 1; i < arrayOfString.size(); i++)
+                dzn_ << ",\"" << arrayOfString[i] << "\"";
+        }
+        else {
+            dzn_ << arrayOfString[0];
+            for (size_t i = 1; i < arrayOfString.size(); i++)
+                dzn_ << "," << arrayOfString[i];
+        }
     }
     dzn_ << "];" << endl;
 }
