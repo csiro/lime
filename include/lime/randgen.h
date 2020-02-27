@@ -4,7 +4,7 @@
   Random number generators.
   Create using static method makeRandGen.
   Legal names are (replacing "<arg>" with double value):
-  - constant                       Constant value
+  - constant(<val>)                Constant value
   - uniform01                      Uniform val between 0 and 1
   - uniform(<minval>,<maxval>)     Uniform val between min and max
   - uniform0n-1(<n>)               Uniform betwen 0 and n-1 (integer)
@@ -26,6 +26,9 @@
 
 namespace lime {
 
+    class RandGen;
+    using RandGenPtr = std::shared_ptr<RandGen>;
+
     /** Class for generating pseudo-random numbers in various distributions. */
     class RandGen : public Rand
     {
@@ -38,7 +41,7 @@ namespace lime {
         virtual double draw() = 0;
         std::string name() const {return name_;}
 
-        static std::shared_ptr<RandGen> makeRandGen (
+        static RandGenPtr makeRandGen (
             std::string name, int seed = 0
         );
 
