@@ -39,7 +39,7 @@ namespace lime {
         RandGen (std::string name, int seed = 0) : Rand(seed), name_(name) {}
 
         virtual double draw() = 0;
-        std::string name() const {return name_;}
+        std::string name() const override {return name_;}
 
         static RandGenPtr makeRandGen (
             std::string name, int seed = 0
