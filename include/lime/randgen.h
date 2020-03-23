@@ -22,6 +22,7 @@
 #include <memory>
 
 #include "lime/rand.h"
+#include "lime/strutil.h"
 #include "lime/displayable.h"
 
 namespace lime {
@@ -68,7 +69,7 @@ namespace lime {
     {
     public:
         RandConstant (double val, int seed) :
-            RandGen (std::string("RandConstant"), seed),
+            RandGen (std::string("Constant(" + dtostr(val) + ")"), seed),
             val_(val)
         {}
 
@@ -84,7 +85,11 @@ namespace lime {
         RandUniform (
             double minVal, double maxVal, int seed
         ) :
-            RandGen (std::string("RandUniform"), seed),
+            RandGen (
+                std::string("RandUniform(") +
+                dtostr(minVal) + "," + dtostr(maxVal) + ")",
+                seed
+            ),
             minVal_(minVal),
             maxVal_(maxVal)
         {}
@@ -102,7 +107,8 @@ namespace lime {
     {
     public:
         RandUniform0n_1 (int n, int seed) :
-            RandGen (std::string("RandUniform0n-1"), seed), n_(n)
+            RandGen (std::string("RandUniform0n-1(" + itostr(n) + ")"), seed),
+            n_(n)
         {}
 
         double draw() override {return (double) uniform0n_1(n_);}
@@ -124,7 +130,11 @@ namespace lime {
     {
     public:
         RandNormal (double mean, double sd, int seed) :
-            RandGen (std::string("RandNormal"), seed),
+            RandGen (
+                std::string("RandNormal(") +
+                dtostr(mean) + "," + dtostr(sd) + ")",
+                seed
+            ),
             mean_(mean),
             sd_(sd)
         {}
@@ -142,7 +152,10 @@ namespace lime {
     {
     public:
         RandLogNormal (double mean, double sd, int seed) :
-            RandGen (std::string("RandLogNormal"), seed),
+            RandGen (
+                std::string("RandLogNormal") +
+                dtostr(mean) + "," + dtostr(sd) + ")",
+                seed),
             mean_(mean),
             sd_(sd)
         {}
@@ -163,7 +176,12 @@ namespace lime {
             double mean, double sd, double minVal, double maxVal,
             int seed
         ) :
-            RandGen (std::string("RandTrunNormal"), seed),
+            RandGen (
+                std::string("RandTrunNormal") +
+                dtostr(mean) + "," + dtostr(sd) + "," + 
+                dtostr(minVal) + "," + dtostr(maxVal) + ")",
+                seed
+            ),
             mean_(mean),
             sd_(sd),
             minVal_(minVal),
@@ -199,7 +217,10 @@ namespace lime {
     {
     public:
         RandExponential (double mean, int seed) :
-            RandGen (std::string("RandExponential"), seed),
+            RandGen (
+                std::string("RandExponential(") + dtostr(mean) + ")",
+                seed
+            ),
             mean_(mean)
         {}
 

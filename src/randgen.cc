@@ -27,7 +27,6 @@ RandGen::makeRandGen (string fullName, int seed)
             comma = fullName.find_first_of(",)", lastPos);
         }
     }
-
     name = toLower (name);
     if (name.compare ("constant") == 0) {
         if (args.size() < 1)
@@ -81,6 +80,11 @@ RandGen::makeRandGen (string fullName, int seed)
         if (args.size() < 1)
             return nullptr;
         return std::make_shared<RandExponential> (args[0], seed);
+    }
+    else if (name.length() > 0 && isdigit(name[0])) {
+        // It's a number - use it as a constant 
+        double c = stod (name);
+        return std::make_shared<RandConstant> (c, seed);
     }
     else
         return nullptr;
