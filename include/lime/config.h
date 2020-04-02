@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 
+#include "lime/displayable.h"
+
 namespace lime
 {
 
@@ -11,7 +13,7 @@ namespace lime
         This config is free-format: any key and value is allowed
         (ConfigReader demands keys are pre-declared)
      */
-    class Config
+    class Config : public Displayable
     {
     public:
         
@@ -86,6 +88,11 @@ namespace lime
         int getTime (const char* key, int defaultVal = 0);
 
         std::string show (const char* sep = " ") const;
+        
+        void display(std::ostream& os = std::cout) const override
+        {
+            os << show();
+        }
         
     protected:
         std::string valFor(std::string key) const;
