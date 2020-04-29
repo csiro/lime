@@ -12,6 +12,7 @@
 #include "lime/acceptmeth.h"
 #include "lime/debug.h"
 #include "lime/constants.h"
+#include "lime/error.h"
 #include "lime/rand.h"
 
 namespace lime
@@ -34,7 +35,10 @@ namespace lime
             restarts_(0),
             restartMod_(0),
             rand_(seed)
-        {}
+        {
+            if (targAccept < 1)
+                limeWarning ("simanneal.h: targAccept sould be > 1");
+        }
 
         enum {FRAC_NO_CHANGE = 20};
 
@@ -54,19 +58,24 @@ namespace lime
                 noChangeIter_ = numIters / FRAC_NO_CHANGE;
             initTemp_ = temp_ = calcTemp (objVal);
             restarts_ = restarts;
-            restartMod_ = (numIters - noChangeIter_) / (restarts_ + 1) + 1;
+            restartMod_ = 1 + numIters / (restarts_ + 1);
                                     // +1 so we don't restart on the last iter
             tempMult_ = calcTempMult (restartMod_);
             DEBUG (
-                'L', "SA: Initial temp " << temp_ << " mult " << tempMult_ <<
-                " restart every " << restartMod_ << " iters"
+                'L', "SA: Using obj " << objVal <<
+                " and numiters " << numIters <<
+                " initial temp " << temp_ <<
+                " mult " << tempMult_ <<
+                " restart every " << restartMod_ << " iters" <<
+                " no change for " << noChangeIter_
             )
         }
         
         bool accept (ObjType solCost, ObjType incumbCost) override
         {
             bool accept = false;
-            auto delta = (double) (solCost - incumbCost);
+            double acceptThresh = 0;
+            double delta = (double) (solCost - incumbCost);
             if (delta < 0) {
                 accept = true;
             }
@@ -80,12 +89,14 @@ namespace lime
                 accept = false;
             }
             else {
-                double acceptThresh = exp (-delta / temp_);
+                acceptThresh = exp (-delta / temp_);
                 accept = (rand_.uniform01() < acceptThresh);
             }
             DEBUG (
                 'L', "SA: iter " << iter_ << " sol " << solCost <<
                 " incumb " << incumbCost << " temp " << temp_ <<
+                " delta " << delta << 
+                " acceptThresh " << acceptThresh << 
                 " accept " << accept
             );
             return accept;
@@ -94,19 +105,15 @@ namespace lime
         void iter (long iter, ObjType objVal) override
         {
             iter_++;
-            if (
-                iter > noChangeIter_ &&
-                (iter_ - noChangeIter_) % restartMod_ == 0
-            ) {
+            if ((iter_ + 1) % restartMod_ == 0) {
                 temp_ = calcTemp (objVal);
                 tempMult_ = calcTempMult (restartMod_);
             }
-            else if (temp_ > 1.0) {
-                if (iter_ >= noChangeIter_)
-                    temp_ *= tempMult_;
+            else {
+                temp_ *= tempMult_;
+                if (temp_ < 1.0)
+                    temp_ = 1.0;
             }
-            else
-                temp_ = 1.0;
             DEBUG (
                 'l', "    SimAnneal iter " << iter_ << " temp now " << temp_
             );
@@ -126,7 +133,8 @@ namespace lime
         {
             // Calc the mult that will get us to temp 1 in numIters_ iters
             // given a starting temperature of temp_
-            return exp (- log(temp_) / numIters);
+            assert (numIters > noChangeIter_);
+            return exp (- log(temp_) / (numIters - noChangeIter_));
         }
 
     private:
