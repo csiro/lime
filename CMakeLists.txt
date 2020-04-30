@@ -48,7 +48,6 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(PROJECT_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include_directories(${PROJECT_INCLUDE_DIR})
 
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
@@ -148,6 +147,8 @@ add_library(lime
 	${LIME_SOURCE_CFILES}
 	${LIME_SOURCE_HEADERS}
 )
+
+target_include_directories(lime PUBLIC ${PROJECT_INCLUDE_DIR})
 
 #------------------------------------------------------------------------------#
 # Tests
