@@ -10,73 +10,101 @@
 #include "lime/error.h"
 
 
-bool limeQuiet = false;
-std::stringstream _limeErrorLine;
-
 using namespace std;
 
-void
-_limeLog (std::stringstream& str)
-{
-    const char* limeDir = getenv ("LIME_LOG");
-    if (limeDir == NULL)
-        limeDir = ".";
+LimeErrorImpl* LimeError::impl_ = NULL;
 
+bool
+LimeErrorImpl::tryOpenFile (string fn)
+{
+    bool ok = false;
+    auto mode = ios_base::out;
+    if (!truncate_)
+        mode |= ios_base::app;
+    try {
+        logFile_.open (fn, mode);
+        if (logFile_) {
+            log_ = &logFile_;
+            ok = true;
+        }
+    }
+    catch (...) {
+    }
+    if (!ok) {
+        cerr << "Could not open log file " << fn;
+        log_ = &cerr;
+    }
+    return ok;
+}
+
+std::ostream&
+LimeErrorImpl::log()
+{
+    if (!isOpen_) {
+        if (fileName_.length() > 0) {
+            isOpen_ = tryOpenFile(fileName_);
+        }
+        if (!isOpen_) {
+            const char* limeDir = getenv ("LIME_LOG");
+            if (limeDir == NULL)
+                limeDir = ".";
+            
+            stringstream fn;
+            fn << limeDir << "/crash.log";
+            isOpen_ = tryOpenFile(fn.str());
+        }
+        // If still not open, use cerr as backup - set up in constructor
+        // Treat as open
+        isOpen_ = true;
+    }
+    return *log_;
+}
+
+std::string
+LimeError::timeStr ()
+{
     char buffer[1024];
-    sprintf (buffer, "%s/crash.log", limeDir);
-    
-    ofstream log (buffer, ios_base::out | ios_base::app);
-    if (log) {
-        time_t theTime;
-        time( &theTime );   // get the calendar time
-        tm *t = localtime( &theTime );  // convert to local
-        strftime (buffer, 1024, "%Y-%m-%d %H:%M:%S ", t);
-        log << buffer << str.str() << endl;
-        log.close();
-        str.str("");
-    }
-    else
-        cerr << "Couldn't open log file " << buffer << endl;
+    time_t theTime;
+    time( &theTime );   // get the calendar time
+    tm *t = localtime( &theTime );  // convert to local
+    strftime (buffer, 1024, "%Y-%m-%d %H:%M:%S ", t);
+    return std::string(buffer);
 }
 
 void
-_limeProgress (std::stringstream& str)
-{
-    if (!limeQuiet) {
-        cerr << "\r " << str.str();
-        cerr << "                   \r" << flush;
-        DEBUG ('a', "Progress " << str.str());
-    }
-}
-
-void
-_limeCrash (std::stringstream& str)
-{
-    cerr << "\rFatal error:                                        " << endl;
-    cerr << str.str() << endl;
-    std::stringstream logStream;
-    logStream << "Fatal error: " << str.str();
-    limeLog (logStream);
-#ifndef NDEBUG
-    Debug::debugFile().flush ();
-#endif
-    assert(0);
-    exit (3);
-}
-
-void
-_limeWarning (std::stringstream& str)
+LimeError::warning ()
 {
     cerr << "\rWarning:                                            " << endl;
-    cerr << str.str() << endl;
-    std::stringstream logStream;
-    logStream << "Warning:" << str.str();
-    limeLog (logStream);
-    DEBUG ('a', "Warning: " << str.str());
-    str.str("");
+    cerr << errorStream().str() << endl;
+    log() << timeStr() << " Warning: " << errorStream().str() << endl;
+    DEBUG ('a', "Warning: " << errorStream().str());
+    errorStream().str("");
 }
 
-void _limeAssert (
+void
+LimeError::crash ()
+{
+    cerr << "\rFatal error:                                            " << endl;
+    cerr << errorStream().str() << endl;
+    log() << timeStr() << " Fatal error: " << errorStream().str() << endl;
+    DEBUG ('a', "Fatal: " << errorStream().str());
+    errorStream().str("");
+    exit(3);
+}
+
+void
+LimeError::progress ()
+{
+    if (!getImpl()->quiet()) {
+        cerr << "\r " << errorStream().str();
+        cerr << "                                     \r" << flush;
+        DEBUG ('a', "Progress " << errorStream().str());
+        errorStream().str("");
+    }
+}
+
+void
+LimeError::_limeAssert (
     bool assertion, const char* file, int line
 )
 {
