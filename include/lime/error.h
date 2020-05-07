@@ -19,6 +19,12 @@ public:
         logFile_()
     {
     }
+    ~LimeErrorImpl()
+    {
+        if (logFile_.is_open()) {
+            logFile_.close();
+        }
+    }
 
     bool quiet() const {return quiet_;}
     void setQuiet (bool quiet) {quiet_ = quiet;}
@@ -89,14 +95,14 @@ public:
 
 private:
     static LimeErrorImpl* getImpl() {
-        if (impl_ == NULL) {
-            impl_ = new LimeErrorImpl();
+        if (impl_ == nullptr) {
+            impl_ =  std::unique_ptr<LimeErrorImpl>(new LimeErrorImpl());
         }
-        return impl_;
+        return impl_.get();
     }
     static std::string timeStr ();
     
-    static LimeErrorImpl* impl_;
+    static std::unique_ptr<LimeErrorImpl> impl_;
 };
     
 #define limeWarning(X) {LimeError::errorStream() << X; LimeError::warning();}

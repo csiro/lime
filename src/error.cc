@@ -12,7 +12,7 @@
 
 using namespace std;
 
-LimeErrorImpl* LimeError::impl_ = NULL;
+std::unique_ptr<LimeErrorImpl> LimeError::impl_ = nullptr;
 
 bool
 LimeErrorImpl::tryOpenFile (string fn)
