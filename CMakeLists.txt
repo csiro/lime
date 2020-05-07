@@ -156,7 +156,7 @@ target_include_directories(lime PUBLIC ${PROJECT_INCLUDE_DIR})
 ## Lime Test
 add_executable(limetest
 	EXCLUDE_FROM_ALL
-	${PROJECT_TEST_DIR}/lastbuild.cc
+	${PROJECT_SOURCE_DIR}/test/limetest.cc
 )
 target_link_libraries(limetest lime)
 
