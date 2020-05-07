@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "lime/config.h"
+#include "lime/error.h"
 
 using namespace std;
 using namespace lime;
@@ -64,4 +65,18 @@ main ()
     cout << "Change aDouble" << endl;
     config.addItem ("aDouble=3.333");
     cout << "   aDouble: " << config.getDouble ("aDouble") << endl;
+
+    limeWarning ("Use default filename");
+    LimeError::setFileName ("lime_error.log");
+
+    limeWarning ("Using error file " << LimeError::fileName());
+    limeWarning ("You have been warned");
+    
+    LimeError::setFileName ("/non/existant/name.log");
+    limeWarning ("This to default name");
+    
+    LimeError::setFileName ("lime_error.log");
+    limeWarning ("Back to " << LimeError::fileName());
+
+    limeCrash ("Now I die");
 }

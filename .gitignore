@@ -6,3 +6,4 @@ lib
 .fsync
 .vs
 *.swp
+*.log
