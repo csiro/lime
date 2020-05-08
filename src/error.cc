@@ -113,3 +113,19 @@ LimeError::_limeAssert (
     }
 }
 
+// Extra info in errorStream
+void
+LimeError::_limeAssert2 (
+    bool assertion, const char* file, int line
+)
+{
+    if (!assertion) {
+        string detail = errorStream().str();
+        errorStream().str("");
+        limeCrash (
+            "Assertion failed in " << file << " at line " << line <<
+            ": " << detail
+        ); 
+    }
+}
+

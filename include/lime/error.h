@@ -92,6 +92,7 @@ public:
     static void crash();
     static void progress ();
     static void _limeAssert(bool assertion, const char* file, int line);
+    static void _limeAssert2(bool assertion, const char* file, int line);
 
 private:
     static LimeErrorImpl* getImpl() {
@@ -109,9 +110,5 @@ private:
 #define limeCrash(X) {LimeError::errorStream() << X; LimeError::crash();}
 #define limeProgress(X) {LimeError::errorStream() << X; LimeError::progress();}
 
-
-#ifdef NDEBUG
-#define limeAssert(X) {if(X){}} // Use the expression to keep the compiler happy
-#else
-#define limeAssert(X) {LimeError::assert((X),__FILE__,__LINE__);}
-#endif
+#define limeAssert(X) {LimeError::_limeAssert((X),__FILE__,__LINE__);}
+#define limeAssert2(X, Y) {LimeError::errorStream() << Y; LimeError::_limeAssert2((X), __FILE__,__LINE__);}

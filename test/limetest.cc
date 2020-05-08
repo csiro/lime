@@ -78,5 +78,6 @@ main ()
     LimeError::setFileName ("lime_error.log");
     limeWarning ("Back to " << LimeError::fileName());
 
-    limeCrash ("Now I die");
+    limeAssert (1);
+    limeAssert2 (0, "Now I die");
 }

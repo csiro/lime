@@ -35,7 +35,7 @@ public:
         closing double-quote is found
     */
     const char* nextToken(
-        const char* delim, bool skipLeadingDelim = true,
+        const char* delim = spaceOrTab(), bool skipLeadingDelim = true,
         const char* fromSet = NULL
     );
     
@@ -80,7 +80,7 @@ public:
     char nextChar();
     
     /** Returns a space or tab - for use as a delimiter string */
-    const char* spaceOrTab() const {return " 	";}
+    static const char* spaceOrTab() {return " 	";}
 
 protected:
     // Move to the next char, stepping over escaped hars 
