@@ -73,6 +73,7 @@ set(LIME_SOURCE_CFILES
 	${PROJECT_SOURCE_DIR}/src/error.cc
 	${PROJECT_SOURCE_DIR}/src/geomutil.cc
 	${PROJECT_SOURCE_DIR}/src/indexchoice.cc
+	${PROJECT_SOURCE_DIR}/src/intset.cc
 	${PROJECT_SOURCE_DIR}/src/limetok.cc
 	${PROJECT_SOURCE_DIR}/src/lockfile.cc
 	${PROJECT_SOURCE_DIR}/src/numutil.cc
@@ -116,6 +117,7 @@ set(LIME_SOURCE_HEADERS
 	${PROJECT_INCLUDE_DIR}/lime/indexchoice.h
 	${PROJECT_INCLUDE_DIR}/lime/indexmap.h
 	${PROJECT_INCLUDE_DIR}/lime/indexstack.h
+	${PROJECT_INCLUDE_DIR}/lime/intset.h
 	${PROJECT_INCLUDE_DIR}/lime/limearr.h
 	${PROJECT_INCLUDE_DIR}/lime/limetok.h
 	${PROJECT_INCLUDE_DIR}/lime/line.h
@@ -156,7 +158,7 @@ target_include_directories(lime PUBLIC ${PROJECT_INCLUDE_DIR})
 ## Lime Test
 add_executable(limetest
 	EXCLUDE_FROM_ALL
-	${PROJECT_TEST_DIR}/lastbuild.cc
+	${PROJECT_SOURCE_DIR}/test/limetest.cc
 )
 target_link_libraries(limetest lime)
 
