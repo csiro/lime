@@ -25,6 +25,15 @@ LimeTok::LimeTok (const char* str) :
     tokenise (str);
 }
 
+LimeTok::LimeTok (std::string str) :
+    bufferLen_(0),
+    buffer_(0),
+    upto_(0),
+    curr_()
+{
+    tokenise (str.c_str());
+}
+
 LimeTok::~LimeTok ()
 {
     if (buffer_ != NULL)

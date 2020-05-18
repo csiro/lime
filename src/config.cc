@@ -132,19 +132,25 @@ Config::addItem (const char* key, const char* val)
 void
 Config::addItem (string key, int val)
 {
-    map_[toLower (key)] = itostr(val);
+    map_[toLower (key)] = std::to_string(val);
 }
 
 void
 Config::addItem (string key, long val)
 {
-    map_[toLower (key)] = ltostr(val);
+    map_[toLower (key)] = std::to_string(val);
 }
 
 void
 Config::addItem (string key, double val)
 {
-    map_[toLower (key)] = dtostr(val);
+    map_[toLower (key)] = std::to_string(val);
+}
+
+void
+Config::addItem (string key, unsigned val)
+{
+    map_[toLower (key)] = std::to_string(val);
 }
 
 void

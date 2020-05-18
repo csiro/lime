@@ -35,6 +35,7 @@ namespace lime
         void addItem (std::string key, int val);
         void addItem (std::string key, long val);
         void addItem (std::string key, double val);
+        void addItem (std::string key, unsigned val);
         
         /** Add items in the form "key=val" or "key:val" */
         void addItem (std::string keyVal);

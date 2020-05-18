@@ -18,6 +18,7 @@ public:
     LimeTok();
     /** Construct a tokeniser with the string to tokenise */
     LimeTok(const char* str);
+    LimeTok(std::string str);
     virtual ~LimeTok();
     
     /** Reinitialsie with a new string to be tokenised.

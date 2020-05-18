@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.0.2)
-
 project(Lime 
 		VERSION 0.1
 		LANGUAGES CXX C)
@@ -9,6 +8,7 @@ project(Lime
 # Compilation options
 
 option(STATIC "compile with the -static linker flag" OFF)
+set(CMAKE_COLOR_MAKEFILE OFF)
 
 #------------------------------------------------------------------------------#
 # Compiler Configuration
