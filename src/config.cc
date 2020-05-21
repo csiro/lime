@@ -148,7 +148,7 @@ Config::addItem (string key, double val)
 }
 
 void
-Config::addItem (string key, unsigned val)
+Config::addItem (string key, unsigned long val)
 {
     map_[toLower (key)] = std::to_string(val);
 }
@@ -218,6 +218,23 @@ double
 Config::getDouble (const char* key, double defaultVal)
 {
     return getDouble (string(key), defaultVal);
+}
+
+unsigned long
+Config::getUnsigned (string key, unsigned long defaultVal)
+{
+    string strVal = valFor (key);
+    if (strVal.length() == 0) { // Not there
+        addItem (key, defaultVal);
+        return defaultVal;
+    }
+
+    return stoul (strVal);
+}
+unsigned long
+Config::getUnsigned (const char* key, unsigned long defaultVal)
+{
+    return getUnsigned (string(key), defaultVal);
 }
 
 bool

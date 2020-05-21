@@ -35,31 +35,30 @@ namespace lime
         void addItem (std::string key, int val);
         void addItem (std::string key, long val);
         void addItem (std::string key, double val);
-        void addItem (std::string key, unsigned val);
+        void addItem (std::string key, unsigned long val);
         
         /** Add items in the form "key=val" or "key:val" */
         void addItem (std::string keyVal);
         
-        /** Get the value of an int, and store it in the passed reference.
-            @param key key of the configuration to retrieve
-            @param val reference to the location where the value must be read
-         */
+        /** Get the value of an int */
         int getInt (std::string key, int defaultVal = 0);
         int getInt (const char* key, int defaultVal = 0);
         
-        /** Get the value of a long, and store it in the passed reference.
-            @param key key of the configuration to retrieve
-            @param val reference to the location where the value must be read
-         */
+        /** Get the value of a long */
         long getLong (std::string key, long defaultVal = 0);
         long getLong (const char* key, long defaultVal = 0);
         
-        /** Get the value of a double, and store it in the passed reference.
-            @param key key of the configuration to retrieve
-            @param val reference to the location where the value must be read
-         */
+        /** Get the value of a double */
         double getDouble (std::string key, double defaultVal = 0.0);
         double getDouble (const char* key, double defaultVal = 0.0);
+        
+        /** Get the value of a unsigned */
+        unsigned long getUnsigned (
+            std::string key, unsigned long defaultVal = 0
+        );
+        unsigned long getUnsigned (
+            const char* key, unsigned long defaultVal = 0
+        );
         
         /** Get the value of a bool, and store it in the passed reference.
             @param key key of the configuration to retrieve

@@ -19,25 +19,30 @@
 
 using namespace lime;
 
-LockFile::LockFile (std::string filename) :
+/** Very strange useLockfile parameter allows caller to not really use
+    lockfile. Makes coding with optional locking easier
+*/
+LockFile::LockFile (std::string filename, bool useLockfile) :
     fd_(0),
     lockFilename_ (filename + ".lck")
 {
-    fd_ = open (lockFilename_.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
-    
-    while (fd_ < 0 && errno == EEXIST) {
-        // the file already exist; another process is 
-        // holding the lock
-        limeProgress ("Waiting for lock on file " << filename);
-#ifdef _MSC_VER
-        _sleep (1);
-#else
-		sleep(1);
-#endif
+    if (useLockfile) {
         fd_ = open (lockFilename_.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
-    }
-    if (fd_ < 0) {
-        limeWarning ("File lock failed for file " << filename);
+    
+        while (fd_ < 0 && errno == EEXIST) {
+            // the file already exist; another process is 
+            // holding the lock
+            limeProgress ("Waiting for lock on file " << filename);
+#ifdef _MSC_VER
+            _sleep (1);
+#else
+            sleep(1);
+#endif
+            fd_ = open (lockFilename_.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
+        }
+        if (fd_ < 0) {
+            limeWarning ("File lock failed for file " << filename);
+        }
     }
 }
 

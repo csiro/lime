@@ -11,7 +11,7 @@ namespace lime {
     class LockFile : public Displayable
     {
     public:
-        LockFile(const std::string filename);
+        LockFile(const std::string filename, bool useLockfile = true);
         virtual ~LockFile();
         void releaseLock();
 
