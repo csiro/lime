@@ -8,7 +8,6 @@ project(Lime
 # Compilation options
 
 option(STATIC "compile with the -static linker flag" OFF)
-set(CMAKE_COLOR_MAKEFILE OFF)
 
 #------------------------------------------------------------------------------#
 # Compiler Configuration
