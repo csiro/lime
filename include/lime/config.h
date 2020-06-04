@@ -21,8 +21,20 @@ namespace lime
             @param filename name of the file to read
             @remarks the file should contain key <spaces> value pairs.
          */
-        Config (std::string filename);
-        Config ();
+        Config (std::string filename) :
+            filename_ (filename),
+            map_()
+        {
+            read (filename);
+        }
+        Config () :
+            filename_ (std::string("(none)")),
+            map_()
+        {}
+        Config (const Config& other) :
+            filename_ (other.filename_),
+            map_(other.map_)
+        {}
         
         void read (std::string filename);
         void read (const char* filename) {read (std::string(filename));}
