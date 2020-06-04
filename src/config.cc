@@ -16,6 +16,25 @@
 using namespace lime;
 using namespace std;
 
+Config::Config () :
+    filename_ (std::string("(none)")),
+    map_()
+{
+}
+
+Config::Config (std::string filename) :
+    filename_ (filename),
+    map_()
+{
+    read (filename);
+}
+
+Config::Config (const Config& other) :
+    filename_ (other.filename_),
+    map_(other.map_)
+{
+}
+
 void
 Config::setDefaults (vector<string> defaults)
 {
