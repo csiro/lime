@@ -122,6 +122,7 @@ set(LIME_SOURCE_HEADERS
 	${PROJECT_INCLUDE_DIR}/lime/line.h
 	${PROJECT_INCLUDE_DIR}/lime/lockfile.h
 	${PROJECT_INCLUDE_DIR}/lime/numutil.h
+	${PROJECT_INCLUDE_DIR}/lime/permutation.h
 	${PROJECT_INCLUDE_DIR}/lime/point.h
 	${PROJECT_INCLUDE_DIR}/lime/progressbar.h
 	${PROJECT_INCLUDE_DIR}/lime/progresslistener.h
@@ -174,6 +175,13 @@ add_executable(boxtest
 	${PROJECT_TEST_DIR}/boxtest
 )
 target_link_libraries(boxtest lime)
+
+## Permutation Test
+add_executable(permtest 
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/permtest.cc
+)
+target_link_libraries(permtest lime)
 
 ## PWL Test
 add_executable(pwltest 
