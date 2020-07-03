@@ -82,13 +82,14 @@ LimeError::warning ()
 }
 
 void
-LimeError::crash ()
+LimeError::crash () 
 {
     cerr << "\rFatal error:                                            " << endl;
     cerr << errorStream().str() << endl;
     log() << timeStr() << " Fatal error: " << errorStream().str() << endl;
     DEBUG ('a', "Fatal: " << errorStream().str());
-    errorStream().str("");
+    if (crashThrowsExcept())
+        throw std::runtime_error (errorStream().str());
     exit(3);
 }
 

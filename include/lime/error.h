@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <exception>
+#include <stdexcept>
 
 // Define a singleton LimeError class
 class LimeErrorImpl
@@ -13,6 +15,7 @@ public:
         isOpen_(false),
         quiet_(false),
         truncate_(false),
+        crashThrowsExcept_(false),
         errorStream_(),
         fileName_(""),
         log_(&std::cerr),
@@ -34,6 +37,11 @@ public:
         truncate_ = truncate;
     }
     
+    bool crashThrowsExcept() const {return crashThrowsExcept_;}
+    void setCrashThrowsExcept (bool crashThrowsExcept) {
+        crashThrowsExcept_ = crashThrowsExcept;
+    }
+    
     std::string fileName() {return fileName_;}
     void setFileName (std::string fileName) {
         fileName_ = fileName;
@@ -51,10 +59,11 @@ public:
 
 private:
     bool tryOpenFile (std::string fn);
-    
+
     bool isOpen_;
     bool quiet_;
     bool truncate_;
+    bool crashThrowsExcept_;
     std::stringstream errorStream_;
     std::string fileName_;
     std::ostream* log_;
@@ -76,6 +85,12 @@ public:
     static bool truncate() {
         return getImpl()->truncate();
     }
+    static void setCrashThrowsExcept(bool crashThrowsExcept) {
+        getImpl()->setCrashThrowsExcept(crashThrowsExcept);
+    }
+    static bool crashThrowsExcept() {
+        return getImpl()->crashThrowsExcept();
+    }
 
     static std::string fileName() {return getImpl()->fileName();}
     static void setFileName (std::string fileName) {
@@ -90,6 +105,7 @@ public:
     // Each of these assumes message is already written to errorStream();
     static void warning();
     static void crash();
+    static void dothrow();
     static void progress ();
     static void _limeAssert(bool assertion, const char* file, int line);
     static void _limeAssert2(bool assertion, const char* file, int line);
@@ -108,6 +124,7 @@ private:
     
 #define limeWarning(X) {LimeError::errorStream() << X; LimeError::warning();}
 #define limeCrash(X) {LimeError::errorStream() << X; LimeError::crash();}
+#define limeExcept(X) {LimeError::errorStream() << X; LimeError::dothrow();}
 #define limeProgress(X) {LimeError::errorStream() << X; LimeError::progress();}
 
 #define limeAssert(X) {LimeError::_limeAssert((X),__FILE__,__LINE__);}
