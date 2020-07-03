@@ -105,7 +105,6 @@ public:
     // Each of these assumes message is already written to errorStream();
     static void warning();
     static void crash();
-    static void dothrow();
     static void progress ();
     static void _limeAssert(bool assertion, const char* file, int line);
     static void _limeAssert2(bool assertion, const char* file, int line);
@@ -124,7 +123,6 @@ private:
     
 #define limeWarning(X) {LimeError::errorStream() << X; LimeError::warning();}
 #define limeCrash(X) {LimeError::errorStream() << X; LimeError::crash();}
-#define limeExcept(X) {LimeError::errorStream() << X; LimeError::dothrow();}
 #define limeProgress(X) {LimeError::errorStream() << X; LimeError::progress();}
 
 #define limeAssert(X) {LimeError::_limeAssert((X),__FILE__,__LINE__);}
