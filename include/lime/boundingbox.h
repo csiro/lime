@@ -49,6 +49,11 @@ namespace lime {
             Box::set (ll, ur);
             isEmpty_ = false;
         }
+        void set (double ll_x, double ll_y, double ur_x, double ur_y)
+        {
+            Box::set (ll_x, ll_y, ur_x, ur_y);
+            isEmpty_ = false;
+        }
 
         double llx() const {return ll()->x();}
         double lly() const {return ll()->y();}
