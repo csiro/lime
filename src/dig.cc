@@ -47,6 +47,12 @@ Dig::title (string title)
 }
 
 void
+Dig::latLong()
+{
+    out << "LATLONG" << endl;
+}
+
+void
 Dig::xLabel (const char* label)
 {
     out << "X \"" << label << "\"" << endl;

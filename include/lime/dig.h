@@ -38,6 +38,7 @@ namespace lime {
 
         void title (const char* title);
         void title (std::string title);
+        void latLong ();
         void xLabel (const char* label);
         void xLabel (std::string label);
         void yLabel (const char* label);
