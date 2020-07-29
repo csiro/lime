@@ -1,6 +1,7 @@
 /** Write a file to display stuff using the "Dig" program */
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <cassert>
 #include <cmath>
@@ -15,13 +16,15 @@ using namespace lime;
 
 Dig::Dig (const char* filename, bool append) :
     out (filename, ofstream::out | (append ? ofstream::app : ofstream::trunc)),
-    currStyle(0)
+    currStyle(0),
+    prec(4)
 {
 }
 
 Dig::Dig (string filename, bool append) :
     out (filename, ofstream::out | (append ? ofstream::app : ofstream::trunc)),
-    currStyle(0)
+    currStyle(0),
+    prec(4)
 {
 }
 
@@ -119,7 +122,8 @@ Dig::colourMark(int c, int m)
 void
 Dig::circle (double x, double y, int diam, bool filled)
 {
-    out << (filled ? "Q " : "O ") << x << " " << y << " " << diam << endl;
+    out << (filled ? "Q " : "O ") << setprecision(prec) << x << " " <<
+        setprecision(prec) << y << " " << diam << endl;
 }
 
 void
@@ -201,7 +205,9 @@ Dig::colourScaleR (double val, double max)
 void
 Dig::labelPoint (double x, double y, const char* label)
 {
-    out << "LP " << x << " " << y <<
+    out << "LP " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y <<
         " \"" << label << "\"" << endl;
     
 }
@@ -209,9 +215,10 @@ Dig::labelPoint (double x, double y, const char* label)
 void
 Dig::labelPoint (double x, double y, string label)
 {
-    out << "LP " << x << " " << y <<
+    out << "LP " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y <<
         " \"" << label << "\"" << endl;
-    
 }
 
 void
@@ -256,7 +263,9 @@ Dig::showMessage (const char* message, double d)
 void
 Dig::moveTo (double x, double y)
 {
-    out << "M " << x << " " << y << endl;
+    out << "M " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y << endl;
 }
 
 void
@@ -268,7 +277,9 @@ Dig::moveTo (const lime::Point* p)
 void
 Dig::drawTo (double x, double y)
 {
-    out << "D " << x << " " << y << endl << flush;
+    out << "D " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y << endl;
 }
 
 void
@@ -280,13 +291,17 @@ Dig::drawTo (const lime::Point* p)
 void
 Dig::drawArrowedTo (double x, double y)
 {
-    out << "A " << x << " " << y << endl;
+    out << "A " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y << endl;
 }
 
 void
 Dig::drawDistinctTo (double x, double y)
 {
-    out << "DD " << x << " " << y << endl;
+    out << "DD " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y << endl;
 }
 
 void
@@ -305,49 +320,55 @@ Dig::draw (double x1, double y1, double x2, double y2)
 void
 Dig::box (double x1, double y1, double x2, double y2, int c)
 {
-    out << "B " << limeMin(x1, x2) << " " << limeMin (y1, y2) << " " << 
-        fabs (x1 - x2) << " " << fabs (y2 - y1) << " " <<
+    out << "B " <<
+        setprecision(prec) << limeMin(x1, x2) << " " <<
+        setprecision(prec) << limeMin (y1, y2) << " " << 
+        setprecision(prec) << fabs (x1 - x2) << " " <<
+        setprecision(prec) << fabs (y2 - y1) << " " <<
         c << endl;
 }
 
 void
 Dig::box (const Box* box, int c)
 {
-    out << "B " << box->llx() << " " << box->lly() << " " << 
-        box->width() << " " << box->height() << " " <<
+    out << "B " <<
+        setprecision(prec) << box->llx() << " " <<
+        setprecision(prec) << box->lly() << " " << 
+        setprecision(prec) << box->width() << " " <<
+        setprecision(prec) << box->height() << " " <<
         c << endl;
 }
 
 void
 Dig::boxOutline (const Box* box)
 {
-    out << "M " << box->llx() << " " << box->lly() << endl;
-    out << "D " << box->urx() << " " << box->lly() << endl;
-    out << "D " << box->urx() << " " << box->ury() << endl;
-    out << "D " << box->llx() << " " << box->ury() << endl;
-    out << "D " << box->llx() << " " << box->lly() << endl;
+    moveTo (box->llx(), box->lly());
+    drawTo (box->urx(), box->lly());
+    drawTo (box->urx(), box->ury());
+    drawTo (box->llx(), box->ury());
+    drawTo (box->llx(), box->lly());
 }
 
 void
 Dig::xTic (double x, const char* label)
 {
-    out << "XT " << x << " \"" << label << "\"" << endl;
+    out << "XT " << setprecision(prec) << x << " \"" << label << "\"" << endl;
 }
 void
 Dig::xTic (double x, string label)
 {
-    out << "XT " << x << " \"" << label << "\"" << endl;
+    out << "XT " << setprecision(prec) << x << " \"" << label << "\"" << endl;
 }
 
 void
 Dig::yTic (double y, const char* label)
 {
-    out << "YT " << y << " \"" << label << "\"" << endl;
+    out << "YT " << setprecision(prec) << y << " \"" << label << "\"" << endl;
 }
 void
 Dig::yTic (double y, string label)
 {
-    out << "YT " << y << " \"" << label << "\"" << endl;
+    out << "YT " << setprecision(prec) << y << " \"" << label << "\"" << endl;
 }
 
 void

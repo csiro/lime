@@ -94,6 +94,9 @@ namespace lime {
         void close ();
         std::ostream& outFile() {return out;}
 
+        // Precision of output
+        void setPrecision (int prec_) {prec = prec_;}
+
         // Constants from the Dig program
         int numStdColours() const {return 11;}
         int numStdMarks() const {return 10;}
@@ -104,6 +107,7 @@ namespace lime {
     protected:
         std::ofstream out;
         int currStyle;
+        int prec;
     };
 
     typedef std::shared_ptr<Dig> DigPtr;
