@@ -40,6 +40,8 @@ namespace lime {
             isEmpty_(false)
         { }
 
+        bool isEmpty() const {return isEmpty_;}
+        
         /** Set both corners at the same time. 
             @param ll lower-left corner
             @param ur upper-right corner
