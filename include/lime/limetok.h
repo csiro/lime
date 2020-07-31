@@ -30,8 +30,6 @@ public:
         Returns a pointer to the next token, or NULL if no more tokens
         Each call moves to the next token.
         If fromSet is non-null, then only advances with chars are in the set.
-        The returned string can be modified without affecting the original
-        string, or the results of the next call to nextToken
         If double-quote is seen, all delimiters are ignored until the
         closing double-quote is found
     */
@@ -45,6 +43,11 @@ public:
         return (curr_.length() == 0) ? NULL : curr_.c_str();
     }
 
+    /** Return the next token as a string.
+        Sets 'error' to true if there was a problem.
+        Assumes space delimiters
+    */
+    std::string nextString(bool& error);
     /** Return the next token as an integer.
         Sets 'error' to true if there was a problem.
         Assumes space delimiters

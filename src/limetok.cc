@@ -142,6 +142,21 @@ LimeTok::nextToken(
     return curr_.c_str();
 }
 
+/** Return the next token as a string.
+    Sets 'error' to true if there was a problem.
+    Assumes space delimiters
+*/
+std::string
+LimeTok::nextString(bool& error)
+{
+    const char* tok = nextToken (spaceOrTab(), true);
+    if (tok == NULL) {
+        error = true;
+        return std::string("");
+    }
+    return std::string(tok);
+}
+
 /** Return the next token as an integer.
     Sets 'error' to true if there was a problem.
     Assumes space delimiters
