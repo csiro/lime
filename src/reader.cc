@@ -89,7 +89,7 @@ Reader::getLine()
 }
 
 bool
-Reader::matches (const char* a, const char* b) const
+Reader::matches (const char* a, const char* b) 
 {
     return a != NULL && b != NULL && strcmp (a, b) == 0;
 }
@@ -104,6 +104,15 @@ Reader::rewind()
     }
     // Now back in original frame
     currFrame_->rewind();
+}
+
+void
+Reader::error (string message)
+{
+    limeCrash (
+        message << " at line " << currFrame_->lineNum_ <<
+        " of " << currFrame_->filename_
+    );
 }
 
 void

@@ -21,12 +21,14 @@ namespace lime {
         virtual ~Reader();
 
         char* getLine();
-        bool matches (const char* a, const char* b) const;
+        static bool matches (const char* a, const char* b);
         bool isListEnd (const char* str) const {return matches (str, "*END*");}
 
         // Rewind to start of file
         void rewind();
 
+        // Called by readerError()
+        void error (std::string message);
         // Called by readerError()
         void readerError_ ();
 
