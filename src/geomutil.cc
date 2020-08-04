@@ -232,13 +232,14 @@ lime::greatCircleDistMetres (
         
     double a = t1 * t1 + cos(lat1) * cos(lat2) * t2 * t2;
     double d = 2.0 * fabs (atan2(sqrt(a), sqrt(1 - a)));
-        
+    
     /**
        This is a simpler formula, but it's subject to rounding errors
-       for small distances.  See
-       http://www.census.gov/cgi-bin/geo/gisfaq?Q5.1
-       double d = Math.acos(Math.sin(lat1) * Math.sin(lat2)
-       + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1-long2));
+        double d =
+        Math.acos(
+            Math.sin(lat1) * Math.sin(lat2)
+            + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1-long2)
+        );
     */
     return earthRadius * d;
 }

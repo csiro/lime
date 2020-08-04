@@ -318,6 +318,12 @@ Dig::draw (double x1, double y1, double x2, double y2)
 }
 
 void
+Dig::draw (const lime::Point* a, const lime::Point* b)
+{
+    draw (a->x(), a->y(), b->x(), b->y());
+}
+
+void
 Dig::box (double x1, double y1, double x2, double y2, int c)
 {
     out << "B " <<
