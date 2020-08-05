@@ -112,7 +112,7 @@ namespace lime
          */
         bool  operator<(const Point& point) const;
 
-        const Point& operator=(const Point& other) {
+        Point& operator=(const Point& other) {
             x_ = other.x_;
             y_ = other.y_;
             z_ = other.z_;
