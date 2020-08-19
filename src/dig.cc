@@ -311,6 +311,20 @@ Dig::drawDistinctTo (const lime::Point* point)
 }
 
 void
+Dig::drawBezierTo (double x, double y)
+{
+    out << "Z " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y << endl;
+}
+
+void
+Dig::drawBezierTo (const Point* p)
+{
+    drawBezierTo (p->x(), p->y());
+}
+
+void
 Dig::draw (double x1, double y1, double x2, double y2)
 {
     moveTo (x1, y1);
