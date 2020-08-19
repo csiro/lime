@@ -297,6 +297,12 @@ Dig::drawArrowedTo (double x, double y)
 }
 
 void
+Dig::drawArrowedTo (const lime::Point* point)
+{
+    drawArrowedTo (point->x(), point->y());
+}
+
+void
 Dig::drawDistinctTo (double x, double y)
 {
     out << "DD " <<

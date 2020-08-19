@@ -78,6 +78,7 @@ namespace lime {
         void drawTo (double x, double y);
         void drawTo (const lime::Point* p);
         void drawArrowedTo (double x, double y);
+        void drawArrowedTo (const lime::Point* point);
         void drawDistinctTo (double x, double y);
         void drawDistinctTo (const lime::Point* point);
         void drawBezierTo (double x, double y);
