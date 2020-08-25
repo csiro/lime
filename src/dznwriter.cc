@@ -115,6 +115,12 @@ DznWriter::write (
 }
 
 void
+DznWriter::writeMetadata (std::string str)
+{
+    dzn_ << "%%%meta-data: " << str << endl;
+}
+
+void
 DznWriter::comment (std::string str)
 {
     dzn_ << "% " << str << endl;

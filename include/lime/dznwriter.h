@@ -34,6 +34,7 @@ namespace lime {
             std::vector<std::string>,
             const bool quotes = true
         );
+        void writeMetadata (std::string str);
         void comment (std::string str);
         
     private:

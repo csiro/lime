@@ -167,6 +167,27 @@ DznReader::read (
     }
 }
 
+string
+DznReader::readMetadata()
+{
+    bool found = false;
+    reader_.rewind();
+    char* line = 0;
+    while (!found && (line = reader_.getLine()) != NULL) {
+        if (strncmp (line, "%%%meta-data:", 13) == 0) {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        return string("");
+    char* c = line+13;
+    while (*c != 0 && isspace(*c))
+        c++;
+    return string (c);
+}
+
+
 /* Find the line where the named field is defined.
    Eats the '='
    ltok_ contains the line.

@@ -36,6 +36,7 @@ namespace lime {
             const char* fldName,
             std::vector<std::vector<int>>& arrayOfArrayOfInt
         );
+        std::string readMetadata();
         
     private:
         void find (const char* fldName);
