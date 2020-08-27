@@ -67,7 +67,7 @@ DznWriter::write (const char* fldName, vector<string>& arrayOfString, const bool
         if (quotes) {
             dzn_ << "\"" << arrayOfString[0] << "\"";
             for (size_t i = 1; i < arrayOfString.size(); i++)
-                dzn_ << ",\"" << arrayOfString[i] << "\"";
+                dzn_ << ", \"" << arrayOfString[i] << "\"";
         }
         else {
             dzn_ << arrayOfString[0];
