@@ -85,8 +85,7 @@ DznReader::read (const char* fldName, vector<string>& arrayOfString)
     string str = ltok_.nextToken (",]", false);
     arrayOfString.push_back(str);
     while (expect (",]") == 1) { // While seeing commas
-        str = ltok_.nextToken (",]", false);
-        // Need to remove spaces ...
+        str = ltok_.nextToken (",]");
         arrayOfString.push_back(str);
     }
 }

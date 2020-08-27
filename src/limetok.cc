@@ -106,20 +106,19 @@ LimeTok::handleQuote (char* start)
 
 const char*
 LimeTok::nextToken(
-    const char* delim, bool skipLeadingDelim, const char* fromSet
+    const char* delim, bool skipLeadingSpaces, const char* fromSet
 )
 {
     curr_ = std::string("");
     if (upto_ == 0)
         return NULL;
     
-    if (skipLeadingDelim) {
-        while (*upto_ != 0 && strchr (delim, *upto_) != NULL)
+    if (skipLeadingSpaces) {
+        while (*upto_ != 0 && strchr (spaceOrTab(), *upto_) != NULL)
             upto_++;
     }
     if (*upto_ == 0)
         return NULL; // All done
-    // Initialise curr_
     const char* start = upto_;
     // Advance until we see a delim, and while we ae seeing
     // the right chars

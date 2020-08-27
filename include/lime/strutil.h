@@ -11,6 +11,12 @@ namespace lime {
     Returns a pointer to first non-blank (or pointer to 0 if all blank
 */
     char* trim (char* str);
+/** Trim leading spaces. */
+    std::string ltrim (const std::string& str);
+/** Trim trailing spaces. */
+    std::string rtrim (const std::string& str);
+/** Trim leading and trailing spaces. */
+    std::string trim (const std::string& str);
 /** stricmp */
     int strcasecmp (const char* a, const char*b);
 /** strnicmp */
