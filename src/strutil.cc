@@ -7,7 +7,6 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdio.h>
-#include <stdio.h>
 
 /** Lime string utilities */
 
@@ -41,6 +40,30 @@ lime::trim (char* str)
     *(e + 1) = 0;
     return c;
 }
+
+
+std::string
+lime::ltrim(const std::string& s)
+{
+    const std::string WHITESPACE = " \n\r\t\f\v";
+    size_t start = s.find_first_not_of(WHITESPACE);
+    return (start == std::string::npos) ? "" : s.substr(start);
+}
+
+std::string
+lime::rtrim(const std::string& s)
+{
+    const std::string WHITESPACE = " \n\r\t\f\v";
+    size_t end = s.find_last_not_of(WHITESPACE);
+    return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+}
+
+std::string
+lime::trim(const std::string& s)
+{
+    return rtrim(ltrim(s));
+}
+
 
 int
 lime::strcasecmp (const char* a, const char*b)

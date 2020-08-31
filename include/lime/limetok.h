@@ -34,7 +34,7 @@ public:
         closing double-quote is found
     */
     const char* nextToken(
-        const char* delim = spaceOrTab(), bool skipLeadingDelim = true,
+        const char* delim = spaceOrTab(), bool skipLeadingSpaces = true,
         const char* fromSet = NULL
     );
     
