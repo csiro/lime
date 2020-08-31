@@ -65,6 +65,9 @@ namespace lime {
         void colourScaleR (double val, double max);
         void label (const char* label_);
         void label (std::string label_);
+        // Allow legend as a synonym of label
+        void legend (const char* label_) {label (label_);}
+        void legend (std::string label_) {label (label_);}
         void labelPoint (double x, double y, const char* label);
         void labelPoint (double x, double y, std::string label);
         void labelPoint (const lime::Point* p, const char* label);

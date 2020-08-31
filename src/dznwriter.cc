@@ -54,6 +54,11 @@ DznWriter::writeTranslated (
 {
     vector<string> strArray;
     for (int i : arrayOfInt) {
+        if (i < 0 || i >= names.size()) 
+            limeCrash (
+                "Index " << i << " out of range while writing " <<
+                fldName
+            );
         strArray.push_back (names[i]);
     }
     write (fldName, strArray, quotes);
