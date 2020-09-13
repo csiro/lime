@@ -77,4 +77,35 @@ std::vector<size_t> sort_indices (const std::vector<T> &v)
   return idx;
 }
 
+/* Distribute @param total units evenly as possible
+   amongst the entries of @param buckets.
+   (The maximum difference between bucket entries is 1)
+   E.g. if buckets has size 4 and total is 10, buckets is returned as
+   [ 3 3 2 2 ]
+   Valid for any integer/unsigned type T
+*/
+template <typename T>
+void
+distribute (T total, std::vector<T> buckets)
+{
+    T size = (T) buckets.size();
+    if (size == 0)
+        return; // Let the caller sort this out.
+    T base = total / size;
+    T remainder = total - (size * base);
+    assert (remainder < size);
+    T check = 0;
+    for (size_t k = 0; k < buckets.size(); k++) {
+        if (remainder > 0) {
+            buckets[k] = base + 1;
+            remainder--;
+            check += base + 1;
+        }
+        else {
+            buckets[k] = base;
+            check += base;
+        }
+    }
+    assert (remainder == 0 && check == total);
+}
 
