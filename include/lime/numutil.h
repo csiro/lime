@@ -57,55 +57,58 @@ bool limeIsZero (double a);
 /** The epsilon we use for "equality" */
 double limeEpsilon();
 
-/** Are all entries in the array zero? */
-bool allZero (const long* arr, int n);
-
-/** Return the vector of indexes that sort the given vector input
-    Vector requires a natural ordering (i.e. operator<)
- */
-template <typename T>
-std::vector<size_t> sort_indices (const std::vector<T> &v)
+namespace lime
 {
-  // initialize original index locations
-  std::vector<size_t> idx(v.size());
-  std::iota(idx.begin(), idx.end(), 0);
+    /** Are all entries in the array zero? */
+    bool allZero (const long* arr, int n);
 
-  // sort indexes based on comparing values in v
-  std::sort(idx.begin(), idx.end(),
-       [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
+    /** Return the vector of indexes that sort the given vector input
+        Vector requires a natural ordering (i.e. operator<)
+    */
+    template <typename T>
+    std::vector<size_t> sort_indices (const std::vector<T> &v)
+    {
+        // initialize original index locations
+        std::vector<size_t> idx(v.size());
+        std::iota(idx.begin(), idx.end(), 0);
 
-  return idx;
-}
+        // sort indexes based on comparing values in v
+        std::sort(idx.begin(), idx.end(),
+                  [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
 
-/* Distribute @param total units evenly as possible
-   amongst the entries of @param buckets.
-   (The maximum difference between bucket entries is 1)
-   E.g. if buckets has size 4 and total is 10, buckets is returned as
-   [ 3 3 2 2 ]
-   Valid for any integer/unsigned type T
-*/
-template <typename T>
-void
-distribute (T total, std::vector<T> buckets)
-{
-    T size = (T) buckets.size();
-    if (size == 0)
-        return; // Let the caller sort this out.
-    T base = total / size;
-    T remainder = total - (size * base);
-    assert (remainder < size);
-    T check = 0;
-    for (size_t k = 0; k < buckets.size(); k++) {
-        if (remainder > 0) {
-            buckets[k] = base + 1;
-            remainder--;
-            check += base + 1;
-        }
-        else {
-            buckets[k] = base;
-            check += base;
-        }
+        return idx;
     }
-    assert (remainder == 0 && check == total);
-}
 
+    /* Distribute @param total units evenly as possible
+       amongst the entries of @param buckets.
+       (The maximum difference between bucket entries is 1)
+       E.g. if buckets has size 4 and total is 10, buckets is returned as
+       [ 3 3 2 2 ]
+       Valid for any integer/unsigned type T
+    */
+
+    template <typename T>
+    void
+    distribute (T total, std::vector<T> buckets)
+    {
+        T size = (T) buckets.size();
+        if (size == 0)
+            return; // Let the caller sort this out.
+        T base = total / size;
+        T remainder = total - (size * base);
+        assert (remainder < size);
+        T check = 0;
+        for (size_t k = 0; k < buckets.size(); k++) {
+            if (remainder > 0) {
+                buckets[k] = base + 1;
+                remainder--;
+                check += base + 1;
+            }
+            else {
+                buckets[k] = base;
+                check += base;
+            }
+        }
+        assert (remainder == 0 && check == total);
+    }
+}
