@@ -5,6 +5,7 @@
 #include <algorithm>    // std::sort
 
 #include "lime/constants.h"
+#include "lime/debug.h"
 
 /** Max and min functions - c is all over the place with these */
 template <typename T>
@@ -89,7 +90,7 @@ namespace lime
 
     template <typename T>
     void
-    distribute (T total, std::vector<T> buckets)
+    distribute (T total, std::vector<T>& buckets)
     {
         T size = (T) buckets.size();
         if (size == 0)
@@ -97,6 +98,7 @@ namespace lime
         T base = total / size;
         T remainder = total - (size * base);
         assert (remainder < size);
+        DEBUG ('A', << "Base " << base << " rem " << remainder);
         T check = 0;
         for (size_t k = 0; k < buckets.size(); k++) {
             if (remainder > 0) {
