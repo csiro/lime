@@ -74,7 +74,7 @@ LimeError::timeStr ()
 void
 LimeError::warning ()
 {
-    cerr << "\rWarning:                                            " << endl;
+    cerr << endl << "Warning: " << endl;
     cerr << errorStream().str() << endl;
     log() << timeStr() << " Warning: " << errorStream().str() << endl;
     DEBUG ('a', "Warning: " << errorStream().str());
@@ -84,7 +84,7 @@ LimeError::warning ()
 void
 LimeError::crash () 
 {
-    cerr << "\rFatal error:                                            " << endl;
+    cerr << endl << "Fatal error: " << endl;
     cerr << errorStream().str() << endl;
     log() << timeStr() << " Fatal error: " << errorStream().str() << endl;
     DEBUG ('a', "Fatal: " << errorStream().str());
