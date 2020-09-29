@@ -331,6 +331,21 @@ Dig::drawBezierTo (const Point* p)
 }
 
 void
+Dig::drawCurveTo (double x, double y, double bend)
+{
+    out << "V " <<
+        setprecision(prec) << x << " " <<
+        setprecision(prec) << y << " " <<
+        bend << endl;
+}
+
+void
+Dig::drawCurveTo (const Point* p, double bend)
+{
+    drawCurveTo (p->x(), p->y(), bend);
+}
+
+void
 Dig::draw (double x1, double y1, double x2, double y2)
 {
     moveTo (x1, y1);
