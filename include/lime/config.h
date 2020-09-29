@@ -30,13 +30,16 @@ namespace lime
         
         void setDefaults (std::vector<std::string> defaults);
         
-        /** Add items after reading file */
         void addItem (std::string key, std::string val);
         void addItem (const char* key, const char* val);
         void addItem (std::string key, int val);
         void addItem (std::string key, long val);
         void addItem (std::string key, double val);
         void addItem (std::string key, unsigned long val);
+        void addItem (std::string key, std::vector<int> val);
+        void addItem (std::string key, std::vector<long> val);
+        void addItem (std::string key, std::vector<unsigned long> val);
+        void addItem (std::string key, std::vector<double> val);
         
         /** Add items in the form "key=val" or "key:val" */
         void addItem (std::string keyVal);
@@ -88,6 +91,12 @@ namespace lime
         int getTime (std::string key, int defaultVal = 0);
         int getTime (const char* key, int defaultVal = 0);
 
+        bool getVector (std::string key, std::vector<std::string> vec);
+        bool getVector (std::string key, std::vector<int> vec);
+        bool getVector (std::string key, std::vector<long> vec);
+        bool getVector (std::string key, std::vector<unsigned long> vec);
+        bool getVector (std::string key, std::vector<double> vec);
+        
         std::string show (const char* sep = " ") const;
         
         void display(std::ostream& os = std::cout) const override

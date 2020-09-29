@@ -122,7 +122,7 @@ private:
 };
     
 #define limeWarning(X) {LimeError::errorStream() << X; LimeError::warning();}
-#define limeCrash(X) {LimeError::errorStream() << X; LimeError::crash();}
+#define limeCrash(X) {LimeError::errorStream() << X << std::endl << "at " << __FILE__ << " line " << __LINE__; LimeError::crash();}
 #define limeProgress(X) {LimeError::errorStream() << X; LimeError::progress();}
 
 #define limeAssert(X) {LimeError::_limeAssert((X),__FILE__,__LINE__);}

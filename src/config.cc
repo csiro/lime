@@ -318,6 +318,76 @@ Config::getTime (const char* key, int defaultVal)
     return getTime (string(key), defaultVal);
 }
 
+bool
+Config::getVector (string key, vector<string> vec)
+{
+    string strVal = valFor (key);
+    if (strVal.length() == 0) { // Not there
+        return false;
+    }
+    vec.clear();
+    stringstream commasep (strVal); //
+    while (commasep.good()) {
+        string val;
+        getline (commasep, val,  ',');
+        vec.push_back (val);
+    }
+    return true;
+}
+
+bool
+Config::getVector (std::string key, std::vector<int> vec)
+{
+    vector<string> strvec;
+    if (!getVector (key, strvec))
+        return false;
+    vec.clear();
+    for (auto str : strvec) {
+        vec.push_back (stoi(str));
+    }
+    return true;
+}
+
+bool
+Config::getVector (std::string key, std::vector<long> vec)
+{
+    vector<string> strvec;
+    if (!getVector (key, strvec))
+        return false;
+    vec.clear();
+    for (auto str : strvec) {
+        vec.push_back (stol(str));
+    }
+    return true;
+}
+
+bool
+Config::getVector (std::string key, std::vector<unsigned long> vec)
+{
+    vector<string> strvec;
+    if (!getVector (key, strvec))
+        return false;
+    vec.clear();
+    for (auto str : strvec) {
+        vec.push_back (stoul(str));
+    }
+    return true;
+}
+
+bool
+Config::getVector (std::string key, std::vector<double> vec)
+{
+    vector<string> strvec;
+    if (!getVector (key, strvec))
+        return false;
+    vec.clear();
+    for (auto str : strvec) {
+        vec.push_back (stod(str));
+    }
+    return true;
+}
+
+
 string
 Config::valFor(string key) const
 {
