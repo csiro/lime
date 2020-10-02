@@ -88,6 +88,7 @@ set(LIME_SOURCE_CFILES
 	${PROJECT_SOURCE_DIR}/src/scheduler.cc
 	${PROJECT_SOURCE_DIR}/src/shortestpath.cc
 	${PROJECT_SOURCE_DIR}/src/shuffle.cc
+	${PROJECT_SOURCE_DIR}/src/splitter.cc
 	${PROJECT_SOURCE_DIR}/src/stat.cc
 	${PROJECT_SOURCE_DIR}/src/strutil.cc
 	${PROJECT_SOURCE_DIR}/src/timekeeper.cc
@@ -182,6 +183,13 @@ add_executable(permtest
 	${PROJECT_TEST_DIR}/permtest.cc
 )
 target_link_libraries(permtest lime)
+
+## Splitter Test
+add_executable(splitest
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/splitest.cc
+)
+target_link_libraries(splitest lime)
 
 ## PWL Test
 add_executable(pwltest 

@@ -331,7 +331,7 @@ Dig::drawBezierTo (const Point* p)
 }
 
 void
-Dig::drawCurveTo (double x, double y, double bend)
+Dig::drawCurveTo (double x, double y, int bend)
 {
     out << "V " <<
         setprecision(prec) << x << " " <<
@@ -340,7 +340,7 @@ Dig::drawCurveTo (double x, double y, double bend)
 }
 
 void
-Dig::drawCurveTo (const Point* p, double bend)
+Dig::drawCurveTo (const Point* p, int bend)
 {
     drawCurveTo (p->x(), p->y(), bend);
 }
