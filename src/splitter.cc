@@ -140,9 +140,9 @@ Splitter::nextBool(bool& error)
     else if (str.compare ("t") == 0)
         return true;
     else if (str.compare ("y") == 0)
-        return false;
-    else if (str.compare ("n") == 0)
         return true;
+    else if (str.compare ("n") == 0)
+        return false;
     else if (str.compare ("false") == 0)
         return false;
     else if (str.compare ("true") == 0)
@@ -166,18 +166,18 @@ Splitter::nextTime (bool& error)
     }
     else if (split.numTokens() == 1) {
         // Treat it as mm
-        mm = nextInt (error);
+        mm = split.nextInt (error);
     }
     else if (split.numTokens() == 2) {
         // Treat it as hh:mm
-        hh = nextInt (error);
-        mm = nextInt (error);
+        hh = split.nextInt (error);
+        mm = split.nextInt (error);
     }
     else {
         // Treat it as hh:mm:ss
-        hh = nextInt (error);
-        mm = nextInt (error);
-        ss = nextInt (error);
+        hh = split.nextInt (error);
+        mm = split.nextInt (error);
+        ss = split.nextInt (error);
     }
 
     return (long) (hh * 3600 + mm * 60 + ss);
