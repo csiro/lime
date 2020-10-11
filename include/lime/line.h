@@ -13,6 +13,10 @@ namespace lime {
         Line() : p1_(), p2_() {}
         Line (const Point& p1, const Point& p2) : p1_(p1), p2_(p2) {}
         Line (const Line& other) : p1_(other.p1_), p2_(other.p2_) {}
+        Line (double x1, double y1, double x2, double y2) :
+            p1_(x1, y1),
+            p2_(x2, y2)
+        {}
         virtual ~Line() {}
 
         void setP1 (const Point& p1) {p1_ = p1;}
