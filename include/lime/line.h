@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 #include "lime/point.h"
 #include "lime/displayable.h"
@@ -31,6 +32,10 @@ namespace lime {
         double y2() const {return p2_.y();}
 
         double length () const {return p1_.distTo(&p2_);}
+
+        double angle () const {
+            return atan2 (p2_.y() - p1_.y(), p2_.x() - p1_.x());
+        }
 
         void display (std::ostream& os = std::cout) const override
         {
