@@ -8,6 +8,7 @@
 
 #include "lime/dig.h"
 #include "lime/point.h"
+#include "lime/line.h"
 #include "lime/box.h"
 #include "lime/numutil.h"
 
@@ -341,6 +342,12 @@ void
 Dig::draw (const lime::Point* a, const lime::Point* b)
 {
     draw (a->x(), a->y(), b->x(), b->y());
+}
+
+void
+Dig::draw (const lime::Line* line)
+{
+    draw (line->p1(), line->p2());
 }
 
 void

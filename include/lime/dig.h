@@ -18,6 +18,7 @@
 namespace lime {
 
     class Point;
+    class Line;
     class Box;
 
     class Dig : public Displayable
@@ -88,6 +89,7 @@ namespace lime {
         void drawBezierTo (const lime::Point* point);
         void draw (double x1, double y1, double x2, double y2);
         void draw (const lime::Point* a, const lime::Point* b);
+        void draw (const lime::Line* line);
         void box (double x1, double y1, double x2, double y2, int c);
         void box (const lime::Box* box, int c);
         void boxOutline (const lime::Box* box);
