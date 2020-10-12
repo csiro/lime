@@ -81,15 +81,15 @@ Dig::yLabel (string label)
 }
 
 void
-Dig::label (const char* label_)
+Dig::label (const char* label_, bool silent)
 {
-    out << "L \"" << label_ << "\"" << endl;
+    out << "L" << (silent ? "S" : "") << " \"" << label_ << "\"" << endl;
 }
 
 void
-Dig::label (string label_)
+Dig::label (string label_, bool silent)
 {
-    out << "L \"" << label_ << "\"" << endl;
+    label (label_.c_str(), silent);
 }
 
 void
