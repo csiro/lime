@@ -18,6 +18,7 @@
 namespace lime {
 
     class Point;
+    class Line;
     class Box;
 
     class Dig : public Displayable
@@ -63,8 +64,8 @@ namespace lime {
         void colourScaleBR (double val, double max);
         // set colour using red-only scale, 0 to max
         void colourScaleR (double val, double max);
-        void label (const char* label_);
-        void label (std::string label_);
+        void label (const char* label_, bool silent = false);
+        void label (std::string label_, bool silent = false);
         // Allow legend as a synonym of label
         void legend (const char* label_) {label (label_);}
         void legend (std::string label_) {label (label_);}
@@ -90,6 +91,7 @@ namespace lime {
         void drawCurveTo (const lime::Point* point, int bend = 0);
         void draw (double x1, double y1, double x2, double y2);
         void draw (const lime::Point* a, const lime::Point* b);
+        void draw (const lime::Line* line);
         void box (double x1, double y1, double x2, double y2, int c);
         void box (const lime::Box* box, int c);
         void boxOutline (const lime::Box* box);
