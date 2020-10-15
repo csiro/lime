@@ -16,7 +16,7 @@ namespace lime {
         void cleanup();
         
     protected:
-        virtual bool isGoal (SPNode* node) = 0;
+        virtual bool isGoal (SPNode* node) {return false;}
         
         SPNode* findPathFrom (SPNode* from);
         SPNode* popFirst();
