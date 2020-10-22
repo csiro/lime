@@ -46,6 +46,7 @@ namespace lime {
         void yLabel (std::string label);
         void style (int style);
         void style (int colour, int mark);
+        void style (int colour, int mark, int stroke);
         void nextStyle ();
         void nextDataset ();
         void mark (int m);
