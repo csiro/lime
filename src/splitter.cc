@@ -30,7 +30,7 @@ Splitter::split (string str, const char* delim, const char* commentChar)
     }
         
     while (str.length() > 0) {
-        cout << "Str is >" << str << "<" << endl;
+        //cout << "Str is >" << str << "<" << endl;
         if (delim[0] == ' ') {
             // Skip leading spaces
             size_t non_space = str.find_first_not_of (delim);
@@ -50,7 +50,7 @@ Splitter::split (string str, const char* delim, const char* commentChar)
         bool inQuotes = false;
         size_t upto = 0;
         for (upto = 0; upto < str.length(); upto++) {
-            cout << "  Upto " << upto << " " << str[upto] << endl;
+            //cout << "  Upto " << upto << " " << str[upto] << endl;
             if (!inQuotes && strchr (delim, str[upto]) != NULL) {
                 // Found delim. Step over it
                 upto++;
