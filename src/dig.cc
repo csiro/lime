@@ -110,8 +110,8 @@ Dig::style (int colour, int mark)
 void
 Dig::style (int colour, int mark, int stroke)
 {
-    int style = (((stroke * numStdColours()) + mark) * numStdMarks()) + colour;
-    out << "S " << style << endl;
+    out << endl;
+    out << "S2 " << colour << " " << mark << " " << stroke << endl;
 }
 
 void
