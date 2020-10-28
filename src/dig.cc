@@ -111,7 +111,7 @@ void
 Dig::style (int colour, int mark, int stroke)
 {
     out << endl;
-    out << "S2 " << colour << " " << mark << " " << stroke << endl;
+    out << "S3 " << colour << " " << mark << " " << stroke << endl;
 }
 
 void
