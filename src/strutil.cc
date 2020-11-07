@@ -285,6 +285,18 @@ lime::fmtDayTime (int secs)
     return lime::fmtDayTime (secs, buffer);
 }
 
+string
+lime::fmtHhMm (int secs)
+{
+    char buffer[100]
+    int hh = secs / (60 * 60); 
+    secs -= hh * (60 * 60);
+    int mm = secs / 60;
+    secs -= mm * 60;
+    sprintf (buffer, "%2d:%2.2d", hh, mm);
+    return string(buffer);
+}
+
 char*
 lime::itoa (int val)
 {

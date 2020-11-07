@@ -79,6 +79,9 @@ namespace lime {
 /** As above, but use a static buffer */
     extern char* fmtTime (int secs);
     extern char* fmtDayTime (int secs);
+/** String formatting */
+    extern std::string fmtHhMm (int secs);
+
 /** Return integer as char* */
     extern char* itoa (int val);
     extern std::string itostr (int val);
