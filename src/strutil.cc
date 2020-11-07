@@ -288,7 +288,7 @@ lime::fmtDayTime (int secs)
 string
 lime::fmtHhMm (int secs)
 {
-    char buffer[100]
+    char buffer[100];
     int hh = secs / (60 * 60); 
     secs -= hh * (60 * 60);
     int mm = secs / 60;
