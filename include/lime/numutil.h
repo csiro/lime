@@ -65,6 +65,10 @@ namespace lime
     double cvt_kmph_mps (double kmph) {return kmph * 1000.0 / 3600.00;}
     double cvt_mps_kmph (double mps) {return mps * 3600.00 / 1000.0;}
 
+    double cvt_to_secs (double hh, double mm, double ss) {
+        return ss + 60.0 * (mm + 60.0 * hh);
+    }
+
     /** Return the vector of indexes that sort the given vector input
         Vector requires a natural ordering (i.e. operator<)
     */
