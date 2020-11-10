@@ -62,12 +62,13 @@ namespace lime
     /** Are all entries in the array zero? */
     bool allZero (const long* arr, int n);
 
-    double cvt_kmph_mps (double kmph) {return kmph * 1000.0 / 3600.00;}
-    double cvt_mps_kmph (double mps) {return mps * 3600.00 / 1000.0;}
+    double cvt_kmph_mps (double kmph);
+    double cvt_mps_kmph (double mps);
 
-    double cvt_to_secs (double hh, double mm, double ss) {
-        return ss + 60.0 * (mm + 60.0 * hh);
-    }
+    // Convert from days+hh:mm:ss to seconds
+    double cvt_to_secs (
+        double ss, double mm = 0.0, double hh = 0.0, double days = 0.0
+    );
 
     /** Return the vector of indexes that sort the given vector input
         Vector requires a natural ordering (i.e. operator<)

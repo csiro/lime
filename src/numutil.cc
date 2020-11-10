@@ -87,3 +87,20 @@ allZero (const long* arr, int n)
             return false;
     return true;
 }
+
+double
+cvt_kmph_mps (double kmph)
+{
+    return kmph * 1000.0 / 3600.00;
+}
+double
+cvt_mps_kmph (double mps)
+{
+    return mps * 3600.00 / 1000.0;
+}
+
+double
+cvt_to_secs (double ss, double mm, double hh, double days)
+{
+    return ss + 60.0 * (mm + 60.0 * (hh + 24.0 * days));
+}
