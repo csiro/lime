@@ -62,6 +62,9 @@ namespace lime
     /** Are all entries in the array zero? */
     bool allZero (const long* arr, int n);
 
+    double cvt_kmph_mps (double kmph) {return kmph * 1000.0 / 3600.00;}
+    double cvt_mps_kmph (double mps) {return mps * 3600.00 / 1000.0;}
+
     /** Return the vector of indexes that sort the given vector input
         Vector requires a natural ordering (i.e. operator<)
     */
