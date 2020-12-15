@@ -70,6 +70,7 @@ set(LIME_SOURCE_CFILES
 	${PROJECT_SOURCE_DIR}/src/dznreader.cc
 	${PROJECT_SOURCE_DIR}/src/dznwriter.cc
 	${PROJECT_SOURCE_DIR}/src/error.cc
+	${PROJECT_SOURCE_DIR}/src/fileutil.cc
 	${PROJECT_SOURCE_DIR}/src/geomutil.cc
 	${PROJECT_SOURCE_DIR}/src/indexchoice.cc
 	${PROJECT_SOURCE_DIR}/src/intset.cc
@@ -112,6 +113,7 @@ set(LIME_SOURCE_HEADERS
 	${PROJECT_INCLUDE_DIR}/lime/dznreader.h
 	${PROJECT_INCLUDE_DIR}/lime/dznwriter.h
 	${PROJECT_INCLUDE_DIR}/lime/error.h
+	${PROJECT_INCLUDE_DIR}/lime/fileutil.h
 	${PROJECT_INCLUDE_DIR}/lime/geomutil.h
 	${PROJECT_INCLUDE_DIR}/lime/hillclimb.h
 	${PROJECT_INCLUDE_DIR}/lime/indexchoice.h
@@ -205,6 +207,13 @@ add_executable(hilbert
 )
 target_link_libraries(hilbert lime)
 
+## File Test
+add_executable(filetest
+	EXCLUDE_FROM_ALL
+	${PROJECT_SOURCE_DIR}/test/filetest.cc
+)
+target_link_libraries(filetest lime)
+
 ## Custom target for all tests
 add_custom_target(tests)
 add_dependencies(tests
@@ -212,6 +221,7 @@ add_dependencies(tests
 	boxtest
 	accessortest
 	pwltest
+	filetest
 )
 
 #------------------------------------------------------------------------------#
