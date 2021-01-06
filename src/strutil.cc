@@ -66,7 +66,7 @@ lime::trim(const std::string& s)
 
 
 int
-lime::strcasecmp (const char* a, const char*b)
+lime::strcasecmp (const char* a, const char* b)
 {
     if (a == NULL && b != NULL)
         return -1;
@@ -83,6 +83,20 @@ lime::strcasecmp (const char* a, const char*b)
         b++;
     }
     return 0;
+}
+
+bool
+equal_ic (const string& a, const string& b)
+{
+    unsigned int sz = a.size();
+    if (sz != b.size())
+        return false;
+    
+    for (unsigned int i = 0; i < sz; ++i) 
+        if (tolower(a[i]) != tolower(b[i]))
+            return false;
+    
+    return true;
 }
 
 int
