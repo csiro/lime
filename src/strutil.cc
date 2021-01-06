@@ -86,7 +86,7 @@ lime::strcasecmp (const char* a, const char* b)
 }
 
 bool
-equal_ic (const string& a, const string& b)
+lime::equal_ic (const string& a, const string& b)
 {
     unsigned int sz = a.size();
     if (sz != b.size())
