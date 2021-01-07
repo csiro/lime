@@ -70,7 +70,10 @@ namespace lime
         double ss, double mm = 0.0, double hh = 0.0, double days = 0.0
     );
 
-    /** Return the vector of indexes that sort the given vector input
+    double deg2rad (double deg);
+    double rad2deg (double rad);
+    
+   /** Return the vector of indexes that sort the given vector input
         Vector requires a natural ordering (i.e. operator<)
     */
     template <typename T>

@@ -106,4 +106,17 @@ namespace lime
     {
         return ss + 60.0 * (mm + 60.0 * (hh + 24.0 * days));
     }
+
+    double deg2rad (double deg)
+    {
+        const double halfCirc = M_PI / 180;
+        return deg * halfCirc;            
+    }
+
+    double rad2deg (double rad)
+    {
+        const double halfCirc = 180 / M_PI;
+        return rad * halfCirc;            
+    }
+    
 }
