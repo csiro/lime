@@ -160,6 +160,36 @@ Config::addItem (string key, unsigned long val)
 }
 
 void
+Config::addString(std::string key, std::string val)
+{
+    addItem (key, val);
+}
+
+void 
+Config::addInt (std::string key, int val)
+{
+    addItem (key, val);
+}
+
+void 
+Config::addLong (std::string key, long val)
+{
+    addItem (key, val);
+}
+
+void 
+Config::addDouble (std::string key, double val)
+{
+    addItem (key, val);
+}
+
+void 
+Config::addULong (std::string key, unsigned long val)
+{
+    addItem (key, val);
+}
+
+void
 Config::addItem (string keyVal) 
 {
     for (auto iter = keyVal.begin(); iter != keyVal.end(); ++iter) {
