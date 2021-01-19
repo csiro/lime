@@ -21,7 +21,8 @@ namespace lime
          */
         Opts (
             std::string description,
-            const char* build_date, const char* build_time
+            const char* build_date = __DATE__,
+            const char* build_time = __TIME__
         );
         void add_opt (
             const char* switch_str, std::string* str_switch,
