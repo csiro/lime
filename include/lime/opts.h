@@ -69,6 +69,11 @@ namespace lime
             const char* usage_str, double* double_ptr, const char* help_str
         );
             
+        void usage (
+            const char* cmd, const char* message1 = 0, const char* message2 = 0
+        );
+        void usage (const char* cmd, std::string msg);
+
         bool process (int argc, const char* argv[], Config* config = NULL);
         
     protected:
@@ -165,10 +170,6 @@ namespace lime
             {
             }
         };
-
-        void usage (
-            const char* cmd, const char* message1 = 0, const char* message2 = 0
-        );
 
         std::string description_;
         const char* build_date_;

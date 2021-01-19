@@ -235,6 +235,12 @@ Opts::usage (
     cerr << endl;
 }
             
+void
+Opts::usage (const char* cmd, string msg)
+{
+    usage (cmd, msg.c_str());
+}
+
 bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
@@ -315,8 +321,7 @@ Opts::process (int argc, const char* argv[], Config* config)
     }
     size_t reqd_args = args_.size() - optional_args_;
     if (upto_arg < reqd_args) {
-        string msg = to_string (reqd_args) + " args required";
-        usage (argv[0], msg.c_str());
+        usage (argv[0], to_string (reqd_args) + " args required");
         return false;
     }
 
