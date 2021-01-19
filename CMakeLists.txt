@@ -76,6 +76,7 @@ set(LIME_SOURCE_CFILES
 	${PROJECT_SOURCE_DIR}/src/limetok.cc
 	${PROJECT_SOURCE_DIR}/src/lockfile.cc
 	${PROJECT_SOURCE_DIR}/src/numutil.cc
+	${PROJECT_SOURCE_DIR}/src/opts.cc
 	${PROJECT_SOURCE_DIR}/src/point.cc
 	${PROJECT_SOURCE_DIR}/src/progressbar.cc
 	${PROJECT_SOURCE_DIR}/src/pwl.cc
@@ -123,6 +124,7 @@ set(LIME_SOURCE_HEADERS
 	${PROJECT_INCLUDE_DIR}/lime/line.h
 	${PROJECT_INCLUDE_DIR}/lime/lockfile.h
 	${PROJECT_INCLUDE_DIR}/lime/numutil.h
+	${PROJECT_INCLUDE_DIR}/lime/opts.h
 	${PROJECT_INCLUDE_DIR}/lime/permutation.h
 	${PROJECT_INCLUDE_DIR}/lime/point.h
 	${PROJECT_INCLUDE_DIR}/lime/progressbar.h
@@ -177,6 +179,13 @@ add_executable(boxtest
 )
 target_link_libraries(boxtest lime)
 
+## Opt Test
+add_executable(opttest
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/opttest
+)
+target_link_libraries(opttest lime)
+
 ## Permutation Test
 add_executable(permtest 
 	EXCLUDE_FROM_ALL
@@ -210,6 +219,7 @@ add_custom_target(tests)
 add_dependencies(tests
 	limetest
 	boxtest
+	opttest
 	accessortest
 	pwltest
 )
@@ -228,7 +238,7 @@ install(
     MESSAGE_NEVER
 )
 install(
-    TARGETS limetest accessortest boxtest pwltest 
+    TARGETS limetest accessortest boxtest opttest pwltest 
     RUNTIME DESTINATION bin 
     OPTIONAL
 )
