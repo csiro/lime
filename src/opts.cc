@@ -53,6 +53,15 @@ Opts::add_opt (const char* switch_str, int* int_ptr, const char* help_str)
 
 void
 Opts::add_opt (
+    const char* switch_str, bool* bool_ptr,
+    const char* help_str
+)
+{
+    switches_.push_back (Entry (switch_str, help_str, bool_ptr));
+}
+
+void
+Opts::add_opt (
     const char* switch_str, double* double_ptr,
     const char* help_str
 )
@@ -62,11 +71,11 @@ Opts::add_opt (
 
 void
 Opts::add_opt (
-    const char* switch_str, bool* bool_ptr,
+    const char* switch_str, Config* config_ptr,
     const char* help_str
 )
 {
-    switches_.push_back (Entry (switch_str, help_str, bool_ptr));
+    switches_.push_back (Entry (switch_str, help_str, config_ptr));
 }
 
 void
@@ -148,6 +157,7 @@ Opts::usage (
             cerr << " str]";
             break;
         case FILENAME:
+        case CONFIG:
             cerr << " fn]";
             break;
         case INT:
@@ -189,6 +199,8 @@ Opts::usage (
             break;
         case BOOL:
             cerr << *sw.bool_ptr;
+            break;
+        case CONFIG:
             break;
         }
         cerr << "]" << endl;
@@ -250,6 +262,9 @@ Opts::process (int argc, const char* argv[], Config* config)
                         break;
                     case BOOL:
                         *sw.bool_ptr = !*sw.bool_ptr;
+                        break;
+                    case CONFIG:
+                        sw.config_ptr->read (argv[++upto]);
                         break;
                     }
                 }

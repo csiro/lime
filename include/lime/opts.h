@@ -40,6 +40,10 @@ namespace lime
             const char* switch_str, double* double_switch,
             const char* help_str
         );
+        void add_opt (
+            const char* switch_str, Config* config_switch,
+            const char* help_str
+        );
         // Bool options are flipped if switch-str is present
         void add_opt (
             const char* switch_str, bool* bool_switch,
@@ -68,7 +72,7 @@ namespace lime
         bool process (int argc, const char* argv[], Config* config = NULL);
         
     protected:
-        enum ValType {STR, FILENAME, INT, BOOL, DBL};
+        enum ValType {STR, FILENAME, INT, BOOL, DBL, CONFIG};
         struct Entry
         {
             const char* switch_str;
@@ -78,6 +82,7 @@ namespace lime
             int* int_ptr;
             bool* bool_ptr;
             double* double_ptr;
+            Config* config_ptr;
 
             Entry (
                 const char* switch_str_,
@@ -91,7 +96,8 @@ namespace lime
                 str_ptr(str_ptr_),
                 int_ptr(NULL),
                 bool_ptr(NULL),
-                double_ptr(NULL)
+                double_ptr(NULL),
+                config_ptr(NULL)
             {
             }
 
@@ -106,7 +112,8 @@ namespace lime
                 str_ptr(NULL),
                 int_ptr(int_ptr_),
                 bool_ptr(NULL),
-                double_ptr(NULL)
+                double_ptr(NULL),
+                config_ptr(NULL)
             {
             }
 
@@ -121,7 +128,8 @@ namespace lime
                 str_ptr(NULL),
                 int_ptr(NULL),
                 bool_ptr(bool_ptr_),
-                double_ptr(NULL)
+                double_ptr(NULL),
+                config_ptr(NULL)
             {
             }
 
@@ -136,7 +144,24 @@ namespace lime
                 str_ptr(NULL),
                 int_ptr(NULL),
                 bool_ptr(NULL),
-                double_ptr(double_ptr_)
+                double_ptr(double_ptr_),
+                config_ptr(NULL)
+            {
+            }
+
+            Entry (
+                const char* switch_str_,
+                const char* help_str_,
+                Config* config_ptr_
+            ) :
+                switch_str(switch_str_),
+                help_str(help_str_),
+                val_type(CONFIG),
+                str_ptr(NULL),
+                int_ptr(NULL),
+                bool_ptr(NULL),
+                double_ptr(NULL),
+                config_ptr(config_ptr_)
             {
             }
         };
