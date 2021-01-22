@@ -96,6 +96,7 @@ namespace lime {
         void box (double x1, double y1, double x2, double y2, int c);
         void box (const lime::Box* box, int c);
         void boxOutline (const lime::Box* box);
+        void fillPoly();
         void xTic (double x, const char* label);
         void xTic (double x, std::string label);
         void yTic (double y, const char* label);

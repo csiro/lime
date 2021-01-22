@@ -405,6 +405,12 @@ Dig::boxOutline (const Box* box)
 }
 
 void
+Dig::fillPoly()
+{
+    out << "F" << endl;
+}
+
+void
 Dig::xTic (double x, const char* label)
 {
     out << "XT " << setprecision(prec) << x << " \"" << label << "\"" << endl;
