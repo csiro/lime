@@ -43,7 +43,10 @@ Opts::add_opt (
 )
 {
     if (switch_exists (switch_str))
-        limeCrash ("Switch already exists: " << switch_str);
+        limeCrash (
+            "Config error: Switch already exists: " <<
+            switch_str << ": " << help_str
+        );
     switches_.push_back (Entry (switch_str, help_str, STR, str_ptr));
 }
 
@@ -54,7 +57,10 @@ Opts::add_opt_filename (
 )
 {
     if (switch_exists (switch_str))
-        limeCrash ("Switch already exists: " << switch_str);
+        limeCrash (
+            "Config error: Switch already exists: " << 
+            switch_str << ": " << help_str
+        );
     switches_.push_back (Entry (switch_str, help_str, FILENAME, str_ptr));
 }
 
@@ -62,7 +68,10 @@ void
 Opts::add_opt (const char* switch_str, int* int_ptr, const char* help_str)
 {
     if (switch_exists (switch_str))
-        limeCrash ("Switch already exists: " << switch_str);
+        limeCrash (
+            "Config error: Switch already exists: " << 
+            switch_str << ": " << help_str
+        );
     switches_.push_back (Entry (switch_str, help_str, int_ptr));
 }
 
@@ -73,7 +82,10 @@ Opts::add_opt (
 )
 {
     if (switch_exists (switch_str))
-        limeCrash ("Switch already exists: " << switch_str);
+        limeCrash (
+            "Config error: Switch already exists: " << 
+            switch_str << ": " << help_str
+        );
     switches_.push_back (Entry (switch_str, help_str, bool_ptr));
 }
 
@@ -84,7 +96,10 @@ Opts::add_opt (
 )
 {
     if (switch_exists (switch_str))
-        limeCrash ("Switch already exists: " << switch_str);
+        limeCrash (
+            "Config error: Switch already exists: " << 
+            switch_str << ": " << help_str
+        );
     switches_.push_back (Entry (switch_str, help_str, double_ptr));
 }
 
@@ -95,7 +110,7 @@ Opts::add_opt (
 )
 {
     if (switch_exists (switch_str))
-        limeCrash ("Switch already exists: " << switch_str);
+        limeCrash ("Config error: Switch already exists: " << help_str);
     switches_.push_back (Entry (switch_str, help_str, config_ptr));
 }
 
@@ -105,7 +120,10 @@ Opts::add_arg (
 )
 {
     if (optional_args_ > 0)
-        limeCrash ("Adding optional args after non-optional: " << help_str);
+        limeCrash (
+            "Config error: Adding optional args after non-optional: " <<
+            help_str
+        );
     
     args_.push_back (Entry (usage_str, help_str, STR, str_ptr));
 }
@@ -125,7 +143,10 @@ Opts::add_arg (
 )
 {
     if (optional_args_ > 0)
-        limeCrash ("Adding optional args after non-optional: " << help_str);
+        limeCrash (
+            "Config error: Adding optional args after non-optional: " <<
+            help_str
+        );
     
     args_.push_back (Entry (usage_str, help_str, int_ptr));
 }
@@ -145,7 +166,10 @@ Opts::add_arg (
 )
 {
     if (optional_args_ > 0)
-        limeCrash ("Adding optional args after non-optional: " << help_str);
+        limeCrash (
+            "Config error: Adding optional args after non-optional: " <<
+            help_str
+        );
     
     args_.push_back (Entry (usage_str, help_str, double_ptr));
 }
