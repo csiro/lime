@@ -170,7 +170,8 @@ namespace lime
             {
             }
         };
-
+        bool switch_exists (const char* switch_str);
+        
         std::string description_;
         const char* build_date_;
         const char* build_time_;

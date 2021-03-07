@@ -27,12 +27,23 @@ Opts::Opts (
 {
 }
 
+bool
+Opts::switch_exists (const char* switch_str)
+{
+    for (auto& sw : switches_) 
+        if (strcmp (sw.switch_str, switch_str) == 0)
+            return true;
+    return false;
+}
+
 void
 Opts::add_opt (
     const char* switch_str, std::string* str_ptr,
     const char* help_str
 )
 {
+    if (switch_exists (switch_str))
+        limeCrash ("Switch already exists: " << switch_str);
     switches_.push_back (Entry (switch_str, help_str, STR, str_ptr));
 }
 
@@ -42,12 +53,16 @@ Opts::add_opt_filename (
     const char* help_str
 )
 {
+    if (switch_exists (switch_str))
+        limeCrash ("Switch already exists: " << switch_str);
     switches_.push_back (Entry (switch_str, help_str, FILENAME, str_ptr));
 }
 
 void
 Opts::add_opt (const char* switch_str, int* int_ptr, const char* help_str)
 {
+    if (switch_exists (switch_str))
+        limeCrash ("Switch already exists: " << switch_str);
     switches_.push_back (Entry (switch_str, help_str, int_ptr));
 }
 
@@ -57,6 +72,8 @@ Opts::add_opt (
     const char* help_str
 )
 {
+    if (switch_exists (switch_str))
+        limeCrash ("Switch already exists: " << switch_str);
     switches_.push_back (Entry (switch_str, help_str, bool_ptr));
 }
 
@@ -66,6 +83,8 @@ Opts::add_opt (
     const char* help_str
 )
 {
+    if (switch_exists (switch_str))
+        limeCrash ("Switch already exists: " << switch_str);
     switches_.push_back (Entry (switch_str, help_str, double_ptr));
 }
 
@@ -75,6 +94,8 @@ Opts::add_opt (
     const char* help_str
 )
 {
+    if (switch_exists (switch_str))
+        limeCrash ("Switch already exists: " << switch_str);
     switches_.push_back (Entry (switch_str, help_str, config_ptr));
 }
 
