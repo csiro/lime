@@ -20,7 +20,7 @@ namespace lime {
         Reader(std::string filename);
         virtual ~Reader();
 
-        char* getLine();
+        char* getLine(bool skipBlanks = true);
         static bool matches (const char* a, const char* b);
         bool isListEnd (const char* str) const {return matches (str, "*END*");}
 
