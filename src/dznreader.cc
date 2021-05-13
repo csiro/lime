@@ -22,26 +22,33 @@ DznReader::DznReader (string filename) :
 {
 }
 
-void
-DznReader::read (const char* fldName, int& val)
+bool
+DznReader::read (const char* fldName, int& val, bool failIfMissing)
 {
-    find (fldName);
+    if (!find (fldName, failIfMissing))
+        return false;
     bool error = false;
     val = ltok_.nextInt(error);
+    return true;
 }
  
-void
-DznReader::read (const char* fldName, double& val)
+bool
+DznReader::read (const char* fldName, double& val, bool failIfMissing)
 {
-    find (fldName);
+    if (!find (fldName, failIfMissing))
+        return false;
     bool error = false;
     val = ltok_.nextDouble (error);
+    return true;
 }
 
-void
-DznReader::read (const char* fldName, std::vector<int>& arrayOfInt)
+bool
+DznReader::read (
+    const char* fldName, std::vector<int>& arrayOfInt, bool failIfMissing
+)
 {
-    find (fldName);
+    if (!find (fldName, failIfMissing))
+        return false;
     expect ("[");
     bool error = false;
     int val = ltok_.nextInt(error);
@@ -51,17 +58,19 @@ DznReader::read (const char* fldName, std::vector<int>& arrayOfInt)
             break;
         val = ltok_.nextInt(error);
     }
+    return true;
 }
 
 bool
 DznReader::readTranslated (
     const char* fldName, std::vector<int>& arrayOfInt,
-    vector<string> names
+    vector<string> names, bool failIfMissing
 )
 {
     arrayOfInt.clear();
     vector<string> strArr;
-    read (fldName, strArr);
+    if (!read (fldName, strArr, failIfMissing))
+        return false;
     for (auto str : strArr) {
         string ustr = toUpper (str);
         bool found = false;
@@ -77,10 +86,13 @@ DznReader::readTranslated (
     return true;
 }
 
-void
-DznReader::read (const char* fldName, vector<string>& arrayOfString)
+bool
+DznReader::read (
+    const char* fldName, vector<string>& arrayOfString, bool failIfMissing
+)
 {
-    find (fldName);
+    if (!find (fldName, failIfMissing))
+        return false;
     expect ("[");
     string str = ltok_.nextToken (",]", false);
     arrayOfString.push_back(str);
@@ -88,15 +100,18 @@ DznReader::read (const char* fldName, vector<string>& arrayOfString)
         str = ltok_.nextToken (",]");
         arrayOfString.push_back(str);
     }
+    return true;
 }
 
-void
+bool
 DznReader::read (
-    const char* fldName, std::vector<std::set<int>>& arrayOfSetOfInt
+    const char* fldName, std::vector<std::set<int>>& arrayOfSetOfInt,
+    bool failIfMissing
 )
 {
     DEBUG ('D', "Read array of set of int " << fldName);
-    find (fldName);
+    if (!find (fldName, failIfMissing))
+        return false;
     expect ("[");
     while (true) {
         std::set<int> theSet;
@@ -121,14 +136,17 @@ DznReader::read (
             break;
         }
     }
+    return true;
 }
 
-void
+bool
 DznReader::read (
-    const char* fldName, std::vector<std::vector<int>>& arrayOfArrayOfInt
+    const char* fldName, std::vector<std::vector<int>>& arrayOfArrayOfInt,
+    bool failIfMissing
 )
 {
-    find (fldName);
+    if (!find (fldName, failIfMissing))
+        return false;
     expect ("[");
     while (true) {
         std::vector<int> theVector;
@@ -164,6 +182,7 @@ DznReader::read (
             break;
         }
     }
+    return true;
 }
 
 string
@@ -191,8 +210,8 @@ DznReader::readMetadata()
    Eats the '='
    ltok_ contains the line.
  */
-void
-DznReader::find (const char* fldName)
+bool
+DznReader::find (const char* fldName, bool failIfMissing)
 {
     bool found = false;
     reader_.rewind();
@@ -203,9 +222,15 @@ DznReader::find (const char* fldName)
         if (reader_.matches (tok, fldName)) 
             found = true;
     }
-    if (!found)
-        readerError (&reader_, "Lost field name " << fldName);
+    if (!found) {
+        if (failIfMissing) {
+            readerError (&reader_, "Lost field name " << fldName);
+        }
+        else
+            return false;
+    }
     expect ("=");
+    return true;
 }
 
 int

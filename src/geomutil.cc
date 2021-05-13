@@ -248,7 +248,7 @@ lime::greatCircleDistMetres (
     (x,y) is read as (lat/long)
 */
 double
-lime::greatCircleDistMetres (const Point* from, const Point* to)
+lime::greatCircleDistLatLongMetres (const Point* from, const Point* to)
 {
     return
         greatCircleDistMetres (
@@ -256,8 +256,20 @@ lime::greatCircleDistMetres (const Point* from, const Point* to)
         );
 }
 
+/** Great circle distance in metres between two Points
+    (x,y) is read as (long/lat)
+*/
+double
+lime::greatCircleDistLongLatMetres (const Point* from, const Point* to)
+{
+    return
+        greatCircleDistMetres (
+            from->y(), from->x(), to->y(), to->x()
+        );
+}
+
 double
 lime::greatCircleDistNM (const Point* from, const Point* to)
 {
-    return greatCircleDistMetres (from, to) *  0.000539956803;
+    return greatCircleDistLatLongMetres (from, to) *  0.000539956803;
 }

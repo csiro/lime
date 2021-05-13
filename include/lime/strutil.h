@@ -19,8 +19,10 @@ namespace lime {
     std::string trim (const std::string& str);
 /** stricmp */
     int strcasecmp (const char* a, const char*b);
+    // Equal ignore case
+    bool equal_ic (const std::string& a, const std::string& b);
 /** strnicmp */
-    int strncasecmp (const char* a, const char*b, int n);
+    int strncasecmp (const char* a, const char* b, int n);
 /** Return current time as a formated time string */
     char* todayStr (char* buffer, size_t bufferLen);
 /** Return current time as a formated time string */
@@ -79,6 +81,9 @@ namespace lime {
 /** As above, but use a static buffer */
     extern char* fmtTime (int secs);
     extern char* fmtDayTime (int secs);
+/** String formatting */
+    extern std::string fmtHhMm (int secs);
+
 /** Return integer as char* */
     extern char* itoa (int val);
     extern std::string itostr (int val);

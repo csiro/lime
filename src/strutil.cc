@@ -66,7 +66,7 @@ lime::trim(const std::string& s)
 
 
 int
-lime::strcasecmp (const char* a, const char*b)
+lime::strcasecmp (const char* a, const char* b)
 {
     if (a == NULL && b != NULL)
         return -1;
@@ -83,6 +83,20 @@ lime::strcasecmp (const char* a, const char*b)
         b++;
     }
     return 0;
+}
+
+bool
+lime::equal_ic (const string& a, const string& b)
+{
+    unsigned int sz = a.size();
+    if (sz != b.size())
+        return false;
+    
+    for (unsigned int i = 0; i < sz; ++i) 
+        if (tolower(a[i]) != tolower(b[i]))
+            return false;
+    
+    return true;
 }
 
 int
@@ -283,6 +297,18 @@ lime::fmtDayTime (int secs)
 {
     static char buffer[100];
     return lime::fmtDayTime (secs, buffer);
+}
+
+string
+lime::fmtHhMm (int secs)
+{
+    char buffer[100];
+    int hh = secs / (60 * 60); 
+    secs -= hh * (60 * 60);
+    int mm = secs / 60;
+    secs -= mm * 60;
+    sprintf (buffer, "%2d:%2.2d", hh, mm);
+    return string(buffer);
 }
 
 char*

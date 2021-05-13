@@ -62,7 +62,18 @@ namespace lime
     /** Are all entries in the array zero? */
     bool allZero (const long* arr, int n);
 
-    /** Return the vector of indexes that sort the given vector input
+    double cvt_kmph_mps (double kmph);
+    double cvt_mps_kmph (double mps);
+
+    // Convert from days+hh:mm:ss to seconds
+    double cvt_to_secs (
+        double ss, double mm = 0.0, double hh = 0.0, double days = 0.0
+    );
+
+    double deg2rad (double deg);
+    double rad2deg (double rad);
+    
+   /** Return the vector of indexes that sort the given vector input
         Vector requires a natural ordering (i.e. operator<)
     */
     template <typename T>

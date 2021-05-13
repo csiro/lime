@@ -19,27 +19,33 @@ namespace lime {
 
         std::string getErrorMsg () {return errorMsg_.str();}
         
-        void read (const char* fldName, int& val);
-        void read (const char* fldName, double& val);
-        void read (const char* fldName, std::vector<int>& arrayOfInt);
+        bool read (const char* fldName, int& val, bool failIfMissing = true);
+        bool read (const char* fldName, double& val, bool failIfMissing = true);
+        bool read (
+            const char* fldName, std::vector<int>& arrayOfInt,
+            bool failIfMissing = true
+        );
         bool readTranslated (
             const char* fldName, std::vector<int>& arrayOfInt,
-            std::vector<std::string> ids
+            std::vector<std::string> ids, bool failIfMissing = true
         );
-        void read (
-            const char* fldName, std::vector<std::string>& arrayOfString
+        bool read (
+            const char* fldName, std::vector<std::string>& arrayOfString,
+            bool failIfMissing  = true
         );
-        void read (
-            const char* fldName, std::vector<std::set<int>>& arrayOfSetOfInt
+        bool read (
+            const char* fldName, std::vector<std::set<int>>& arrayOfSetOfInt,
+            bool failIfMissing = true
         );
-        void read (
+        bool read (
             const char* fldName,
-            std::vector<std::vector<int>>& arrayOfArrayOfInt
+            std::vector<std::vector<int>>& arrayOfArrayOfInt,
+            bool failIfMissing = true
         );
         std::string readMetadata();
         
     private:
-        void find (const char* fldName);
+        bool find (const char* fldName, bool failIfMissing);
         // Expect particular characters.
         // Returns 1-based pos of the char found, or 0 for not present
         int expect (const char* chars, bool allowEOL = false);
