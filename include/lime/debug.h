@@ -53,7 +53,7 @@ private:
 #define USE(X) {(void)X;}
 
 namespace lime {
-    unsigned long buildId (std::string dateStr, std::string timeStr);
+    std::string buildId (std::string dateStr, std::string timeStr);
 }
 
 #ifdef NDEBUG

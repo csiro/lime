@@ -1,6 +1,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <sstream>
 
 #include "lime/debug.h"
 
@@ -41,11 +42,11 @@ std::ostream& Debug::debugFile()
 }
 
 /**
-   Turn __DATE__ and __TIME__ into an integer build id.
+   Turn __DATE__ and __TIME__ into an string build id.
    Date is expected to be Mmm dd YYYY
    Time is expected to be hh:mm:ss
 */
-unsigned long
+string
 lime::buildId (string dateStr, string timeStr)
 {
     string mStr = dateStr.substr(0, 3);
@@ -87,8 +88,12 @@ lime::buildId (string dateStr, string timeStr)
         (unsigned long)atoi(timeStr.substr(3,2).c_str());
     unsigned long ss =
         (unsigned long)atoi(timeStr.substr(6,2).c_str());
+    cout << yy << " " << mo << " " << dd << " " << hh << " " << mm << " " << ss << endl;
 
-    return 
+    unsigned long build =
         ((((((yy * 12) + mo) * 31) + dd) * 24 + hh) * 60 +  mm) * 60 + ss;
+    stringstream str;
+    str << hex << build;
+    return str.str();
 }
         
