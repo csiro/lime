@@ -88,7 +88,7 @@ lime::buildId (string dateStr, string timeStr)
         (unsigned long)atoi(timeStr.substr(3,2).c_str());
     unsigned long ss =
         (unsigned long)atoi(timeStr.substr(6,2).c_str());
-    cout << yy << " " << mo << " " << dd << " " << hh << " " << mm << " " << ss << endl;
+    //cout << yy << " " << mo << " " << dd << " " << hh << " " << mm << " " << ss << endl;
 
     unsigned long build =
         ((((((yy * 12) + mo) * 31) + dd) * 24 + hh) * 60 +  mm) * 60 + ss;
