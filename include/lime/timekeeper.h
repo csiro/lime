@@ -41,9 +41,13 @@ namespace lime {
         int hasTimeLimit() const {return timeLimitS_ != 0;}
         /** Return the time limit in effect.
             Zero time limit means no time limit
+            (Deprecated - use name with units below)
         */
         int timeLimit() const {return timeLimitS_;}
 	void setTimeLimit(int timeLimitS) { timeLimitS_ = timeLimitS; }
+        // Standard naming with units
+        int timeLimitS() const {return timeLimitS_;}
+	void setTimeLimitS(int timeLimitS) { timeLimitS_ = timeLimitS; }
 
         void display (std::ostream& os = std::cout) const override;
     

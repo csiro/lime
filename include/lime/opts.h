@@ -26,19 +26,23 @@ namespace lime
         );
         void add_opt (
             const char* switch_str, std::string* str_switch,
-            const char* help_str
+            const char* help_str,
+            const char* config_name = NULL
         );
         void add_opt_filename (
             const char* switch_str, std::string* str_switch,
-            const char* help_str
+            const char* help_str,
+            const char* config_name = NULL
         );
         void add_opt (
             const char* switch_str, int* int_switch,
-            const char* help_str
+            const char* help_str,
+            const char* config_name = NULL
         );
         void add_opt (
             const char* switch_str, double* double_switch,
-            const char* help_str
+            const char* help_str,
+            const char* config_name = NULL
         );
         void add_opt (
             const char* switch_str, Config* config_switch,
@@ -47,26 +51,33 @@ namespace lime
         // Bool options are flipped if switch-str is present
         void add_opt (
             const char* switch_str, bool* bool_switch,
-            const char* help_str
+            const char* help_str,
+            const char* config_name = NULL
         );
 
         void add_arg (
-            const char* usage_str, std::string* str_ptr, const char* help_str
+            const char* usage_str, std::string* str_ptr, const char* help_str,
+            const char* config_name = NULL
         );
         void add_optional_arg (
-            const char* usage_str, std::string* str_ptr, const char* help_str
+            const char* usage_str, std::string* str_ptr, const char* help_str,
+            const char* config_name = NULL
         );
         void add_arg (
-            const char* usage_str, int* int_ptr, const char* help_str
+            const char* usage_str, int* int_ptr, const char* help_str,
+            const char* config_name = NULL
         );
         void add_optional_arg (
-            const char* usage_str, int* int_ptr, const char* help_str
+            const char* usage_str, int* int_ptr, const char* help_str,
+            const char* config_name = NULL
         );
         void add_arg (
-            const char* usage_str, double* double_ptr, const char* help_str
+            const char* usage_str, double* double_ptr, const char* help_str,
+            const char* config_name = NULL
         );
         void add_optional_arg (
-            const char* usage_str, double* double_ptr, const char* help_str
+            const char* usage_str, double* double_ptr, const char* help_str,
+            const char* config_name = NULL
         );
             
         void usage (
@@ -88,12 +99,14 @@ namespace lime
             bool* bool_ptr;
             double* double_ptr;
             Config* config_ptr;
+            const char* config_name;
 
             Entry (
                 const char* switch_str_,
                 const char* help_str_,
                 ValType val_type_,
-                std::string* str_ptr_
+                std::string* str_ptr_,
+                const char* config_name_
             ) :
                 switch_str(switch_str_),
                 help_str(help_str_),
@@ -102,14 +115,16 @@ namespace lime
                 int_ptr(NULL),
                 bool_ptr(NULL),
                 double_ptr(NULL),
-                config_ptr(NULL)
+                config_ptr(NULL),
+                config_name(config_name_)
             {
             }
 
             Entry (
                 const char* switch_str_,
                 const char* help_str_,
-                int* int_ptr_
+                int* int_ptr_,
+                const char* config_name_
             ) :
                 switch_str(switch_str_),
                 help_str(help_str_),
@@ -118,14 +133,16 @@ namespace lime
                 int_ptr(int_ptr_),
                 bool_ptr(NULL),
                 double_ptr(NULL),
-                config_ptr(NULL)
+                config_ptr(NULL),
+                config_name(config_name_)
             {
             }
 
             Entry (
                 const char* switch_str_,
                 const char* help_str_,
-                bool* bool_ptr_
+                bool* bool_ptr_,
+                const char* config_name_
             ) :
                 switch_str(switch_str_),
                 help_str(help_str_),
@@ -134,14 +151,16 @@ namespace lime
                 int_ptr(NULL),
                 bool_ptr(bool_ptr_),
                 double_ptr(NULL),
-                config_ptr(NULL)
+                config_ptr(NULL),
+                config_name(config_name_)
             {
             }
 
             Entry (
                 const char* switch_str_,
                 const char* help_str_,
-                double* double_ptr_
+                double* double_ptr_,
+                const char* config_name_
             ) :
                 switch_str(switch_str_),
                 help_str(help_str_),
@@ -150,7 +169,8 @@ namespace lime
                 int_ptr(NULL),
                 bool_ptr(NULL),
                 double_ptr(double_ptr_),
-                config_ptr(NULL)
+                config_ptr(NULL),
+                config_name(config_name_)
             {
             }
 
@@ -166,11 +186,13 @@ namespace lime
                 int_ptr(NULL),
                 bool_ptr(NULL),
                 double_ptr(NULL),
-                config_ptr(config_ptr_)
+                config_ptr(config_ptr_),
+                config_name(NULL)
             {
             }
         };
         bool switch_exists (const char* switch_str);
+        void do_config_defaults (Config* config);
         
         std::string description_;
         const char* build_date_;

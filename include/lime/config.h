@@ -73,16 +73,12 @@ namespace lime
         
         /** Get the value of a bool, and store it in the passed reference.
             @param key key of the configuration to retrieve
-            @param val reference to the location where the value must be read
          */
         bool getBool (std::string key, bool defaultVal = false);
         bool getBool (const char* key, bool defaultVal = false);
         
-        /** Get the value of a string, and store it in the passed reference.
+        /** Get the value of a string
             @param key key of the configuration to retrieve
-            @param val reference to the location where the value must be read
-            @remarks Updates val to point to a lime::strdup copy of the string.
-                     Make sure to delete [] the value at cleanup.
          */
         std::string getString (
             std::string key, std::string defaultVal = std::string("")
@@ -90,10 +86,8 @@ namespace lime
         std::string getString (
             const char* key, std::string defaultVal = std::string("")
         );
-        /** Get the value of a time expressed as hh:mm[:ss] or as sss, and store
-            in the passed reference.
+        /** Get the value of a time expressed as hh:mm[:ss] or as sss
             @param key key of the configuration to retrieve
-            @param val reference to the location where the value must be read
          */
         int getTime (std::string key, int defaultVal = 0);
         int getTime (const char* key, int defaultVal = 0);

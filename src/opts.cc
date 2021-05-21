@@ -39,7 +39,8 @@ Opts::switch_exists (const char* switch_str)
 void
 Opts::add_opt (
     const char* switch_str, std::string* str_ptr,
-    const char* help_str
+    const char* help_str,
+    const char* config_name
 )
 {
     if (switch_exists (switch_str))
@@ -47,13 +48,16 @@ Opts::add_opt (
             "Config error: Switch already exists: " <<
             switch_str << ": " << help_str
         );
-    switches_.push_back (Entry (switch_str, help_str, STR, str_ptr));
+    switches_.push_back (
+        Entry (switch_str, help_str, STR, str_ptr, config_name)
+    );
 }
 
 void
 Opts::add_opt_filename (
     const char* switch_str, std::string* str_ptr,
-    const char* help_str
+    const char* help_str,
+    const char* config_name
 )
 {
     if (switch_exists (switch_str))
@@ -61,24 +65,30 @@ Opts::add_opt_filename (
             "Config error: Switch already exists: " << 
             switch_str << ": " << help_str
         );
-    switches_.push_back (Entry (switch_str, help_str, FILENAME, str_ptr));
+    switches_.push_back (
+        Entry (switch_str, help_str, FILENAME, str_ptr, config_name)
+    );
 }
 
 void
-Opts::add_opt (const char* switch_str, int* int_ptr, const char* help_str)
+Opts::add_opt (
+    const char* switch_str, int* int_ptr, const char* help_str,
+    const char* config_name
+)
 {
     if (switch_exists (switch_str))
         limeCrash (
             "Config error: Switch already exists: " << 
             switch_str << ": " << help_str
         );
-    switches_.push_back (Entry (switch_str, help_str, int_ptr));
+    switches_.push_back (Entry (switch_str, help_str, int_ptr, config_name));
 }
 
 void
 Opts::add_opt (
     const char* switch_str, bool* bool_ptr,
-    const char* help_str
+    const char* help_str,
+    const char* config_name
 )
 {
     if (switch_exists (switch_str))
@@ -86,13 +96,14 @@ Opts::add_opt (
             "Config error: Switch already exists: " << 
             switch_str << ": " << help_str
         );
-    switches_.push_back (Entry (switch_str, help_str, bool_ptr));
+    switches_.push_back (Entry (switch_str, help_str, bool_ptr, config_name));
 }
 
 void
 Opts::add_opt (
     const char* switch_str, double* double_ptr,
-    const char* help_str
+    const char* help_str,
+    const char* config_name
 )
 {
     if (switch_exists (switch_str))
@@ -100,7 +111,7 @@ Opts::add_opt (
             "Config error: Switch already exists: " << 
             switch_str << ": " << help_str
         );
-    switches_.push_back (Entry (switch_str, help_str, double_ptr));
+    switches_.push_back (Entry (switch_str, help_str, double_ptr, config_name));
 }
 
 void
@@ -116,7 +127,8 @@ Opts::add_opt (
 
 void
 Opts::add_arg (
-    const char* usage_str, std::string* str_ptr, const char* help_str
+    const char* usage_str, std::string* str_ptr, const char* help_str,
+    const char* config_name
 )
 {
     if (optional_args_ > 0)
@@ -125,21 +137,23 @@ Opts::add_arg (
             help_str
         );
     
-    args_.push_back (Entry (usage_str, help_str, STR, str_ptr));
+    args_.push_back (Entry (usage_str, help_str, STR, str_ptr, config_name));
 }
 
 void
 Opts::add_optional_arg (
-    const char* usage_str, std::string* str_ptr, const char* help_str
+    const char* usage_str, std::string* str_ptr, const char* help_str,
+    const char* config_name
 )
 {
     optional_args_++;
-    args_.push_back (Entry (usage_str, help_str, STR, str_ptr));
+    args_.push_back (Entry (usage_str, help_str, STR, str_ptr, config_name));
 }
 
 void
 Opts::add_arg (
-    const char* usage_str, int* int_ptr, const char* help_str
+    const char* usage_str, int* int_ptr, const char* help_str,
+    const char* config_name
 )
 {
     if (optional_args_ > 0)
@@ -148,21 +162,23 @@ Opts::add_arg (
             help_str
         );
     
-    args_.push_back (Entry (usage_str, help_str, int_ptr));
+    args_.push_back (Entry (usage_str, help_str, int_ptr, config_name));
 }
 
 void
 Opts::add_optional_arg (
-    const char* usage_str, int* int_ptr, const char* help_str
+    const char* usage_str, int* int_ptr, const char* help_str,
+    const char* config_name
 )
 {
     optional_args_++;
-    args_.push_back (Entry (usage_str, help_str, int_ptr));
+    args_.push_back (Entry (usage_str, help_str, int_ptr, config_name));
 }
 
 void
 Opts::add_arg (
-    const char* usage_str, double* double_ptr, const char* help_str
+    const char* usage_str, double* double_ptr, const char* help_str,
+    const char* config_name
 )
 {
     if (optional_args_ > 0)
@@ -171,16 +187,17 @@ Opts::add_arg (
             help_str
         );
     
-    args_.push_back (Entry (usage_str, help_str, double_ptr));
+    args_.push_back (Entry (usage_str, help_str, double_ptr, config_name));
 }
             
 void
 Opts::add_optional_arg (
-    const char* usage_str, double* double_ptr, const char* help_str
+    const char* usage_str, double* double_ptr, const char* help_str,
+    const char* config_name
 )
 {
     optional_args_++;
-    args_.push_back (Entry (usage_str, help_str, double_ptr));
+    args_.push_back (Entry (usage_str, help_str, double_ptr, config_name));
 }
 
 void
@@ -243,12 +260,15 @@ Opts::usage (
             cerr << *sw.double_ptr;
             break;
         case BOOL:
-            cerr << *sw.bool_ptr;
+            cerr << *sw.bool_ptr ? "true" : "false";
             break;
         case CONFIG:
             break;
         }
-        cerr << "]" << endl;
+        cerr << "]";
+        if (sw.config_name != NULL) 
+            cerr << "  (config '" << sw.config_name << "')";
+        cerr << endl;
     }
     cerr << "  Args: " << endl;
     for (size_t i = 0; i < args_.size(); i++) {
@@ -273,6 +293,9 @@ Opts::usage (
             }
             cerr << "]";
         }
+        if (ar.config_name != NULL) 
+            cerr << "  (config '" << ar.config_name << "')";
+        
         cerr << endl;
     }
     cerr << endl;
@@ -286,6 +309,56 @@ Opts::usage (const char* cmd, string msg)
     usage (cmd, msg.c_str());
 }
 
+void
+Opts::do_config_defaults (Config* config)
+{
+    if (config == NULL)
+        return;
+    // Do switches
+    for (auto& sw : switches_)  {
+        if (sw.config_name != NULL) {
+            switch (sw.val_type) {
+            case STR:
+            case FILENAME:
+                *(sw.str_ptr) =
+                    config->getString (sw.config_name, *(sw.str_ptr));
+                break;
+            case INT:
+                *(sw.int_ptr) =
+                    config->getInt (sw.config_name, *(sw.int_ptr));
+                break;
+            case DBL:
+                *(sw.double_ptr) =
+                    config->getDouble (sw.config_name, *(sw.double_ptr));
+                break;
+            case BOOL:
+                *(sw.bool_ptr) =
+                    config->getBool (sw.config_name, *(sw.bool_ptr));
+                break;
+            }
+        }
+    }
+
+    // Do args
+    for (auto ar :args_) {
+        switch (ar.val_type) {
+        case STR:
+        case FILENAME:
+            *ar.str_ptr = 
+                config->getString (ar.config_name, *(ar.str_ptr));
+            break;
+        case INT:
+            *ar.int_ptr = 
+                config->getInt (ar.config_name, *(ar.int_ptr));
+            break;
+        case DBL:
+            *ar.double_ptr = 
+                config->getDouble (ar.config_name, *(ar.double_ptr));
+            break;
+        }
+    }
+}
+    
 bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
@@ -303,7 +376,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                     switch (sw.val_type) {
                     case STR:
                     case FILENAME:
-                        *sw.str_ptr = argv[++upto];
+                        *(sw.str_ptr) = argv[++upto];
                         break;
                     case INT:
                         *sw.int_ptr = atoi (argv[++upto]);
@@ -316,8 +389,13 @@ Opts::process (int argc, const char* argv[], Config* config)
                         break;
                     case CONFIG:
                         sw.config_ptr->read (argv[++upto]);
-                        break;
+                        do_config_defaults (sw.config_ptr);
+                        // Set up defaults
                     }
+                    break;
+                }
+                if (sw.config_name != NULL && config != NULL) {
+                    config->addItem (sw.config_name, argv[upto]);
                 }
             }
             if (!found) {
@@ -337,8 +415,13 @@ Opts::process (int argc, const char* argv[], Config* config)
             strchr (argv[upto], '=') != NULL ||
             strchr (argv[upto], ':') != NULL
         ) {
-            if (config != NULL)
+            if (config != NULL) {
                 config->addItem (string(argv[upto]));
+                //  Parse the value now
+                Config tmp;
+                tmp.addItem (string(argv[upto]));
+                do_config_defaults (&tmp);
+            }
             else {
                 usage (argv[0], "No config items recognized: ", argv[upto]);
                 return false;
@@ -364,12 +447,52 @@ Opts::process (int argc, const char* argv[], Config* config)
             return false;
         }
     }
+
+    // Set up config
+    if (config != NULL) {
+        for (auto& sw : switches_)  {
+            if (sw.config_name !=  NULL) {
+                switch (sw.val_type) {
+                case STR:
+                case FILENAME:
+                    config->addItem (sw.config_name, *(sw.str_ptr));
+                    break;
+                case INT:
+                    config->addItem (sw.config_name, *(sw.int_ptr));
+                    break;
+                case DBL:
+                    config->addItem (sw.config_name, *(sw.double_ptr));
+                    break;
+                case BOOL:
+                    config->addItem (sw.config_name, *(sw.bool_ptr));
+                    break;
+                }
+            }
+        }
+    }
+    // See if all required argshave values
     size_t reqd_args = args_.size() - optional_args_;
-    if (upto_arg < reqd_args) {
+    bool missing = false;
+    for (size_t k = 0; k < reqd_args; k++) {
+        for (auto ar :args_) {
+            switch (ar.val_type) {
+            case STR:
+            case FILENAME:
+                if (ar.str_ptr->length() == 0)
+                    missing = true;
+                break;
+            case INT:
+            case DBL:
+                if (upto_arg <= k)
+                    missing = true;
+                break;
+            }
+        }
+    }
+    if (missing) {
         usage (argv[0], to_string (reqd_args) + " args required");
         return false;
     }
-
     return true;    
 }
 
