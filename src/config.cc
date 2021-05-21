@@ -213,8 +213,15 @@ Config::getInt (string key, int defaultVal)
         addItem (key, defaultVal);
         return defaultVal;
     }
-
-    return stoi (strVal);
+    int val = 0;
+    try {
+        val = stoi (strVal);
+    }
+    catch (std:: exception e) {
+        // Ignore exceptions; use default
+        val = defaultVal;
+    }
+    return val;
 }
 int
 Config::getInt (const char* key, int defaultVal) 
@@ -231,7 +238,15 @@ Config::getLong (string key, long defaultVal)
         return defaultVal;
     }
 
-    return stol (strVal);
+    long val = 0;
+    try {
+        val = stol (strVal);
+    }
+    catch (std:: exception e) {
+        // Ignore exceptions; use default
+        val = defaultVal;
+    }
+    return val;
 }
 long
 Config::getLong (const char* key, long defaultVal)
@@ -248,7 +263,15 @@ Config::getDouble (string key, double defaultVal)
         return defaultVal;
     }
 
-    return stod (strVal);
+    double val = 0;
+    try {
+        val = stod (strVal);
+    }
+    catch (std:: exception e) {
+        // Ignore exceptions; use default
+        val = defaultVal;
+    }
+    return val;
 }
 double
 Config::getDouble (const char* key, double defaultVal)
@@ -264,8 +287,16 @@ Config::getUnsigned (string key, unsigned long defaultVal)
         addItem (key, defaultVal);
         return defaultVal;
     }
-
-    return stoul (strVal);
+    
+    unsigned long val = 0;
+    try {
+        val = stoul (strVal);
+    }
+    catch (std:: exception e) {
+        // Ignore exceptions; use default
+        val = defaultVal;
+    }
+    return val;
 }
 unsigned long
 Config::getUnsigned (const char* key, unsigned long defaultVal)
@@ -373,7 +404,12 @@ Config::getVector (std::string key, std::vector<int> vec)
         return false;
     vec.clear();
     for (auto str : strvec) {
-        vec.push_back (stoi(str));
+        try {
+            vec.push_back (stoi(str));
+        }
+        catch (std::exception e) {
+            // Ignore;
+        }
     }
     return true;
 }
@@ -386,7 +422,12 @@ Config::getVector (std::string key, std::vector<long> vec)
         return false;
     vec.clear();
     for (auto str : strvec) {
-        vec.push_back (stol(str));
+        try {
+            vec.push_back (stol(str));
+        }
+        catch (std::exception e) {
+            // Ignore;
+        }
     }
     return true;
 }
@@ -399,7 +440,12 @@ Config::getVector (std::string key, std::vector<unsigned long> vec)
         return false;
     vec.clear();
     for (auto str : strvec) {
-        vec.push_back (stoul(str));
+        try {
+            vec.push_back (stoul(str));
+        }
+        catch (std::exception e) {
+            // Ignore;
+        }
     }
     return true;
 }
@@ -412,7 +458,12 @@ Config::getVector (std::string key, std::vector<double> vec)
         return false;
     vec.clear();
     for (auto str : strvec) {
-        vec.push_back (stod(str));
+        try {
+            vec.push_back (stod(str));
+        }
+        catch (std::exception e) {
+            // Ignore;
+        }
     }
     return true;
 }
