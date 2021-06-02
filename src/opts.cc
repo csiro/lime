@@ -363,6 +363,8 @@ bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
     size_t upto_arg = 0;
+    // Use "--" to switch off config parsing
+    bool look_for_config = true;
     for (int upto = 1; upto < argc; upto++) {
         if (*argv[upto] == '-') {
             bool found = false;
@@ -399,7 +401,11 @@ Opts::process (int argc, const char* argv[], Config* config)
                 }
             }
             if (!found) {
-                if (
+                if (!strcmp (argv[upto], "--")) {
+                    // Toggle looking for '='/':' (e.g in filenames)
+                    look_for_config = !look_for_config;
+                }
+                else if (
                     !strcmp (argv[upto], "-?") ||
                     !strcmp (argv[upto], "-help") ||
                     !strcmp (argv[upto], "--help")
@@ -412,8 +418,11 @@ Opts::process (int argc, const char* argv[], Config* config)
             }
         }
         else if (
-            strchr (argv[upto], '=') != NULL ||
-            strchr (argv[upto], ':') != NULL
+            look_for_config &&
+            (
+                strchr (argv[upto], '=') != NULL ||
+                strchr (argv[upto], ':') != NULL
+            )
         ) {
             if (config != NULL) {
                 config->addItem (string(argv[upto]));
