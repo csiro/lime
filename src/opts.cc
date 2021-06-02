@@ -299,6 +299,9 @@ Opts::usage (
         cerr << endl;
     }
     cerr << endl;
+    cerr << "Use <config-name>:<value> on cmd line to set config values" << endl;
+    cerr << "Use -- to toggle config name parsing" << endl;
+    cerr << endl;
     cerr << "This build: " << build_date_ << " " << build_time_ << endl;
     cerr << endl;
 }
