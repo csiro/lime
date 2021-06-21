@@ -416,8 +416,10 @@ Opts::process (int argc, const char* argv[], Config* config)
                     usage (argv[0]);
                     return false;
                 }
-                usage (argv[0], "Unrecognised option: ", argv[upto]);
-                return false;
+                else {
+                    usage (argv[0], "Unrecognised option: ", argv[upto]);
+                    return false;
+                }
             }
         }
         else if (
