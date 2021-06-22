@@ -260,7 +260,7 @@ Opts::usage (
             cerr << *sw.double_ptr;
             break;
         case BOOL:
-            cerr << *sw.bool_ptr ? "true" : "false";
+            cerr << (*sw.bool_ptr ? "true" : "false");
             break;
         case CONFIG:
             break;
@@ -288,7 +288,7 @@ Opts::usage (
                 cerr << *ar.double_ptr;
                 break;
             case BOOL:
-                cerr << *ar.bool_ptr;
+                cerr << (*ar.bool_ptr ? "true" : "false");
                 break;
             }
             cerr << "]";
