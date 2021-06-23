@@ -468,6 +468,15 @@ Config::getVector (std::string key, std::vector<double> vec)
     return true;
 }
 
+list<string>
+Config::keys()
+{
+    list<string> keys;
+    for (auto elt : map_)
+        keys.push_back (elt.first);
+    return keys;
+}
+
 
 string
 Config::valFor(string key) const

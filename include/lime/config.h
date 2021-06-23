@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <list>
 #include <vector>
 #include <memory>
 
@@ -97,6 +98,8 @@ namespace lime
         bool getVector (std::string key, std::vector<long> vec);
         bool getVector (std::string key, std::vector<unsigned long> vec);
         bool getVector (std::string key, std::vector<double> vec);
+
+        std::list<std::string> keys();
         
         std::string show (const char* sep = " ") const;
         
