@@ -81,9 +81,9 @@ namespace lime
         );
             
         void usage (
-            const char* cmd, const char* message1 = 0, const char* message2 = 0
+            const char* message1 = 0, const char* message2 = 0
         );
-        void usage (const char* cmd, std::string msg);
+        void usage (std::string msg);
 
         bool process (int argc, const char* argv[], Config* config = NULL);
         
@@ -200,6 +200,7 @@ namespace lime
         std::vector<Entry> switches_;
         std::vector<Entry> args_;
         int optional_args_;
+        std::string cmd_;
     };
 }
 

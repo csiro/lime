@@ -23,7 +23,8 @@ Opts::Opts (
     args_(),
     optional_args_(0),
     build_date_(build_date),
-    build_time_(build_time)
+    build_time_(build_time),
+    cmd_("<cmd>")
 {
 }
 
@@ -202,7 +203,7 @@ Opts::add_optional_arg (
 
 void
 Opts::usage (
-    const char* cmd, const char* message1, const char* message2
+    const char* message1, const char* message2
 )
 {
     if (message1)
@@ -211,7 +212,7 @@ Opts::usage (
         cerr << " " << message2;
     if (message1 || message2)
         cerr << endl;
-    cerr << "Usage: " << cmd;
+    cerr << "Usage: " << cmd_;
     for (auto& sw : switches_) {
         cerr << " [" << sw.switch_str;
         switch (sw.val_type) {
@@ -307,9 +308,9 @@ Opts::usage (
 }
             
 void
-Opts::usage (const char* cmd, string msg)
+Opts::usage (string msg)
 {
-    usage (cmd, msg.c_str());
+    usage (msg.c_str());
 }
 
 void
@@ -365,6 +366,7 @@ Opts::do_config_defaults (Config* config)
 bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
+    cmd_ = argv[0];
     size_t upto_arg = 0;
     // Use "--" to switch off config parsing
     bool look_for_config = true;
@@ -375,7 +377,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                 if (!strcmp (argv[upto], sw.switch_str)) {
                     found = true;
                     if (sw.val_type != BOOL && upto >= argc-1) {
-                        usage (argv[0], "No value for switch ", sw.switch_str);
+                        usage ("No value for switch ", sw.switch_str);
                         return false;
                     }
                     switch (sw.val_type) {
@@ -413,11 +415,11 @@ Opts::process (int argc, const char* argv[], Config* config)
                     !strcmp (argv[upto], "-help") ||
                     !strcmp (argv[upto], "--help")
                 ) {
-                    usage (argv[0]);
+                    usage ();
                     return false;
                 }
                 else {
-                    usage (argv[0], "Unrecognised option: ", argv[upto]);
+                    usage ("Unrecognised option: ", argv[upto]);
                     return false;
                 }
             }
@@ -437,7 +439,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                 do_config_defaults (&tmp);
             }
             else {
-                usage (argv[0], "No config items recognized: ", argv[upto]);
+                usage ("No config items recognized: ", argv[upto]);
                 return false;
             }
         }
@@ -457,7 +459,7 @@ Opts::process (int argc, const char* argv[], Config* config)
             }
         }
         else {
-            usage (argv[0], "Too many args: ", argv[upto]);
+            usage ("Too many args: ", argv[upto]);
             return false;
         }
     }
@@ -504,7 +506,7 @@ Opts::process (int argc, const char* argv[], Config* config)
         }
     }
     if (missing) {
-        usage (argv[0], to_string (reqd_args) + " args required");
+        usage (to_string (reqd_args) + " args required");
         return false;
     }
     return true;    
