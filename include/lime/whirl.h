@@ -21,13 +21,16 @@ namespace lime
             count_(0)
         {}
 
+        char nextChar() {
+            count_++;
+            return (usePbdq_ ? pbdqWhirlygig (count_) : whirlygig (count_));
+        }
         char next() {
             double elapsed = timer_.elapsedTimeSecs();
+            //std::cout << elapsed << std::endl;
             if (elapsed - lastSecs_ > freq_) {
-                count_++;
                 lastSecs_ = elapsed;
-                lastChar_ =
-                    (usePbdq_ ? pbdqWhirlygig (count_) : whirlygig (count_));
+                lastChar_ = nextChar();
             }
             return lastChar_;
         }
