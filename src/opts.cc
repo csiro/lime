@@ -24,7 +24,8 @@ Opts::Opts (
     optional_args_(0),
     build_date_(build_date),
     build_time_(build_time),
-    cmd_("<cmd>")
+    cmd_("<cmd>"),
+    uses_config_(false)
 {
 }
 
@@ -300,9 +301,12 @@ Opts::usage (
         cerr << endl;
     }
     cerr << endl;
-    cerr << "Use <config-name>:<value> on cmd line to set config values" << endl;
-    cerr << "Use -- to toggle config name parsing" << endl;
-    cerr << endl;
+    if (uses_config_) {
+        cerr << "Use <config-name>:<value> on cmd line to set config values" <<
+            endl;
+        cerr << "Use -- to toggle config name parsing" << endl;
+        cerr << endl;
+    }
     cerr << "This build: " << build_date_ << " " << build_time_ << endl;
     cerr << endl;
 }
@@ -367,6 +371,7 @@ bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
     cmd_ = argv[0];
+    uses_config_ = (config != NULL);
     size_t upto_arg = 0;
     // Use "--" to switch off config parsing
     bool look_for_config = true;

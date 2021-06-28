@@ -201,6 +201,7 @@ namespace lime
         std::vector<Entry> args_;
         int optional_args_;
         std::string cmd_;
+        bool uses_config_;
     };
 }
 
