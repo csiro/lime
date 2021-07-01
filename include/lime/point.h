@@ -54,13 +54,13 @@ namespace lime
         }
         
         /** Read x. */
-        const double x() const { return x_; }
+        double x() const { return x_; }
         
         /** Read y. */
-        const double y() const { return y_; }
+        double y() const { return y_; }
         
         /** Read z. */
-        const double z() const { return z_; }
+        double z() const { return z_; }
         
         /** Update x.
             @param x new value of x

@@ -343,13 +343,13 @@ lime::dtostr (double val)
     return std::string(buffer);
 }
 
-const char
+char
 lime::whirlygig (int k)
 {
     static const char* shape = "\\|/-";
     return shape[k % 4];
 }
-const char
+char
 lime::pbdqWhirlygig (int k)
 {
     static const char* shape = "pbdq";
