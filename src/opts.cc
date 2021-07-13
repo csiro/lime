@@ -376,7 +376,7 @@ Opts::process (int argc, const char* argv[], Config* config)
     // Use "--" to switch off config parsing
     bool look_for_config = true;
     for (int upto = 1; upto < argc; upto++) {
-        if (*argv[upto] == '-') {
+        if (*argv[upto] == '-' && strlen(argv[upto]) > 1) {
             bool found = false;
             for (auto& sw : switches_)  {
                 if (!strcmp (argv[upto], sw.switch_str)) {
