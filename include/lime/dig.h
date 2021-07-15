@@ -32,6 +32,9 @@ namespace lime {
             BLACK =0, BLUE, RED, DARK_GREEN, CYAN, SIENNA, MAGENTA,
             CORAL, ORANGE, PINK, CADET_BLUE, NUM_COLOURS
         } StyleColours;
+        enum {
+            THIN, DASHED, THICK
+        } StyleStroke;
 
         Dig(const char* filename, bool append = false);
         Dig(const std::string filename, bool append = false);
