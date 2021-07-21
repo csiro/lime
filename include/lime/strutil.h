@@ -93,6 +93,12 @@ namespace lime {
     extern char pbdqWhirlygig (int k);
     extern char whirlygig (int k);
 
+    extern double editDist (
+        std::string a, std::string b,
+        double addCost = 1.0, double delCost = 1.0,
+        double modCost = 1.0, double transCost = 1.0
+    );
+
     extern int kbhit(void);
 
 } // namespace

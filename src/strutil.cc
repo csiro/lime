@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -11,6 +12,7 @@
 /** Lime string utilities */
 
 #include "lime/strutil.h"
+#include "lime/debug.h"
 
 using namespace lime;
 using namespace std;
@@ -355,6 +357,67 @@ lime::pbdqWhirlygig (int k)
     static const char* shape = "pbdq";
     return shape[k % 4];
 }
+
+/**
+ * Return the edit distance between two strings
+ * Cost of add, del, mod and transpose is specified
+ * Note: Could use less memeory, but I'm too lazy
+ */
+double lime::editDist (
+    string a, string b,
+    double addCost, double delCost, double modCost, double transCost
+)
+{
+    int n = a.length() + 1;
+    int m = b.length() + 1;
+    vector<vector<double>> dist;
+    for (size_t i = 0; i < n+1; i++)
+        dist.push_back (vector<double>(m+1));
+    
+    dist[0][0] = 0;
+    for (int i = 1; i < n; i++) 
+        dist[i][0] = dist[i-1][0] + delCost;
+    for (int j = 1; j < m; j++) 
+        dist[0][j] = dist[0][j-1] + addCost;
+
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j < m; j++) {
+            // Assume modify
+            double best = dist[i-1][j-1] + modCost;
+                
+            if (a[i-1] == b[j-1])
+                best = dist[i-1][j-1]; // Copy (no cost)
+            if (dist[i-1][j] + delCost < best)
+                best = dist[i-1][j] + delCost;
+            if (dist[i][j-1] + addCost < best)
+                best = dist[i][j-1] + addCost; 
+            if (
+                i > 1 && j > 1 &&
+                a[i-1] == b[j-2] &&
+                a[i-2] == b[j-1] &&
+                dist[i-2][j-2] + transCost < best
+            )
+                best = dist[i-2][j-2] + transCost;
+                
+            dist[i][j] = best;
+        }
+    }
+
+    if (false) {
+        DEBUG_NL ('e', "  ");
+        for (int j = 1; j < m; j++) 
+            DEBUG_NL ('e', "  " << b[j-1]);
+        DEBUG ('e', "");
+        for (int i = 0; i < n; i++) {
+            DEBUG_NL ('e', ((i > 0) ? a[i-1] : ' '));
+            for (int j = 0; j < m; j++) 
+                DEBUG_NL('e', " " << setw(4) << dist[i][j]);
+            DEBUG('e',"");
+        }
+    }
+    return dist[n-1][m-1];
+}
+
 
 /** Test if keyboard has been hit */
 
