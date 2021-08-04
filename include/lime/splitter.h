@@ -88,10 +88,27 @@ namespace lime {
         size_t currPos() const {return (nextPos_ == 0) ? 0 : nextPos_ - 1;}
         size_t nextPos() const {return nextPos_;}
         size_t numTokens() const {return tokens_.size();}
-    
+
+        /** Return the rest of the tokens as a space-separated string */
+        std::string rest() {
+            std::string str("");
+            std::string sep("");
+            while (hasNext()) {
+                str += sep + next();
+                sep = " ";
+            }
+            return str;
+        }
+        
         /** Return the token from the previous call to nextToken */
         std::string currToken() const {return tokens_[currPos()];}
 
+        /** Return the next token as an string (just for completeness)
+            Sets 'error' to true if there was a problem.
+        */
+        std::string nextStr(bool& error) {
+            return next (error);
+        }
         /** Return the next token as an integer.
             Sets 'error' to true if there was a problem.
         */
