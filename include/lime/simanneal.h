@@ -37,7 +37,7 @@ namespace lime
             rand_(seed)
         {
             if (targAccept < 1)
-                limeWarning ("simanneal.h: targAccept sould be > 1");
+                limeWarning ("simanneal.h: targAccept should be > 1");
         }
 
         enum {FRAC_NO_CHANGE = 20};

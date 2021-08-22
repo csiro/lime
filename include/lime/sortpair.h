@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <assert.h>
+#include <algorithm.h>
 
 namespace lime
 {
