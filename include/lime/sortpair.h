@@ -37,13 +37,20 @@ namespace lime
             return valKey_[i].key;
         }
 
+        void show (std::ostream& out, const char* indent = "") {
+            for (auto vk : valKey_) {
+                out << indent << "[" << vk.val << "," << vk.key <<"]" <<
+                    std::endl;
+            }
+        }
+
     private:
         struct ValKey
         {
             int val;
             double key;
             
-            ValKey (int val_, int key_) : val(val_), key(key_) {}
+            ValKey (int val_, double key_) : val(val_), key(key_) {}
 
             
             bool operator< (const ValKey& other) const {
