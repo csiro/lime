@@ -101,6 +101,7 @@ namespace lime {
 
     enum EscSeqAction {CLRSCR_HOME, POS, CLR_LINE, UP, DOWN, LEFT, RIGHT};
     // Note: rows UP and DOWN in row arg; cols LEF and RIGHT in col arg
+    // Note also: row and col are 1-based.
     extern std::string escSeq (
         EscSeqAction action, int row = 0, int col = 0
     );
