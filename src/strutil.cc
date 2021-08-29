@@ -418,6 +418,30 @@ double lime::editDist (
     return dist[n-1][m-1];
 }
 
+string lime::escSeq (EscSeqAction action, int row, int col)
+{
+    switch (action) {
+    case CLRSCR_HOME:
+        return "\e[2J\e[1;0H";
+    case POS:
+        return "\e[" + to_string(row) + ";" + to_string(col) + "H";
+    case CLR_LINE:
+        return "\e[K";
+    case UP:
+        return "\e[" + to_string(row) + "A";
+    case DOWN:
+        return "\e[" + to_string(row) + "B";
+    case LEFT:
+        if (col == 0)
+            col = row;
+        return "\e[" + to_string(col) + "D";
+    case RIGHT:
+        if (col == 0)
+            col = row;
+        return "\e[" + to_string(col) + "C";
+    }
+    return "";
+}
 
 /** Test if keyboard has been hit */
 

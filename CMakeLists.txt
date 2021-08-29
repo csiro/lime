@@ -36,6 +36,12 @@ if(NOT CMAKE_BUILD_TYPE)
 	message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
 	set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}")
 endif()
+set(EXE_EXT "")
+IF(${CMAKE_SYSTEM_NAME} STREQUAL CYGWIN)
+  set(EXE_EXT ".exe")
+ENDIF()
+message(STATUS "os is ${CMAKE_SYSTEM_NAME}")
+message(STATUS "exe ext is ${EXE_EXT}")
 
 ## C++ Standard
 set(CMAKE_CXX_STANDARD 11)
@@ -161,77 +167,77 @@ target_include_directories(lime PUBLIC ${PROJECT_INCLUDE_DIR})
 # Tests
 
 ## Lime Test
-add_executable(limetest
+add_executable(limetest${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_SOURCE_DIR}/test/limetest.cc
 )
-target_link_libraries(limetest lime)
+target_link_libraries(limetest${EXE_EXT} lime)
 
 ## Accessor Test
-add_executable(accessortest
+add_executable(accessortest${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_TEST_DIR}/accessortest.cc
 )
-target_link_libraries(accessortest lime)
+target_link_libraries(accessortest${EXE_EXT} lime)
 
 ## Box Test
-add_executable(boxtest
+add_executable(boxtest${EXE_EXT}
 	EXCLUDE_FROM_ALL
-	${PROJECT_TEST_DIR}/boxtest
+	${PROJECT_TEST_DIR}/boxtest.cc
 )
-target_link_libraries(boxtest lime)
+target_link_libraries(boxtest${EXE_EXT} lime)
 
 ## Opt Test
-add_executable(opttest
+add_executable(opttest${EXE_EXT}
 	EXCLUDE_FROM_ALL
-	${PROJECT_TEST_DIR}/opttest
+	${PROJECT_TEST_DIR}/opttest.cc
 )
-target_link_libraries(opttest lime)
+target_link_libraries(opttest${EXE_EXT} lime)
 
 ## Permutation Test
-add_executable(permtest 
+add_executable(permtest${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_TEST_DIR}/permtest.cc
 )
-target_link_libraries(permtest lime)
+target_link_libraries(permtest${EXE_EXT} lime)
 
 ## Splitter Test
-add_executable(splitest
+add_executable(splitest${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_TEST_DIR}/splitest.cc
 )
-target_link_libraries(splitest lime)
+target_link_libraries(splitest${EXE_EXT} lime)
 
 ## PWL Test
-add_executable(pwltest 
+add_executable(pwltest${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_TEST_DIR}/pwltest.cc
 )
-target_link_libraries(pwltest lime)
+target_link_libraries(pwltest${EXE_EXT} lime)
 
 ## hilbert 
-add_executable(hilbert
+add_executable(hilbert${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_TEST_DIR}/hilbert.cc
 )
-target_link_libraries(hilbert lime)
+target_link_libraries(hilbert${EXE_EXT} lime)
 
 ## File Test
-add_executable(filetest
+add_executable(filetest${EXE_EXT}
 	EXCLUDE_FROM_ALL
 	${PROJECT_SOURCE_DIR}/test/filetest.cc
 )
-target_link_libraries(filetest lime)
+target_link_libraries(filetest${EXE_EXT} lime)
 
 ## Custom target for all tests
 add_custom_target(tests)
 add_dependencies(tests
-	limetest
-	boxtest
-	opttest
-	accessortest
-	pwltest
-	filetest
+	limetest${EXE_EXT}
+	boxtest${EXE_EXT}
+	opttest${EXE_EXT}
+	accessortest${EXE_EXT}
+	pwltest${EXE_EXT}
+	filetest${EXE_EXT}
 )
 
 #------------------------------------------------------------------------------#
@@ -248,7 +254,7 @@ install(
     MESSAGE_NEVER
 )
 install(
-    TARGETS limetest accessortest boxtest opttest pwltest 
+    TARGETS limetest${EXE_EXT} accessortest${EXE_EXT} boxtest${EXE_EXT} opttest${EXE_EXT} pwltest${EXE_EXT} 
     RUNTIME DESTINATION bin 
     OPTIONAL
 )

@@ -99,6 +99,12 @@ namespace lime {
         double modCost = 1.0, double transCost = 1.0
     );
 
+    enum EscSeqAction {CLRSCR_HOME, POS, CLR_LINE, UP, DOWN, LEFT, RIGHT};
+    // Note: rows UP and DOWN in row arg; cols LEF and RIGHT in col arg
+    extern std::string escSeq (
+        EscSeqAction action, int row = 0, int col = 0
+    );
+
     extern int kbhit(void);
 
 } // namespace

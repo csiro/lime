@@ -55,7 +55,7 @@ namespace lime
             const char* config_name = NULL
         );
 
-        void add_arg (
+        void add_arg(
             const char* usage_str, std::string* str_ptr, const char* help_str,
             const char* config_name = NULL
         );
