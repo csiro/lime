@@ -41,7 +41,7 @@ Opts::switch_exists (const char* switch_str)
 void
 Opts::add_opt (
     const char* switch_str, std::string* str_ptr,
-    const char* help_str,
+    std::string help_str,
     const char* config_name
 )
 {
@@ -58,7 +58,7 @@ Opts::add_opt (
 void
 Opts::add_opt_filename (
     const char* switch_str, std::string* str_ptr,
-    const char* help_str,
+    std::string help_str,
     const char* config_name
 )
 {
@@ -74,7 +74,7 @@ Opts::add_opt_filename (
 
 void
 Opts::add_opt (
-    const char* switch_str, int* int_ptr, const char* help_str,
+    const char* switch_str, int* int_ptr, std::string help_str,
     const char* config_name
 )
 {
@@ -89,7 +89,7 @@ Opts::add_opt (
 void
 Opts::add_opt (
     const char* switch_str, bool* bool_ptr,
-    const char* help_str,
+    std::string help_str,
     const char* config_name
 )
 {
@@ -104,7 +104,7 @@ Opts::add_opt (
 void
 Opts::add_opt (
     const char* switch_str, double* double_ptr,
-    const char* help_str,
+    std::string help_str,
     const char* config_name
 )
 {
@@ -119,7 +119,7 @@ Opts::add_opt (
 void
 Opts::add_opt (
     const char* switch_str, Config* config_ptr,
-    const char* help_str
+    std::string help_str
 )
 {
     if (switch_exists (switch_str))
@@ -129,7 +129,7 @@ Opts::add_opt (
 
 void
 Opts::add_arg (
-    const char* usage_str, std::string* str_ptr, const char* help_str,
+    const char* usage_str, std::string* str_ptr, std::string help_str,
     const char* config_name
 )
 {
@@ -144,7 +144,7 @@ Opts::add_arg (
 
 void
 Opts::add_optional_arg (
-    const char* usage_str, std::string* str_ptr, const char* help_str,
+    const char* usage_str, std::string* str_ptr, std::string help_str,
     const char* config_name
 )
 {
@@ -154,7 +154,7 @@ Opts::add_optional_arg (
 
 void
 Opts::add_arg (
-    const char* usage_str, int* int_ptr, const char* help_str,
+    const char* usage_str, int* int_ptr, std::string help_str,
     const char* config_name
 )
 {
@@ -169,7 +169,7 @@ Opts::add_arg (
 
 void
 Opts::add_optional_arg (
-    const char* usage_str, int* int_ptr, const char* help_str,
+    const char* usage_str, int* int_ptr, std::string help_str,
     const char* config_name
 )
 {
@@ -179,7 +179,7 @@ Opts::add_optional_arg (
 
 void
 Opts::add_arg (
-    const char* usage_str, double* double_ptr, const char* help_str,
+    const char* usage_str, double* double_ptr, std::string help_str,
     const char* config_name
 )
 {
@@ -194,7 +194,7 @@ Opts::add_arg (
             
 void
 Opts::add_optional_arg (
-    const char* usage_str, double* double_ptr, const char* help_str,
+    const char* usage_str, double* double_ptr, std::string help_str,
     const char* config_name
 )
 {
