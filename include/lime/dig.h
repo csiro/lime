@@ -24,17 +24,17 @@ namespace lime {
     class Dig : public Displayable
     {
     public:
-        enum {
+        enum Markers {
             NO_MARK=0, CIRCLE, STAR, SQUARE, CROSS, DOWN_TRIANGLE, 
             UP_TRIANGLE, FILLED_SQUARE, FILLED_CIRCLE, PLUS, BAR, NUM_MARKERS
-        } Markers;
-        enum {
+        };
+        enum StyleColours {
             BLACK =0, BLUE, RED, DARK_GREEN, CYAN, SIENNA, MAGENTA,
             CORAL, ORANGE, PINK, CADET_BLUE, NUM_COLOURS
-        } StyleColours;
-        enum {
+        };
+        enum StyleStroke {
             THIN, DASHED, THICK
-        } StyleStroke;
+        };
 
         Dig(const char* filename, bool append = false);
         Dig(const std::string filename, bool append = false);
