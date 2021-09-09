@@ -65,6 +65,7 @@ namespace lime {
 
         double width() const {return ur_.x() - ll_.x();}
         double height() const {return ur_.y() - ll_.y();}
+        double area() const {return width() * height();}
 
         bool overlaps (const Box* other) const;
         bool contains (const Point* point) const {

@@ -20,7 +20,7 @@ namespace lime {
         void display (std::ostream& os = std::cout) const override;
     
     protected:
-        double count_;
+        int count_;
         double sum_;
         double sumSq_;
     };

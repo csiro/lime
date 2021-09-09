@@ -43,6 +43,6 @@ Stat::variance() const
 void
 Stat::display (std::ostream& os) const
 {
-    os << "Stat, mean " << mean();
+    os << "Stat, mean " << mean() << " sd " << stddev();
 }
 
