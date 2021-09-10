@@ -42,9 +42,3 @@ Point::operator<(const Point& other) const
     return false;
 }
 
-std::ostream&
-lime::operator<< (ostream& out, const Point& p)
-{
-    p.display (out);
-    return out;
-}

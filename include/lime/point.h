@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #include "lime/numutil.h"
 #include "lime/displayable.h"
@@ -135,7 +136,6 @@ namespace lime
         /** The z-coordinate. */
         double z_;
     };
-    
-    std::ostream& operator<< (std::ostream&, const Point&);
+    using PointPtr = std::shared_ptr<Point>;
 }
 
