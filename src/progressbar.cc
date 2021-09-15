@@ -13,16 +13,16 @@ ProgressBar::progress (int iter, std::string message, bool newBest)
 {
     // Only display according to frequency selected, or for new best
     double elapsed = timer_.elapsedTimeSecs();
+    DEBUG (
+        'a', "Progress: " << iter << " elapsed " << (elapsed - lastReport_) <<
+        " " << message
+    );
     if (newBest || elapsed > lastReport_ + freq_) {
         lastReport_ = elapsed;
     
-        DEBUG ('a', "Progress: " << iter << " " << message);
-        if (iter > 0) 
-            cerr << "\r " << "\033[5C" << setw(5) << iter;
-        else {
-            cerr << "\r " << "\033[5C" << setw(5) << "";
+        if (iter == 0) 
             iter = lastIter_;
-        }
+        cerr << "\r " << "\033[5C" << setw(5) << iter;
 
         double proportion = -1.0;
         if (maxIters_ > 0) 
@@ -32,8 +32,9 @@ ProgressBar::progress (int iter, std::string message, bool newBest)
         for (double p = 0; p <= 1.0; p += 0.05) 
             cerr << (p < proportion ? '#' : '_');
         cerr << "|  " << message << "\033[0K\r";
-        lastIter_ = iter;
     }
+    if (iter > 0)
+        lastIter_ = iter;
     
     bool cancel = false;
     if (kbhit()) {
