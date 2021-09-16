@@ -27,9 +27,9 @@ namespace lime {
     char* todayStr (char* buffer, size_t bufferLen);
 /** Return current time as a formated time string */
     std::string todayString ();
-/** Converts a string to upper case IN SITU. Returns the str argument */
+/** Converts a string to upper case. Returns the str argument */
     std::string toUpper (std::string str);
-/** Converts a string to lower case IN SITU. Returns the str argument */
+/** Converts a string to lower case. Returns the str argument */
     std::string toLower (std::string str);
     
 /** Converts a string to upper case IN SITU. Returns the str argument */
