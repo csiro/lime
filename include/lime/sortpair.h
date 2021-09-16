@@ -2,6 +2,7 @@
 
 /** Sort an array with int and double by the double */
 
+#include <iostream>
 #include <vector>
 #include <assert.h>
 #include <algorithm>
