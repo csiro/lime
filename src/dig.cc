@@ -211,6 +211,18 @@ Dig::colourScaleR (double val, double max)
 }
 
 void
+Dig::colourScaleG (double val, double max)
+{
+    double r = 0;
+    double g = 0;
+    double b = 0;
+    if (max > 1e-6) {
+        r = g = b = (max - val) / max;
+    }
+    rgb (r, g, b);
+}
+
+void
 Dig::labelPoint (double x, double y, const char* label)
 {
     out << "LP " <<

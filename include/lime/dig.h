@@ -68,6 +68,8 @@ namespace lime {
         void colourScaleBR (double val, double max);
         // set colour using red-only scale, 0 to max
         void colourScaleR (double val, double max);
+        // set colour using grey scale (white to black), 0 to max
+        void colourScaleG (double val, double max);
         void label (const char* label_, bool silent = false);
         void label (std::string label_, bool silent = false);
         // Allow legend as a synonym of label
