@@ -211,7 +211,7 @@ Dig::colourScaleR (double val, double max)
 }
 
 void
-Dig::colourScaleG (double val, double max)
+Dig::colourScaleGrey (double val, double max)
 {
     double r = 0;
     double g = 0;
