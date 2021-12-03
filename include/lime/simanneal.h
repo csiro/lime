@@ -1,5 +1,11 @@
 #pragma once
 
+/* Use of this code is is subject to agreement to the
+   CSIRO Open Source Software Licence Agreement
+   as set out in the file ../../LICENCE.md
+*/
+
+
 /**
  *  Use an improved (extended) simulated annealing method to
  *  choose whether to accept a sol.

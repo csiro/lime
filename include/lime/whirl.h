@@ -1,5 +1,11 @@
 #pragma once
 
+/* Use of this code is is subject to agreement to the
+   CSIRO Open Source Software Licence Agreement
+   as set out in the file ../../LICENCE.md
+*/
+
+
 /** Control a whirlygig a bit better
     Will only update the whirlygig every freq [0.1] seconds
  */

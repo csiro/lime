@@ -1,3 +1,9 @@
+
+/* Use of this code is is subject to agreement to the
+   CSIRO Open Source Software Licence Agreement
+   as set out in the file ../LICENCE.md
+*/
+
 /** 
  *  A biased choice between ints. Similar to BiasChoice,
  *  but this object assumes ints will be consecutive,

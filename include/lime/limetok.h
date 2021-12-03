@@ -1,5 +1,11 @@
 #pragma once
 
+/* Use of this code is is subject to agreement to the
+   CSIRO Open Source Software Licence Agreement
+   as set out in the file ../../LICENCE.md
+*/
+
+
 /**
  * Tokenize a string safely - without the sttic storage used by strtok
  * Tokens are defined by delimiter in the string.

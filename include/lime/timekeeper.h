@@ -1,5 +1,11 @@
 #pragma once
 
+/* Use of this code is is subject to agreement to the
+   CSIRO Open Source Software Licence Agreement
+   as set out in the file ../../LICENCE.md
+*/
+
+
 /**
  *  Keeps track of time. Can be used as a count-down timer with a
  *  a given (cpu) time limit, or to simply track cpu usage.

@@ -1,5 +1,11 @@
 #pragma once
 
+/* Use of this code is is subject to agreement to the
+   CSIRO Open Source Software Licence Agreement
+   as set out in the file ../../LICENCE.md
+*/
+
+
 /** Visit all permutations of a vector of ints
     Takes a vector of num-values (
     The num-values vector 2 3 2 would generate permutations

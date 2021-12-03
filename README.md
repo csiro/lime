@@ -1,5 +1,7 @@
 # Lime
-A library of useful C++ stuff developed and implemented by Phil Kilby.
+A library of useful C++ stuff developed and implemented by Phil Kilby on belalf of CSIRO.
+
+Subject to copyright as set out in the file [LICENCE.md](LICENCE.md) 
 
 # Installation
 
