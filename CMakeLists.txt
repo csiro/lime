@@ -127,7 +127,6 @@ set(LIME_SOURCE_HEADERS
 	${PROJECT_INCLUDE_DIR}/lime/indexmap.h
 	${PROJECT_INCLUDE_DIR}/lime/indexstack.h
 	${PROJECT_INCLUDE_DIR}/lime/intset.h
-	${PROJECT_INCLUDE_DIR}/lime/limearr.h
 	${PROJECT_INCLUDE_DIR}/lime/limetok.h
 	${PROJECT_INCLUDE_DIR}/lime/line.h
 	${PROJECT_INCLUDE_DIR}/lime/lockfile.h
