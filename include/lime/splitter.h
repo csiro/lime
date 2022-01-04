@@ -109,12 +109,12 @@ namespace lime {
         /** Return the token from the previous call to nextToken */
         std::string currToken() const {return tokens_[currPos()];}
 
-        /** Return the next token as an string (just for completeness)
+        /** Return the next token as a string.
             Sets 'error' to true if there was a problem.
+            Just syntactic sugar for a 'next' call.
         */
-        std::string nextStr(bool& error) {
-            return next (error);
-        }
+        std::string nextString(bool& error) {return next(error);}
+        
         /** Return the next token as an integer.
             Sets 'error' to true if there was a problem.
         */
