@@ -74,10 +74,12 @@ namespace lime {
     double greatCircleDistMetres (
         double lat1, double long1, double lat2, double long2
     );
+    
     /** Great circle distance in metres between two Points
         (x,y) is read as (lat/long)
     */
     double greatCircleDistLatLongMetres (const Point* from, const Point* to);
+    
     /** Great circle distance in metres between two Points
         (x,y) is read as (long/lat)
     */

@@ -149,12 +149,11 @@ LimeTok::nextToken(
 
 /** Return the next token as a string.
     Sets 'error' to true if there was a problem.
-    Assumes space delimiters
 */
 std::string
-LimeTok::nextString(bool& error)
+LimeTok::nextString(bool& error, const char* delim)
 {
-    const char* tok = nextToken (spaceOrTab(), true);
+    const char* tok = nextToken (delim, true);
     if (tok == NULL) {
         error = true;
         return std::string("");
@@ -164,13 +163,13 @@ LimeTok::nextString(bool& error)
 
 /** Return the next token as an integer.
     Sets 'error' to true if there was a problem.
-    Assumes space delimiters
 */
 int 
-LimeTok::nextInt(bool& error)
+LimeTok::nextInt(bool& error, const char* delim)
 {
-    const char* tok = nextToken (spaceOrTab(), true, "0123456789+-");
-    if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
+    const char* from = "0123456789+-";
+    const char* tok = nextToken (delim, true, from);
+    if (tok == NULL || strchr (from, tok[0]) == NULL) {
         error = true;
         return 0;
     }
@@ -179,12 +178,11 @@ LimeTok::nextInt(bool& error)
 
 /** Return the next token as an double.
     Sets 'error' to true if there was a problem.
-    Assumes space delimiters
 */
 double 
-LimeTok::nextDouble(bool& error)
+LimeTok::nextDouble(bool& error, const char* delim)
 {
-    const char* tok = nextToken (spaceOrTab(), true, "0123456789+-e.");
+    const char* tok = nextToken (delim, true, "0123456789+-e.");
     if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
         error = true;
         return 0.0;
@@ -196,12 +194,11 @@ LimeTok::nextDouble(bool& error)
 /** Return the next token as an boolean.
     Legal bools are (ignoring case): 0, 1, t, f, true, false
     Sets 'error' to true if the token was not in this set.
-    Assumes space delimiters
 */
 bool
-LimeTok::nextBool(bool& error)
+LimeTok::nextBool(bool& error, const char* delim)
 {
-    const char* tok = nextToken (spaceOrTab(), true, "01truefalsTRUEFALS");
+    const char* tok = nextToken (delim, true, "01truefalsTRUEFALS");
     if (tok != NULL) {
         if (strcmp (tok, "0") == 0)
             return false;
@@ -221,9 +218,9 @@ LimeTok::nextBool(bool& error)
 }
 
 long
-LimeTok::nextTime () 
+LimeTok::nextTime (const char* delim) 
 {
-    const char* tok = nextToken (spaceOrTab(), true, "0123456789:.");
+    const char* tok = nextToken (delim, true, "0123456789:.");
     if (tok == NULL)
         return 0;
     LimeTok ltok2 (tok);

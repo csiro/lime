@@ -53,28 +53,28 @@ public:
         Sets 'error' to true if there was a problem.
         Assumes space delimiters
     */
-    std::string nextString(bool& error);
+    std::string nextString(bool& error, const char* delim = spaceOrTab());
     /** Return the next token as an integer.
         Sets 'error' to true if there was a problem.
         Assumes space delimiters
     */
-    int nextInt(bool& error);
+    int nextInt(bool& error, const char* delim = spaceOrTab());
     /** Return the next token as an double.
         Sets 'error' to true if there was a problem.
         Assumes space delimiters
     */
-    double nextDouble(bool& error);
+    double nextDouble(bool& error, const char* delim = spaceOrTab());
     /** Return the next token as an boolean.
         Legal bools are (ignoring case): 0, 1, t, f, true, false
         Sets 'error' to true if the token was not in this set.
         Assumes space delimiters
     */
-    bool nextBool(bool& error);
+    bool nextBool(bool& error, const char* delim = spaceOrTab());
     /** Return the next token as a time
         Assumes space delimiters.
         Assumes format is hh:mm:ss, or mm:ss, or sss
     */
-    long nextTime ();
+    long nextTime (const char* delim = spaceOrTab());
         
     /** Return the next token as a C string.
         Assumes space delimiters
