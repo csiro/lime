@@ -34,6 +34,9 @@ namespace lime {
         // Rewind to start of file
         void rewind();
 
+        std::string currFilename() const {return currFrame_->filename_;}
+        int currLineNum() const {return currFrame_->lineNum_;}
+
         // Called by readerError()
         void error (std::string message);
         // Called by readerError()
