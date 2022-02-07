@@ -6,6 +6,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <sstream>
 #include <cctype>
@@ -242,6 +243,7 @@ Opts::usage (
         }
     }
     size_t first_optional = args_.size() - optional_args_;
+    int arg_len = 0;
     for (size_t i = 0; i < args_.size(); i++) {
         auto& ar = args_[i];
         cerr << " ";
@@ -250,6 +252,8 @@ Opts::usage (
         cerr << ar.switch_str;
         if (i >= first_optional)
             cerr << "]";
+        if (strlen(ar.switch_str) > arg_len)
+            arg_len = strlen(ar.switch_str);
     }
     cerr << endl;
     cerr << description_;
@@ -281,7 +285,8 @@ Opts::usage (
     cerr << "  Args: " << endl;
     for (size_t i = 0; i < args_.size(); i++) {
         auto& ar = args_[i];
-        cerr << "    " << ar.switch_str << ": " << ar.help_str;
+        cerr << "    " << std::right << setw(arg_len) << ar.switch_str <<
+            ": " << ar.help_str;
         if (i >= first_optional) {
             cerr << " [";
             switch (ar.val_type) {
