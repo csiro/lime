@@ -165,7 +165,7 @@ lime::todayString ()
     std::ostringstream str;
     str <<
         setw(2) << setfill('0') << tim->tm_mday << "/" <<
-        setw(2) << setfill('0') << tim->tm_mon << "/" <<
+        setw(2) << setfill('0') << (tim->tm_mon + 1) << "/" <<
         setw(2) << setfill('0') << 1900 + tim->tm_year << " " << 
         setw(2) << setfill('0') << tim->tm_hour << ":" <<
         setw(2) << setfill('0') << tim->tm_min << ":" <<
