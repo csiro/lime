@@ -44,7 +44,7 @@ message(STATUS "os is ${CMAKE_SYSTEM_NAME}")
 message(STATUS "exe ext is ${EXE_EXT}")
 
 ## C++ Standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 
 #------------------------------------------------------------------------------#
 # Set directories
