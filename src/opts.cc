@@ -361,20 +361,21 @@ Opts::do_config_defaults (Config* config)
     // Do args
     for (auto ar :args_) {
         if (ar.config_name != NULL) {
-        switch (ar.val_type) {
-        case STR:
-        case FILENAME:
-            *ar.str_ptr = 
-                config->getString (ar.config_name, *(ar.str_ptr));
-            break;
-        case INT:
-            *ar.int_ptr = 
-                config->getInt (ar.config_name, *(ar.int_ptr));
-            break;
-        case DBL:
-            *ar.double_ptr = 
-                config->getDouble (ar.config_name, *(ar.double_ptr));
-            break;
+            switch (ar.val_type) {
+            case STR:
+            case FILENAME:
+                *ar.str_ptr = 
+                    config->getString (ar.config_name, *(ar.str_ptr));
+                break;
+            case INT:
+                *ar.int_ptr = 
+                    config->getInt (ar.config_name, *(ar.int_ptr));
+                break;
+            case DBL:
+                *ar.double_ptr = 
+                    config->getDouble (ar.config_name, *(ar.double_ptr));
+                break;
+            }
         }
     }
 }
