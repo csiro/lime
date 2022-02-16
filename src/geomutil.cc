@@ -223,7 +223,7 @@ lime::greatCircleDistMetres (
 {
     // approx radius of Earth in meters.  True radius varies from
     // 6357km (polar) to 6378km (equatorial).
-    static double earthRadius = 6367000;
+    static double earthRadius = 6371000;
 
     lat1 = toRadians (lat1);
     long1 = toRadians (long1);

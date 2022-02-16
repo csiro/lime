@@ -360,6 +360,7 @@ Opts::do_config_defaults (Config* config)
 
     // Do args
     for (auto ar :args_) {
+        if (ar.config_name != NULL) {
         switch (ar.val_type) {
         case STR:
         case FILENAME:
@@ -506,19 +507,18 @@ Opts::process (int argc, const char* argv[], Config* config)
     size_t reqd_args = args_.size() - optional_args_;
     bool missing = false;
     for (size_t k = 0; k < reqd_args; k++) {
-        for (auto ar :args_) {
-            switch (ar.val_type) {
-            case STR:
-            case FILENAME:
-                if (ar.str_ptr->length() == 0)
-                    missing = true;
-                break;
-            case INT:
-            case DBL:
-                if (upto_arg <= k)
-                    missing = true;
-                break;
-            }
+        auto& ar = args_[k];
+        switch (ar.val_type) {
+        case STR:
+        case FILENAME:
+            if (ar.str_ptr->length() == 0)
+                missing = true;
+            break;
+        case INT:
+        case DBL:
+            if (upto_arg <= k)
+                missing = true;
+            break;
         }
     }
     if (missing) {

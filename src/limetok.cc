@@ -1,4 +1,3 @@
-
 /* Use of this code is is subject to agreement to the
    CSIRO Open Source Software Licence Agreement
    as set out in the file ../LICENCE.md
@@ -12,6 +11,7 @@
 #include <cctype>
 
 #include "lime/limetok.h"
+#include "lime/debug.h"
 #include "lime/strutil.h"
 
 LimeTok::LimeTok () :
@@ -115,14 +115,17 @@ LimeTok::nextToken(
     const char* delim, bool skipLeadingSpaces, const char* fromSet
 )
 {
+    //DEBUG ('D', "nexttoken at upto >" << upto_ << "<");
     curr_ = std::string("");
     if (upto_ == 0)
         return NULL;
     
     if (skipLeadingSpaces) {
+        //DEBUG ('D', "  skipleading");
         while (*upto_ != 0 && strchr (spaceOrTab(), *upto_) != NULL)
             upto_++;
     }
+    //DEBUG ('D', "  upto now >" << upto_ << "<");
     if (*upto_ == 0)
         return NULL; // All done
     const char* start = upto_;
@@ -143,6 +146,13 @@ LimeTok::nextToken(
     *upto_ = 0;
     curr_.assign (start);
     *upto_ = tmp;
+    //DEBUG ('D', "  found >" << curr_ << "<");
+    //DEBUG ('D', "  upto now >" << upto_ << "<");
+    if (*upto_ != 0 && strchr (delim, *upto_) != NULL) {
+        // We stopped at a delim, so step over it
+        upto_++;
+        //DEBUG ('D', "  step to >" << upto_ << "<");
+    }
 
     return curr_.c_str();
 }
@@ -182,8 +192,10 @@ LimeTok::nextInt(bool& error, const char* delim)
 double 
 LimeTok::nextDouble(bool& error, const char* delim)
 {
-    const char* tok = nextToken (delim, true, "0123456789+-e.");
-    if (tok == NULL || (!isdigit(tok[0]) && tok[0] != '-')) {
+    const char* from = "0123456789+-e.";
+           
+    const char* tok = nextToken (delim, true, from);
+    if (tok == NULL || tok[0] == 0 || (strchr (from, tok[0]) == NULL)) {
         error = true;
         return 0.0;
     }
