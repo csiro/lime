@@ -138,6 +138,12 @@ namespace lime {
         
         /** Returns a space or tab - for use as a delimiter string */
         static const char* spaceOrTab() {return " 	";}
+
+        
+        // Do the two strings match, up to the length of a
+        static bool matches (std::string a, std::string b);
+        // Do the two strings match ignoring case, up to the length of a
+        static bool matchesIgnoreCase (std::string a, std::string b);
     
     private:
 

@@ -188,3 +188,21 @@ Splitter::nextTime (bool& error)
 
     return (long) (hh * 3600 + mm * 60 + ss);
 }
+
+bool
+Splitter::matches (string a, string b)
+{
+    for (size_t i = 0; i < a.length(); i++) 
+        if (a[i] != b[i])
+            return false;
+    return true;
+}
+
+bool
+Splitter::matchesIgnoreCase (string a, string b)
+{
+    for (size_t i = 0; i < a.length(); i++) 
+        if (tolower(a[i]) != tolower(b[i]))
+            return false;
+    return true;
+}
