@@ -236,7 +236,7 @@ Opts::usage (
             cerr << " #]";
             break;
         case BOOL:
-            cerr << "]";
+            cerr << " t/f]";
             break;
         default:
             cerr << "Unknown val type: " << sw.val_type << endl;
@@ -394,7 +394,7 @@ Opts::process (int argc, const char* argv[], Config* config)
             for (auto& sw : switches_)  {
                 if (!strcmp (argv[upto], sw.switch_str)) {
                     found = true;
-                    if (sw.val_type != BOOL && upto >= argc-1) {
+                    if (upto >= argc-1) {
                         usage ("No value for switch ", sw.switch_str);
                         return false;
                     }
@@ -409,8 +409,11 @@ Opts::process (int argc, const char* argv[], Config* config)
                     case DBL:
                         *sw.double_ptr = atof (argv[++upto]);
                         break;
-                    case BOOL:
-                        *sw.bool_ptr = !*sw.bool_ptr;
+                    case BOOL: {
+                        auto val = argv[++upto];
+                        // Set true if on of 0, t or T
+                        *sw.bool_ptr = (strchr ("1tT", *val) != NULL);
+                    }
                         break;
                     case CONFIG:
                         sw.config_ptr->read (argv[++upto]);
