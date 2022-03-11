@@ -27,7 +27,7 @@ namespace lime {
         virtual ~Reader();
 
         /** Returns NULL at EOF */
-        char* getLine(bool skipBlanks = true);
+        char* getLine(bool skipBlanks = true, bool skipComments = true);
         static bool matches (const char* a, const char* b);
         bool isListEnd (const char* str) const {return matches (str, "*END*");}
 

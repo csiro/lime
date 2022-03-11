@@ -48,7 +48,7 @@ Reader::~Reader ()
 }
 
 char* 
-Reader::getLine(bool skipBlanks)
+Reader::getLine(bool skipBlanks, bool skipComments)
 {
     while (true) { // Skip comments and (optionally) blanks
         currFrame_->in_->getline (buffer_, BUFFER_LEN);
@@ -90,7 +90,7 @@ Reader::getLine(bool skipBlanks)
         }
         if (nextTok == NULL && !skipBlanks)
             break;
-        if (nextTok != NULL && *nextTok != '#')
+        if (nextTok != NULL && (!skipComments || *nextTok != '#'))
             break;
     }
     return buffer_;
