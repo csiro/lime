@@ -95,7 +95,7 @@ Opts::add_opt (
 
 void
 Opts::add_opt (
-    const char* switch_str, bool* bool_ptr,
+    const char* switch_str, bool* bool_ptr, BoolArgType arg_type,
     std::string help_str,
     const char* config_name
 )
@@ -105,7 +105,14 @@ Opts::add_opt (
             "Config error: Switch already exists: " << 
             switch_str << ": " << help_str
         );
-    switches_.push_back (Entry (switch_str, help_str, bool_ptr, config_name));
+    if (arg_type == TAKES_ARG) 
+        switches_.push_back (
+            Entry (switch_str, help_str, bool_ptr, true, config_name)
+        );
+    else
+        switches_.push_back (
+            Entry (switch_str, help_str, bool_ptr, false, config_name)
+        );
 }
 
 void
@@ -236,6 +243,9 @@ Opts::usage (
             cerr << " #]";
             break;
         case BOOL:
+            cerr << "]";
+            break;
+        case BOOL_W_ARG:
             cerr << " t/f]";
             break;
         default:
@@ -272,6 +282,7 @@ Opts::usage (
             cerr << *sw.double_ptr;
             break;
         case BOOL:
+        case BOOL_W_ARG:
             cerr << (*sw.bool_ptr ? "true" : "false");
             break;
         case CONFIG:
@@ -301,6 +312,7 @@ Opts::usage (
                 cerr << *ar.double_ptr;
                 break;
             case BOOL:
+            case BOOL_W_ARG:
                 cerr << (*ar.bool_ptr ? "true" : "false");
                 break;
             }
@@ -351,6 +363,7 @@ Opts::do_config_defaults (Config* config)
                     config->getDouble (sw.config_name, *(sw.double_ptr));
                 break;
             case BOOL:
+            case BOOL_W_ARG:
                 *(sw.bool_ptr) =
                     config->getBool (sw.config_name, *(sw.bool_ptr));
                 break;
@@ -409,7 +422,11 @@ Opts::process (int argc, const char* argv[], Config* config)
                     case DBL:
                         *sw.double_ptr = atof (argv[++upto]);
                         break;
-                    case BOOL: {
+                    case BOOL: 
+                        // Set true if on of 0, t or T
+                        *sw.bool_ptr = !(*sw.bool_ptr);
+                        break;
+                    case BOOL_W_ARG: {
                         auto val = argv[++upto];
                         // Set true if on of 0, t or T
                         *sw.bool_ptr = (strchr ("1tT", *val) != NULL);
@@ -418,9 +435,8 @@ Opts::process (int argc, const char* argv[], Config* config)
                     case CONFIG:
                         sw.config_ptr->read (argv[++upto]);
                         do_config_defaults (sw.config_ptr);
-                        // Set up defaults
+                        break;
                     }
-                    break;
                 }
                 if (sw.config_name != NULL && config != NULL) {
                     config->addItem (sw.config_name, argv[upto]);
@@ -501,6 +517,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                     config->addItem (sw.config_name, *(sw.double_ptr));
                     break;
                 case BOOL:
+                case BOOL_W_ARG:
                     config->addItem (sw.config_name, *(sw.bool_ptr));
                     break;
                 }

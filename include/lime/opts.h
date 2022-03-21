@@ -21,6 +21,8 @@ namespace lime
     class Opts 
     {
     public:
+        enum BoolArgType {SWITCH, TAKES_ARG};
+        
         /** Constructor. Initialises the reader with the contents of a file.
             @param filename name of the file to read
             @remarks the file should contain key <spaces> value pairs.
@@ -54,12 +56,25 @@ namespace lime
             const char* switch_str, Config* config_switch,
             std::string help_str
         );
-        // Bool options are flipped if switch-str is present
+        // Bool options are either flipped if switch-str is present,
+        // or take an arg
         void add_opt (
-            const char* switch_str, bool* bool_switch,
+            const char* switch_str, bool* bool_switch, BoolArgType arg_type,
             std::string help_str,
             const char* config_name = NULL
         );
+        // Default for bool is to flip if switch-str is present
+        void add_opt (
+            const char* switch_str, bool* bool_switch, 
+            std::string help_str,
+            const char* config_name = NULL
+        )  {
+            add_opt (
+                switch_str, bool_switch, SWITCH, 
+                help_str,
+                config_name
+            );
+        }
 
         void add_arg(
             const char* usage_str, std::string* str_ptr, std::string help_str,
@@ -94,7 +109,7 @@ namespace lime
         bool process (int argc, const char* argv[], Config* config = NULL);
         
     protected:
-        enum ValType {STR, FILENAME, INT, BOOL, DBL, CONFIG};
+        enum ValType {STR, FILENAME, INT, BOOL, BOOL_W_ARG, DBL, CONFIG};
         struct Entry
         {
             const char* switch_str;
@@ -148,11 +163,12 @@ namespace lime
                 const char* switch_str_,
                 std::string help_str_,
                 bool* bool_ptr_,
+                bool takes_arg, 
                 const char* config_name_
             ) :
                 switch_str(switch_str_),
                 help_str(help_str_),
-                val_type(BOOL),
+                val_type(takes_arg  ? BOOL_W_ARG : BOOL),
                 str_ptr(NULL),
                 int_ptr(NULL),
                 bool_ptr(bool_ptr_),
