@@ -407,7 +407,7 @@ Opts::process (int argc, const char* argv[], Config* config)
             for (auto& sw : switches_)  {
                 if (!strcmp (argv[upto], sw.switch_str)) {
                     found = true;
-                    if (upto >= argc-1) {
+                    if (sw.val_type != BOOL && upto >= argc-1) {
                         usage ("No value for switch ", sw.switch_str);
                         return false;
                     }
