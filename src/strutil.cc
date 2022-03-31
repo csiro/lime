@@ -271,6 +271,15 @@ lime::basename (const char* path, char* buffer, size_t bufferLen)
     return buffer;
 }
 
+string
+lime::basename (string path)
+{
+    size_t len = path.length()+1;
+    char* buffer = new char[len];
+    char* base = basename (path.c_str(), buffer, len);
+    return string(base);
+}
+
 char*
 lime::fmtTime (int secs, char* buffer)
 {

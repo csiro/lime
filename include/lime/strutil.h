@@ -63,6 +63,7 @@ namespace lime {
      Return value is buffer.
 */
     char* basename (const char*path, char* buffer, size_t bufferLen);
+    std::string basename (std::string path);
 
     /** Comparitor for Maps with char* keys */
     struct strCmp
