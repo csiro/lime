@@ -109,9 +109,11 @@ namespace lime {
     enum EscSeqAction {CLRSCR_HOME, POS, CLR_LINE, UP, DOWN, LEFT, RIGHT};
     // Note: rows UP and DOWN in row arg; cols LEF and RIGHT in col arg
     // Note also: row and col are 1-based.
-    extern std::string escSeq (
+    extern std::string escSeqCmd (
         EscSeqAction action, int row = 0, int col = 0
     );
+    enum EscSeqColour {RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};
+    extern std::string escSeqColour (EscSeqColour c);
 
     extern int kbhit(void);
 

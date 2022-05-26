@@ -433,7 +433,8 @@ double lime::editDist (
     return dist[n-1][m-1];
 }
 
-string lime::escSeq (EscSeqAction action, int row, int col)
+string
+lime::escSeqCmd (EscSeqAction action, int row, int col)
 {
     switch (action) {
     case CLRSCR_HOME:
@@ -456,6 +457,23 @@ string lime::escSeq (EscSeqAction action, int row, int col)
         return "\e[" + to_string(col) + "C";
     }
     return "";
+}
+
+string
+lime::escSeqColour (EscSeqColour col)
+{
+    const char* arr[] = {
+        "0", 	// RESET
+        "30",	// BLACK
+        "31",	// RED
+        "32",	// GREEN
+        "33", 	// YELLOW
+        "34",	// BLUE
+        "35", 	// MAGENTA
+        "36",	// CYAN
+        "37" 	// WHITE
+    };
+    return string("\e[") + arr[(size_t)col] + "m";
 }
 
 /** Test if keyboard has been hit */
