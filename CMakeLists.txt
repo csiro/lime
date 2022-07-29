@@ -81,6 +81,7 @@ set(LIME_SOURCE_CFILES
 	${PROJECT_SOURCE_DIR}/src/indexchoice.cc
 	${PROJECT_SOURCE_DIR}/src/intset.cc
 	${PROJECT_SOURCE_DIR}/src/limetok.cc
+	${PROJECT_SOURCE_DIR}/src/linereader.cc
 	${PROJECT_SOURCE_DIR}/src/lockfile.cc
 	${PROJECT_SOURCE_DIR}/src/numutil.cc
 	${PROJECT_SOURCE_DIR}/src/opts.cc
