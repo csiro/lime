@@ -81,6 +81,10 @@ Config::read (string filename)
             keyEnd++;
         }
         
+        string key(keyStart, keyEnd);
+        if (key[0] == '#') // Comment
+            continue;
+
         // Find first non-blank
         auto valStart = keyEnd;
         if (valStart != line.end())
@@ -90,11 +94,7 @@ Config::read (string filename)
                 break;
             valStart++;
         }
-        bool quotedString = false;
-        if (valStart != line.end() && *valStart == '\"') {
-            quotedString = true;
-            valStart++;
-        }
+        
         if (valStart == line.end()) // Empty val
             limeCrash (
                 "Bad format in config file at line " << lineNum <<
@@ -102,23 +102,15 @@ Config::read (string filename)
             );
             
         auto valEnd = valStart + 1;
-        while (valEnd != line.end()) {
-            if (quotedString) {
-                // Look for close quote
-                if (*valEnd == '\"')
-                    break;
-            }
-            else if (isspace(*valEnd))
-                break;
-            valEnd++;
+        auto upto = valEnd;
+        while (upto != line.end() && *upto != '#') {
+            if (!isspace(*upto))
+                valEnd = upto+1;
+            upto++;
         }
 
-        string key(keyStart, keyEnd);
         string val(valStart, valEnd);
         
-        if (key[0] == '#') // Comment
-            continue;
-
         if (val.length() == 0)
             limeCrash (
                 "Bad format in config file at line " << lineNum <<
@@ -360,22 +352,21 @@ Config::getTime (string key, int defaultVal)
     }
     
     LimeTok ltok (strVal.c_str());
-    const char* hhStr = ltok.nextToken (":");
-    const char* mmStr = ltok.nextToken (":");
-    const char* ssStr = ltok.nextToken (" ");
-
-    if (mmStr == NULL) {
+    string hhStr = ltok.nextToken (":");
+    string mmStr = ltok.nextToken (":");
+    string ssStr = ltok.nextToken ();
+    if (mmStr == "") {
         // Only seconds - not in ":" format
         ssStr = hhStr;
         hhStr = "0";
         mmStr = "0";
     }
-    if (ssStr == NULL) {
+    if (ssStr == "") {
         // No seconds - assume 0
         ssStr = "0";
     }
     
-    return atol (hhStr) * 3600 + atol (mmStr) * 60 + atol (ssStr);
+    return stol (hhStr) * 3600 + stol (mmStr) * 60 + stol (ssStr);
 }
 
 int
@@ -385,24 +376,23 @@ Config::getTime (const char* key, int defaultVal)
 }
 
 bool
-Config::getVector (string key, vector<string> vec)
+Config::getVector (string key, vector<string>& vec)
 {
     string strVal = valFor (key);
     if (strVal.length() == 0) { // Not there
         return false;
     }
     vec.clear();
-    stringstream commasep (strVal); //
-    while (commasep.good()) {
-        string val;
-        getline (commasep, val,  ',');
-        vec.push_back (val);
+    LimeTok tok (strVal);
+    string str;
+    while ((str = tok.nextToken(", ")) != "") {
+        vec.push_back (str);
     }
     return true;
 }
 
 bool
-Config::getVector (std::string key, std::vector<int> vec)
+Config::getVector (std::string key, std::vector<int>& vec)
 {
     vector<string> strvec;
     if (!getVector (key, strvec))
@@ -420,7 +410,7 @@ Config::getVector (std::string key, std::vector<int> vec)
 }
 
 bool
-Config::getVector (std::string key, std::vector<long> vec)
+Config::getVector (std::string key, std::vector<long>& vec)
 {
     vector<string> strvec;
     if (!getVector (key, strvec))
@@ -438,7 +428,7 @@ Config::getVector (std::string key, std::vector<long> vec)
 }
 
 bool
-Config::getVector (std::string key, std::vector<unsigned long> vec)
+Config::getVector (std::string key, std::vector<unsigned long>& vec)
 {
     vector<string> strvec;
     if (!getVector (key, strvec))
@@ -456,7 +446,7 @@ Config::getVector (std::string key, std::vector<unsigned long> vec)
 }
 
 bool
-Config::getVector (std::string key, std::vector<double> vec)
+Config::getVector (std::string key, std::vector<double>& vec)
 {
     vector<string> strvec;
     if (!getVector (key, strvec))

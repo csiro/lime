@@ -72,7 +72,8 @@ Reader::getLine(bool skipBlanks, bool skipComments)
         }
         DEBUG ('D', currFrame_->lineNum_ << " >" << buffer_);
         LimeTok ltok (buffer_);
-        const char* nextTok = ltok.nextString();
+        std::string nextTokStr = ltok.nextString();
+        const char* nextTok = nextTokStr.c_str();
 
         if (nextTok != NULL && *nextTok == '@') {
             // File redirection. Open a new file frame

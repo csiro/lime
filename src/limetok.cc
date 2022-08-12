@@ -110,7 +110,7 @@ LimeTok::handleQuote (char* start)
     return next;
 }
 
-const char*
+std::string
 LimeTok::nextToken(
     const char* delim, bool skipLeadingSpaces, const char* fromSet
 )
@@ -118,7 +118,7 @@ LimeTok::nextToken(
     //DEBUG ('D', "nexttoken at upto >" << upto_ << "<");
     curr_ = std::string("");
     if (upto_ == 0)
-        return NULL;
+        return "";
     
     if (skipLeadingSpaces) {
         //DEBUG ('D', "  skipleading");
@@ -127,7 +127,7 @@ LimeTok::nextToken(
     }
     //DEBUG ('D', "  upto now >" << upto_ << "<");
     if (*upto_ == 0)
-        return NULL; // All done
+        return ""; // All done
     const char* start = upto_;
     // Advance until we see a delim, and while we ae seeing
     // the right chars
@@ -154,21 +154,18 @@ LimeTok::nextToken(
         //DEBUG ('D', "  step to >" << upto_ << "<");
     }
 
-    return curr_.c_str();
+    return curr_;
 }
-
 /** Return the next token as a string.
     Sets 'error' to true if there was a problem.
 */
 std::string
 LimeTok::nextString(bool& error, const char* delim)
 {
-    const char* tok = nextToken (delim, true);
-    if (tok == NULL) {
+    std::string tok = nextToken (delim, true);
+    if (tok == "") 
         error = true;
-        return std::string("");
-    }
-    return std::string(tok);
+    return tok;
 }
 
 /** Return the next token as an integer.
@@ -178,12 +175,12 @@ int
 LimeTok::nextInt(bool& error, const char* delim)
 {
     const char* from = "0123456789+-";
-    const char* tok = nextToken (delim, true, from);
-    if (tok == NULL || strchr (from, tok[0]) == NULL) {
+    std::string tok = nextToken (delim, true, from);
+    if (tok == "" || strchr (from, tok[0]) == NULL) {
         error = true;
         return 0;
     }
-    return atoi (tok);
+    return std::stoi (tok);
 }
 
 /** Return the next token as an double.
@@ -194,12 +191,12 @@ LimeTok::nextDouble(bool& error, const char* delim)
 {
     const char* from = "0123456789+-e.";
            
-    const char* tok = nextToken (delim, true, from);
-    if (tok == NULL || tok[0] == 0 || (strchr (from, tok[0]) == NULL)) {
+    std::string tok = nextToken (delim, true, from);
+    if (tok == "" || (strchr (from, tok[0]) == NULL)) {
         error = true;
         return 0.0;
     }
-    return atof (tok);
+    return std::stod (tok);
 }
 
 
@@ -210,19 +207,19 @@ LimeTok::nextDouble(bool& error, const char* delim)
 bool
 LimeTok::nextBool(bool& error, const char* delim)
 {
-    const char* tok = nextToken (delim, true, "01truefalsTRUEFALS");
-    if (tok != NULL) {
-        if (strcmp (tok, "0") == 0)
+    std::string tok = nextToken (delim, true, "01truefalsTRUEFALS");
+    if (tok != "") {
+        if (tok == "0")
             return false;
-        else if (strcmp (tok, "1") == 0)
+        else if (tok == "1")
             return true;
-        else if (lime::strcasecmp (tok, "f") == 0)
+        else if (tok == "f" || tok == "F")
             return false;
-        else if (lime::strcasecmp (tok, "t") == 0)
+        else if (tok == "t" || tok == "T")
             return true;
-        else if (lime::strcasecmp (tok, "false") == 0)
+        else if (lime::strcasecmp (tok.c_str(), "false") == 0)
             return false;
-        else if (lime::strcasecmp (tok, "true") == 0)
+        else if (lime::strcasecmp (tok.c_str(), "true") == 0)
             return true;
     }
     error = true;
@@ -232,27 +229,27 @@ LimeTok::nextBool(bool& error, const char* delim)
 long
 LimeTok::nextTime (const char* delim) 
 {
-    const char* tok = nextToken (delim, true, "0123456789:.");
-    if (tok == NULL)
+    std::string tok = nextToken (delim, true, "0123456789:.");
+    if (tok == "")
         return 0;
     LimeTok ltok2 (tok);
 
-    const char* hhStr = ltok2.nextToken (":");
-    const char* mmStr = ltok2.nextToken (":");
-    const char* ssStr = ltok2.nextToken (":");
+    std::string hhStr = ltok2.nextToken (":");
+    std::string mmStr = ltok2.nextToken (":");
+    std::string ssStr = ltok2.nextToken (":");
     int hh = 0;
     int mm = 0;
     int ss = 0;
-    if (hhStr == NULL)
+    if (hhStr == "")
         return 0;
-    if (ssStr == NULL || mmStr == NULL) {
+    if (ssStr == "" || mmStr == "") {
         // It is a seconds-only time
-        ss = atoi (hhStr);
+        ss = std::stoi (hhStr);
     }
     else {
-        hh = atoi (hhStr);
-        mm = atoi (mmStr);
-        ss = atoi (ssStr);
+        hh = std::stoi (hhStr);
+        mm = std::stoi (mmStr);
+        ss = std::stoi (ssStr);
     }
     return hh * 3600 + mm * 60 + ss;
 }
@@ -260,7 +257,7 @@ LimeTok::nextTime (const char* delim)
 /** Return the next token as a C string.
     Assumes space delimiters
 */
-const char*
+std::string
 LimeTok::nextString()
 {
     return nextToken (spaceOrTab(), true);
@@ -272,10 +269,9 @@ LimeTok::nextString()
 std::string
 LimeTok::nextStdString(bool& error)
 {
-    const char* tok = nextToken (spaceOrTab(), true);
-    if (tok == NULL) {
+    std::string tok = nextToken (spaceOrTab(), true);
+    if (tok == "") {
         error = true;
-        return std::string("");
     }
     return std::string(tok);
 }

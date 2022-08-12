@@ -99,11 +99,11 @@ namespace lime
         int getTime (std::string key, int defaultVal = 0);
         int getTime (const char* key, int defaultVal = 0);
 
-        bool getVector (std::string key, std::vector<std::string> vec);
-        bool getVector (std::string key, std::vector<int> vec);
-        bool getVector (std::string key, std::vector<long> vec);
-        bool getVector (std::string key, std::vector<unsigned long> vec);
-        bool getVector (std::string key, std::vector<double> vec);
+        bool getVector (std::string key, std::vector<std::string>& vec);
+        bool getVector (std::string key, std::vector<int>& vec);
+        bool getVector (std::string key, std::vector<long>& vec);
+        bool getVector (std::string key, std::vector<unsigned long>& vec);
+        bool getVector (std::string key, std::vector<double>& vec);
 
         std::list<std::string> keys();
         

@@ -32,20 +32,27 @@ ConfigReader::ConfigReader (const char* filename) :
         lineNum++;
         ltok.tokenise (line);
 
-        const char* key = ltok.nextString();
-        const char* val = ltok.nextString();
+        string key = ltok.nextString();
+        bool error = false;
+        string val = ltok.nextStdString(error);
 
-        if (key == NULL)
+        if (key == "")
             continue;
-        if (*key == '#') // Comment
+        if (key[0] == '#') // Comment
             continue;
 
-        if (val == NULL)
+        if (error)
             limeCrash (
                 "Bad format in config file at line " << lineNum <<
                 " of " << filename
             );
-        items_.push_back (new ConfigItem (key, val));
+        
+        string nextStr = ltok.nextStdString(error);
+        while (!error && nextStr[0] != '#') {
+            val += string(" ") + nextStr;
+        }
+        
+        items_.push_back (new ConfigItem (key.c_str(), val.c_str()));
     }
     used_ = new bool [items_.size()];
     std::fill (used_, used_ + items_.size(), false);
@@ -63,12 +70,12 @@ ConfigReader::ConfigReader (std::vector<const char*>& configs) :
     for (size_t i = 0; i < configs.size(); i++) {
         lineNum++;
         ltok.tokenise (configs[i]);
-        const char* key = ltok.nextToken ("=:");
-        if (key == NULL)
+        string key = ltok.nextToken ("=:");
+        if (key == "")
             continue;
-        if (*key == '#') // Comment
+        if (key[0] == '#') // Comment
             continue;
-        strcpy (keyBuffer, key);
+        strcpy (keyBuffer, key.c_str());
         if (
             configs[i][strlen(configs[i])-1] == ':' ||
             configs[i][strlen(configs[i])-1] == '='
@@ -76,14 +83,14 @@ ConfigReader::ConfigReader (std::vector<const char*>& configs) :
             // Value is on the next line
             ltok.tokenise (configs[++i]);
         }
-        const char* val = ltok.nextToken (ltok.spaceOrTab());
+        std::string val = ltok.nextToken (ltok.spaceOrTab());
 
-        if (val == NULL)
+        if (val == "")
             limeCrash (
                 "Bad format in config file at line " << lineNum <<
                 " of args, key is " << keyBuffer
             );
-        items_.push_back (new ConfigItem (keyBuffer, val));
+        items_.push_back (new ConfigItem (keyBuffer, val.c_str()));
     }
     used_ = new bool [items_.size()];
     std::fill (used_, used_ + items_.size(), false);
@@ -183,22 +190,22 @@ ConfigReader::readTime (const char* key, long& val)
         return;
     
     LimeTok ltok (strVal);
-    const char* hhStr = ltok.nextToken (":");
-    const char* mmStr = ltok.nextToken (":");
-    const char* ssStr = ltok.nextToken (" ");
+    string hhStr = ltok.nextToken (":");
+    string mmStr = ltok.nextToken (":");
+    string ssStr = ltok.nextToken (" ");
 
-    if (mmStr == NULL) {
+    if (mmStr == "") {
         // Only seconds - not in ":" format
         ssStr = hhStr;
         hhStr = "0";
         mmStr = "0";
     }
-    if (ssStr == NULL) {
+    if (ssStr == "") {
         // No seconds - assume 0
         ssStr = "0";
     }
     
-    val = atol (hhStr) * 3600 + atol (mmStr) * 60 + atol (ssStr);
+    val = stol (hhStr) * 3600 + stol (mmStr) * 60 + stol (ssStr);
 }
 
 void

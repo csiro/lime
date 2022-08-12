@@ -224,8 +224,8 @@ DznReader::find (const char* fldName, bool failIfMissing)
     char* line = 0;
     while (!found && (line = reader_.getLine()) != NULL) {
         ltok_.tokenise (line);
-        const char* tok = ltok_.nextString ();
-        if (reader_.matches (tok, fldName)) 
+        std::string tok = ltok_.nextString ();
+        if (reader_.matches (tok.c_str(), fldName)) 
             found = true;
     }
     if (!found) {

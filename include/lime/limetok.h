@@ -39,16 +39,16 @@ public:
         If double-quote is seen, all delimiters are ignored until the
         closing double-quote is found
     */
-    const char* nextToken(
+    std::string nextToken(
         const char* delim = spaceOrTab(), bool skipLeadingSpaces = true,
         const char* fromSet = NULL
     );
     
     /** Return the token from the previous call to nextToken */
-    const char* currToken() {
-        return (curr_.length() == 0) ? NULL : curr_.c_str();
+    std::string currToken() {
+        return (curr_.length() == 0) ? std::string("") : curr_;
     }
-
+    
     /** Return the next token as a string.
         Sets 'error' to true if there was a problem.
         Assumes space delimiters
@@ -79,7 +79,7 @@ public:
     /** Return the next token as a C string.
         Assumes space delimiters
     */
-    const char* nextString();
+    std::string nextString();
     /** Return the next token as an std::string.
         Assumes space delimiters
     */
