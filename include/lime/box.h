@@ -69,6 +69,17 @@ namespace lime {
         double urx() const {return ur_.x();}
         double ury() const {return ur_.y();}
 
+        // upper left corner
+        const Point* ul (Point* pt) {
+            pt->set (llx(), ury());
+            return pt;
+        }
+        // lower right corner
+        const Point* lr (Point* pt) {
+            pt->set (urx(), lly());
+            return pt;
+        }
+
         double width() const {return ur_.x() - ll_.x();}
         double height() const {return ur_.y() - ll_.y();}
         double area() const {return width() * height();}
@@ -101,7 +112,7 @@ namespace lime {
             double len = (ur_.y() - ll_.y()) / 2.0;
             pt.set (ll_.x() + wid, ll_.y() + len);
         }
-        
+
         /** Translate by deltax and deltay */
         void translate (double deltaX, double deltaY)
         {
