@@ -33,7 +33,7 @@ public:
     void tokenise (const char* str);
     
     /** Return the next token
-        Returns a pointer to the next token, or NULL if no more tokens
+        Returns a pointer to the next token, or "" if no more tokens
         Each call moves to the next token.
         If fromSet is non-null, then only advances with chars are in the set.
         If double-quote is seen, all delimiters are ignored until the

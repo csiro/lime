@@ -22,7 +22,7 @@ namespace lime {
     public:
         LineReader(std::string filename);
 
-        /** Returns NULL at EOF */
+        /** Returns false at EOF */
         bool getLine (
             std::string& line, bool skipBlanks = true, bool skipComments = true
         );

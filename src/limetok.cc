@@ -115,17 +115,17 @@ LimeTok::nextToken(
     const char* delim, bool skipLeadingSpaces, const char* fromSet
 )
 {
-    //DEBUG ('D', "nexttoken at upto >" << upto_ << "<");
+    DEBUG ('T', "nexttoken at upto >" << upto_ << "<");
     curr_ = std::string("");
     if (upto_ == 0)
         return "";
     
     if (skipLeadingSpaces) {
-        //DEBUG ('D', "  skipleading");
+        DEBUG ('T', "  skipleading");
         while (*upto_ != 0 && strchr (spaceOrTab(), *upto_) != NULL)
             upto_++;
     }
-    //DEBUG ('D', "  upto now >" << upto_ << "<");
+    DEBUG ('T', "  upto now >" << upto_ << "<");
     if (*upto_ == 0)
         return ""; // All done
     const char* start = upto_;
@@ -146,12 +146,12 @@ LimeTok::nextToken(
     *upto_ = 0;
     curr_.assign (start);
     *upto_ = tmp;
-    //DEBUG ('D', "  found >" << curr_ << "<");
-    //DEBUG ('D', "  upto now >" << upto_ << "<");
+    DEBUG ('T', "  found >" << curr_ << "<");
+    DEBUG ('T', "  upto now >" << upto_ << "<");
     if (*upto_ != 0 && strchr (delim, *upto_) != NULL) {
         // We stopped at a delim, so step over it
         upto_++;
-        //DEBUG ('D', "  step to >" << upto_ << "<");
+        DEBUG ('T', "  step to >" << upto_ << "<");
     }
 
     return curr_;
