@@ -168,6 +168,23 @@ Opts::add_optional_arg (
 
 void
 Opts::add_arg (
+    const char* usage_str, std::vector<std::string>* strvec_ptr,
+    std::string help_str, const char* config_name
+)
+{
+    if (optional_args_ > 0)
+        limeCrash (
+            "Config error: Adding optional args after non-optional: " <<
+            help_str
+        );
+    
+    args_.push_back (
+        Entry (usage_str, help_str, STR_VEC, strvec_ptr, config_name)
+    );
+}
+
+void
+Opts::add_arg (
     const char* usage_str, int* int_ptr, std::string help_str,
     const char* config_name
 )
@@ -487,6 +504,10 @@ Opts::process (int argc, const char* argv[], Config* config)
             case FILENAME:
                 *ar.str_ptr = argv[upto];
                 break;
+            case STR_VEC:
+                while (upto < argc && *argv[upto] != '-')
+                    ar.strvec_ptr->push_back (argv[upto++]);
+                break;
             case INT:
                 *ar.int_ptr = atoi (argv[upto]);
                 break;
@@ -533,6 +554,10 @@ Opts::process (int argc, const char* argv[], Config* config)
         case STR:
         case FILENAME:
             if (ar.str_ptr->length() == 0)
+                missing = true;
+            break;
+        case STR_VEC:
+            if (ar.strvec_ptr->size() == 0)
                 missing = true;
             break;
         case INT:
