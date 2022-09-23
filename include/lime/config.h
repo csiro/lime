@@ -96,6 +96,7 @@ namespace lime
         /** Get the value of a time expressed as hh:mm[:ss] or as sss
             @param key key of the configuration to retrieve
          */
+        
         int getTime (std::string key, int defaultVal = 0);
         int getTime (const char* key, int defaultVal = 0);
 
