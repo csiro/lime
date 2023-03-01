@@ -21,8 +21,8 @@ namespace lime
         SortPair() : valKey_(), sorted_(false) {}
         
         void add (int val, double key) {
-            assert(!sorted_);
             valKey_.push_back (ValKey (val, key));
+            sorted_ = false;
         }
         
         void doSort() {
@@ -36,11 +36,19 @@ namespace lime
 
         size_t size() const {return valKey_.size();}
         
-        int operator[](int i) const {return get(i);}
-        int get (int i) const {
+        int operator[](int i) {
+            if (!sorted_)
+                doSort();
+            return get(i);
+        }
+        int get (int i) {
+            if (!sorted_)
+                doSort();
             return valKey_[i].val;
         }
-        double getKey (int i) const {
+        double getKey (int i) {
+            if (!sorted_)
+                doSort();
             return valKey_[i].key;
         }
 
