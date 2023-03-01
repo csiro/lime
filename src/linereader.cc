@@ -64,9 +64,18 @@ LineReader::getLine (string& line, bool skipBlanks, bool skipComments)
             );
             continue;
         }
-        if (k == line.length() && !skipBlanks)
-            return true;
-        if (k < line.length() && (!skipComments || !isComment(line, k)))
+        // Kill comments
+        if (skipComments) {
+            // Kill rest of line from the first comment char
+            for (size_t kk = k; kk < line.length(); kk++) {
+                if (isComment (line, kk)) {
+                    line.erase (kk);
+                    break;
+                }
+            }
+        }
+        DEBUG ('D', currFrame_->lineNum_ << " >" << line << "<");
+        if (k < line.length() || !skipBlanks)
             return true;
     }
 }
