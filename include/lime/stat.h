@@ -19,6 +19,7 @@ namespace lime {
         virtual ~Stat() {}
 
         void add (double val);
+        int count() const {return count_;}
         double mean() const;
         double stddev() const;
         double variance() const;
