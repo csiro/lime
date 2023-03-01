@@ -23,6 +23,22 @@ T limeMin (std::vector<T> vec)
 }
 
 
+int
+limeRound (double a)
+{
+    bool negate = false;
+    if (a < 0) {
+        negate = true;
+        a = -a;
+    }
+    int val = (int) a;
+    if (a - (double)val > 0.5)
+        val = val+1;
+    if (negate)
+        val = -val;
+    return val;
+}
+
 /** Round a to the nearest r */
 int
 limeRound (int a, int r)
@@ -43,6 +59,12 @@ limeRound (int a, int r)
     return negate ? -val : val;
 }
 
+int
+limeRound (double a, int r)
+{
+    return limeRound (limeRound(a), r);
+}
+
 /** Round a up to the nearest r */
 int
 limeRoundUp (int a, int r)
@@ -53,6 +75,13 @@ limeRoundUp (int a, int r)
     if (m == 0)
         return a;
     return a + r - m;
+}
+
+/** Round a up to the nearest r */
+int
+limeRoundUp (double a, int r)
+{
+    return limeRoundUp (limeRound(a), r);
 }
 
 /** Round a down to the nearest r */
@@ -67,6 +96,12 @@ limeRoundDown (int a, int r)
     return a - m;
 }
 
+int
+limeRoundDown (double a, int r)
+{
+    return limeRoundDown (limeRound(a), r);
+}
+
 bool
 limeDblEqual (double a, double b)
 {
@@ -77,6 +112,16 @@ bool
 limeIsZero (double a)
 {
     return (fabs (a) < LIME_EPSILON);
+}
+
+bool limeIsNegative (double a)
+{
+    return (a < -LIME_EPSILON);
+}
+
+bool limeIsPositive (double a)
+{
+    return (a > LIME_EPSILON);
 }
 
 double

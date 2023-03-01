@@ -50,15 +50,27 @@ template<typename T> T limeMin (std::vector<T> vec);
 template<typename T> T limeMax (std::vector<T> vec);
 
 /** Round a to the nearest r */
+int limeRound (double a);
+/** Round a to the nearest r */
 int limeRound (int a, int r);
+/** Round a to the nearest r */
+int limeRound (double a, int r);
 /** Round a up to the nearest r */
 int limeRoundUp (int a, int r);
 /** Round a up to the nearest r */
+int limeRoundUp (double a, int r);
+/** Round a down to the nearest r */
 int limeRoundDown (int a, int r);
+/** Round a down to the nearest r */
+int limeRoundDown (double a, int r);
 /** Is a within epsilon (= 1e-6) of b? */
 bool limeDblEqual (double a, double b);
 /** Is a within epsilon (= 1e-6) of 0? */
 bool limeIsZero (double a);
+/** Is a -ve? */
+bool limeIsNegative (double a);
+/** Is a +ve? */
+bool limeIsPositive (double a);
 
 /** The epsilon we use for "equality" */
 double limeEpsilon();
