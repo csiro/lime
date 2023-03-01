@@ -35,6 +35,9 @@ namespace lime {
         void addCommentString (std::string comment) {
             comments_.push_back (comment);
         }
+        void clearComments () {
+            comments_.clear ();
+        }
 
         // Calls limecrash
         void error (std::string message);
