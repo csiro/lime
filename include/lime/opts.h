@@ -42,6 +42,11 @@ namespace lime
             std::string help_str,
             const char* config_name = nullptr
         );
+        void add_opt_filename (
+            const char* switch_str, std::vector<std::string>* strvec_ptr,
+            std::string help_str,
+            const char* config_name = nullptr
+        );
         void add_opt (
             const char* switch_str, int* int_switch,
             std::string help_str,
@@ -114,7 +119,7 @@ namespace lime
         
     protected:
         enum ValType {
-            STR, STR_VEC, FILENAME, INT, BOOL, BOOL_W_ARG, DBL, CONFIG
+            STR, STR_VEC, FILENAME, FILENAME_VEC, INT, BOOL, BOOL_W_ARG, DBL, CONFIG
         };
         struct Entry
         {
@@ -140,7 +145,7 @@ namespace lime
                 help_str(help_str_),
                 val_type(val_type_),
                 str_ptr(str_ptr_),
-                strvec_ptr(),
+                strvec_ptr(nullptr),
                 int_ptr(nullptr),
                 bool_ptr(nullptr),
                 double_ptr(nullptr),
@@ -179,7 +184,7 @@ namespace lime
                 help_str(help_str_),
                 val_type(INT),
                 str_ptr(nullptr),
-                strvec_ptr(),
+                strvec_ptr(nullptr),
                 int_ptr(int_ptr_),
                 bool_ptr(nullptr),
                 double_ptr(nullptr),
@@ -199,7 +204,7 @@ namespace lime
                 help_str(help_str_),
                 val_type(takes_arg  ? BOOL_W_ARG : BOOL),
                 str_ptr(nullptr),
-                strvec_ptr(),
+                strvec_ptr(nullptr),
                 int_ptr(nullptr),
                 bool_ptr(bool_ptr_),
                 double_ptr(nullptr),
@@ -218,7 +223,7 @@ namespace lime
                 help_str(help_str_),
                 val_type(DBL),
                 str_ptr(nullptr),
-                strvec_ptr(),
+                strvec_ptr(nullptr),
                 int_ptr(nullptr),
                 bool_ptr(nullptr),
                 double_ptr(double_ptr_),
@@ -236,7 +241,7 @@ namespace lime
                 help_str(help_str_),
                 val_type(CONFIG),
                 str_ptr(nullptr),
-                strvec_ptr(),
+                strvec_ptr(nullptr),
                 int_ptr(nullptr),
                 bool_ptr(nullptr),
                 double_ptr(nullptr),

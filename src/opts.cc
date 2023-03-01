@@ -80,6 +80,23 @@ Opts::add_opt_filename (
 }
 
 void
+Opts::add_opt_filename (
+    const char* switch_str, std::vector<std::string>* strvec_ptr,
+    std::string help_str,
+    const char* config_name
+)
+{
+    if (switch_exists (switch_str))
+        limeCrash (
+            "Config error: Switch already exists: " << 
+            switch_str << ": " << help_str
+        );
+    switches_.push_back (
+        Entry (switch_str, help_str, FILENAME_VEC, strvec_ptr, config_name)
+    );
+}
+
+void
 Opts::add_opt (
     const char* switch_str, int* int_ptr, std::string help_str,
     const char* config_name
@@ -251,9 +268,15 @@ Opts::usage (
         case STR:
             cerr << " str]";
             break;
+        case STR_VEC:
+            cerr << " str...]";
+            break;
         case FILENAME:
         case CONFIG:
             cerr << " fn]";
+            break;
+        case FILENAME_VEC:
+            cerr << " fn...]";
             break;
         case INT:
         case DBL:
@@ -291,6 +314,16 @@ Opts::usage (
         case STR:
         case FILENAME:
             cerr << *sw.str_ptr;
+            break;
+        case STR_VEC:
+        case FILENAME_VEC:
+        {
+            const char* sep = "";
+            for (auto str : *(sw.strvec_ptr)) {
+                cerr << sep << str;
+                sep = " ";
+            }
+        }
             break;
         case INT:
             cerr << *sw.int_ptr;
@@ -505,8 +538,11 @@ Opts::process (int argc, const char* argv[], Config* config)
                 *ar.str_ptr = argv[upto];
                 break;
             case STR_VEC:
+            case FILENAME_VEC:
                 while (upto < argc && *argv[upto] != '-')
                     ar.strvec_ptr->push_back (argv[upto++]);
+                if (upto < argc)
+                    upto--; // Stepped to a switch - backtrack to process it
                 break;
             case INT:
                 *ar.int_ptr = atoi (argv[upto]);
