@@ -63,11 +63,6 @@ namespace lime {
             isEmpty_ = false;
         }
 
-        double llx() const {return ll()->x();}
-        double lly() const {return ll()->y();}
-        double urx() const {return ur()->x();}
-        double ury() const {return ur()->y();}
-        
         /** Add a point to the bounding box, possibly enlarging the box to
             accomodate the new point.
             @param loc new Point to add
