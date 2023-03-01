@@ -105,6 +105,9 @@ namespace lime {
             }
             return str;
         }
+
+        std::string operator[](size_t k) const {return tokens_[k];}
+
         
         /** Return the token from the previous call to nextToken */
         std::string currToken() const {return tokens_[currPos()];}
