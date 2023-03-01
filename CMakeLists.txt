@@ -70,6 +70,7 @@ set(LIME_SOURCE_CFILES
 	${PROJECT_SOURCE_DIR}/src/box.cc
 	${PROJECT_SOURCE_DIR}/src/config.cc
 	${PROJECT_SOURCE_DIR}/src/configreader.cc
+	${PROJECT_SOURCE_DIR}/src/dateutil.cc
 	${PROJECT_SOURCE_DIR}/src/debug.cc
 	${PROJECT_SOURCE_DIR}/src/dig.cc
 	${PROJECT_SOURCE_DIR}/src/displayable.cc
