@@ -85,10 +85,10 @@ namespace lime
             if (delta < 0) {
                 accept = true;
             }
-            else if (delta < LIME_EPSILON) {
+            else if (delta < limeEpsilon()) {
                 accept = rand_.coinToss();
             }
-            else if (temp_ < LIME_EPSILON) {
+            else if (temp_ < limeEpsilon()) {
                 accept = false;
             }
             else if (iter_ < noChangeIter_) {
@@ -131,7 +131,7 @@ namespace lime
         {
             double temp =
                 - (targAccept_ * objVal) / log (targProb_);
-            if (temp < LIME_EPSILON)
+            if (temp < limeEpsilon())
                 temp = 1.0;
             return temp;
         }
