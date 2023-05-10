@@ -157,6 +157,58 @@ Config::addItem (string key, unsigned long val)
 }
 
 void
+Config::addItem (std::string key, std::vector<std::string> val)
+{
+    stringstream valStr;
+    const char* sep = "";
+    for (auto str : val) {
+        valStr << sep << str;
+        sep = " ";
+    }
+    addItem (key, valStr.str());
+}
+
+void
+Config::addItem (std::string key, std::vector<int> val)
+{
+    stringstream valStr;
+    for (auto i : val) {
+        valStr << " " << std::to_string(i);
+    }
+    addItem (key, valStr.str());
+}
+
+void
+Config::addItem (std::string key, std::vector<long> val)
+{
+    stringstream valStr;
+    for (auto i : val) {
+        valStr << " " << std::to_string(i);
+    }
+    addItem (key, valStr.str());
+}
+
+void
+Config::addItem (std::string key, std::vector<unsigned long> val)
+{
+    stringstream valStr;
+    for (auto i : val) {
+        valStr << " " << std::to_string(i);
+    }
+    addItem (key, valStr.str());
+}
+
+void
+Config::addItem (std::string key, std::vector<double> val)
+{
+    stringstream valStr;
+    for (auto d : val) {
+        valStr << " " << std::to_string(d);
+    }
+    addItem (key, valStr.str());
+}
+
+void
 Config::addString(std::string key, std::string val)
 {
     addItem (key, val);
