@@ -118,6 +118,7 @@ set(LIME_SOURCE_HEADERS
 	${PROJECT_INCLUDE_DIR}/lime/constants.h
 	${PROJECT_INCLUDE_DIR}/lime/debug.h
 	${PROJECT_INCLUDE_DIR}/lime/dig.h
+	${PROJECT_INCLUDE_DIR}/lime/dijkstra.h
 	${PROJECT_INCLUDE_DIR}/lime/displayable.h
 	${PROJECT_INCLUDE_DIR}/lime/dznreader.h
 	${PROJECT_INCLUDE_DIR}/lime/dznwriter.h
@@ -187,6 +188,13 @@ add_executable(boxtest${EXE_EXT}
 	${PROJECT_TEST_DIR}/boxtest.cc
 )
 target_link_libraries(boxtest${EXE_EXT} lime)
+
+## Dijkstra Test
+add_executable(dijktest${EXE_EXT}
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/dijktest.cc
+)
+target_link_libraries(dijktest${EXE_EXT} lime)
 
 ## Opt Test
 add_executable(opttest${EXE_EXT}
