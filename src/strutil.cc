@@ -14,10 +14,12 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 /** Lime string utilities */
 
 #include "lime/strutil.h"
+#include "lime/error.h"
 #include "lime/debug.h"
 
 using namespace lime;
@@ -132,6 +134,20 @@ lime::strncasecmp (const char* a, const char*b, int n)
         b++;
     }
     return 0;
+}
+
+string
+limeFormat(const char* format, ...)
+{
+    constexpr int buffer_len = 1024;
+    char buffer[buffer_len];
+    va_list argptr;
+    va_start(argptr, format);
+    vsprintf(buffer, format, argptr);
+    va_end(argptr);
+    if (strlen (buffer) > buffer_len)
+        limeCrash ("limeFormat exceed buffer length");
+    return string (buffer);
 }
 
 /** Return a formated time string */

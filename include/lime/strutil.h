@@ -9,6 +9,9 @@
 #include <string.h>
 #include <string>
 
+/** Do a printf style thing to a string. WARNING - fixed 1024 length string */
+std::string limeFormat (const char* format, ...);
+
 namespace lime {
 
 /** Strdup (silly gygwin doesn't have it) */
