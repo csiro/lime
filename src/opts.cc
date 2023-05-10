@@ -404,6 +404,14 @@ Opts::do_config_defaults (Config* config)
                 *(sw.str_ptr) =
                     config->getString (sw.config_name, *(sw.str_ptr));
                 break;
+            case STR_VEC:
+            case FILENAME_VEC: {
+                vector<std::string> vec;
+                config->getVector (sw.config_name, vec);
+                for (auto str : vec)
+                    sw.strvec_ptr->push_back (str);
+            }
+                break;
             case INT:
                 *(sw.int_ptr) =
                     config->getInt (sw.config_name, *(sw.int_ptr));
@@ -466,6 +474,15 @@ Opts::process (int argc, const char* argv[], Config* config)
                     case FILENAME:
                         *(sw.str_ptr) = argv[++upto];
                         break;
+                    case STR_VEC:
+                    case FILENAME_VEC:
+                        while (upto+1 < argc) {
+                            // See if we are up to next switch
+                            if (*argv[upto+1] == '-')
+                                break;
+                            sw.strvec_ptr->push_back (argv[++upto]);
+                        }
+                        break;
                     case INT:
                         *sw.int_ptr = atoi (argv[++upto]);
                         break;
@@ -487,9 +504,9 @@ Opts::process (int argc, const char* argv[], Config* config)
                         do_config_defaults (sw.config_ptr);
                         break;
                     }
-                }
-                if (sw.config_name != NULL && config != NULL) {
-                    config->addItem (sw.config_name, argv[upto]);
+                    if (sw.config_name != NULL && config != NULL) {
+                        config->addItem (sw.config_name, argv[upto]);
+                    }
                 }
             }
             if (!found) {
@@ -567,6 +584,17 @@ Opts::process (int argc, const char* argv[], Config* config)
                 case FILENAME:
                     config->addItem (sw.config_name, *(sw.str_ptr));
                     break;
+                case STR_VEC:
+                case FILENAME_VEC: {
+                    stringstream cfg_str;
+                    const char* sep = "";
+                    for (auto str : *(sw.strvec_ptr)) {
+                        cfg_str << sep << str;
+                        sep = " ";
+                    }
+                    config->addItem (sw.config_name, cfg_str.str());
+                }
+                    break;
                 case INT:
                     config->addItem (sw.config_name, *(sw.int_ptr));
                     break;
@@ -593,6 +621,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                 missing = true;
             break;
         case STR_VEC:
+        case FILENAME_VEC:
             if (ar.strvec_ptr->size() == 0)
                 missing = true;
             break;

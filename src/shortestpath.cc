@@ -13,7 +13,7 @@ using namespace std;
 using namespace lime;
 
 ShortestPath::ShortestPath () :
-    frontier_(SPNodePtrCmp()),
+    frontier_(SPNodeStarCmp()),
     nodes_()
 {
 }
