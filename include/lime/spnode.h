@@ -11,6 +11,7 @@
 */
 
 #include <iostream>
+#include <vector>
 
 namespace lime {
 
@@ -30,7 +31,7 @@ namespace lime {
         void setParent (SPNode* parent) {parent_ = parent;}
 
         virtual SPNode* firstNeighbour() = 0;
-        virtual SPNode* nextNeighbour() = 0;   
+        virtual SPNode* nextNeighbour() = 0;
         virtual bool isLessThan(const SPNode* other) const = 0;
 
     protected:
@@ -38,7 +39,7 @@ namespace lime {
         lime::SPNode* parent_;
     };
 
-    struct SPNodePtrCmp
+    struct SPNodeStarCmp
     {
         bool operator() (const SPNode* a, const SPNode* b) const {
             if (a->cost() == b->cost())

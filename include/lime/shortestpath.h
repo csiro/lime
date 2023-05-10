@@ -28,7 +28,7 @@ namespace lime {
         SPNode* popFirst();
         void expand(SPNode* node);
         
-        std::set <SPNode*,SPNodePtrCmp> frontier_;
+        std::set <SPNode*,SPNodeStarCmp> frontier_;
 
         std::list<SPNode*> nodes_;
     };
