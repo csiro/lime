@@ -18,6 +18,7 @@
 
 #include "lime/indexchoice.h"
 #include "lime/constants.h"
+#include "lime/numutil.h"
 #include "lime/debug.h"
 
 using namespace std;
@@ -116,7 +117,7 @@ IndexChoice::inverseChoose ()
     DEBUG_NL ('4', " InvChoice");
     double sumInvWeights = 0.0;
     for (int i = 0; i < size_; i++) {
-        assert (weight_[i] > 1.0 - LIME_EPSILON);
+        assert (weight_[i] > 1.0 - limeEpsilon());
         DEBUG_NL (
             '4', " " << i << " " << weight_[i] <<
             " " << sumWeights_ / weight_[i]

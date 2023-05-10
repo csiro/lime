@@ -10,6 +10,8 @@
 
 /** Lime numeric utilities */
 
+double limeEpsilon_ = LIME_EPSILON;
+
 template<typename T>
 T limeMin (std::vector<T> vec)
 {
@@ -105,29 +107,35 @@ limeRoundDown (double a, int r)
 bool
 limeDblEqual (double a, double b)
 {
-    return (fabs (a - b) < LIME_EPSILON);
+    return (fabs (a - b) < limeEpsilon());
 }
 
 bool
 limeIsZero (double a)
 {
-    return (fabs (a) < LIME_EPSILON);
+    return (fabs (a) < limeEpsilon());
 }
 
 bool limeIsNegative (double a)
 {
-    return (a < -LIME_EPSILON);
+    return (a < -limeEpsilon());
 }
 
 bool limeIsPositive (double a)
 {
-    return (a > LIME_EPSILON);
+    return (a > limeEpsilon());
 }
 
 double
 limeEpsilon()
 {
-    return LIME_EPSILON;
+    return limeEpsilon_;
+}
+
+void
+limeSetEpsilon(double eps)
+{
+    limeEpsilon_ = eps;
 }
 
 namespace lime

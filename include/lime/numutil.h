@@ -74,6 +74,7 @@ bool limeIsPositive (double a);
 
 /** The epsilon we use for "equality" */
 double limeEpsilon();
+void limeSetEpsilon(double eps);
 
 namespace lime
 {
