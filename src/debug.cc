@@ -39,7 +39,7 @@ std::ostream& Debug::debugFile()
 {
     if (outfile_ == 0) {
         const char* filename = (filename_ != "")?filename_.c_str():"debug.out";
-        const char* envFilename = getenv ("ATOMIC_DEBUG");
+        const char* envFilename = getenv ("LIME_DEBUG");
         if (envFilename != NULL)
             filename = envFilename;
         outfile_ = new ofstream (filename);
