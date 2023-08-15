@@ -126,6 +126,16 @@ bool limeIsPositive (double a)
     return (a > limeEpsilon());
 }
 
+bool limeLessEq (double a, double b)
+{
+    return a <= b + limeEpsilon();
+}
+
+bool limeIsGreaterEq (double a, double b)
+{
+    return limeLessEq (b, a);
+}
+
 double
 limeEpsilon()
 {

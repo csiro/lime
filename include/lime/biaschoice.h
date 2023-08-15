@@ -14,6 +14,14 @@
 #include <iostream>
 #include <list>
 
+#include "lime/biaschoicet.h"
+
+namespace lime {
+    using BiasChoice = BiasChoiceT<int>;
+}
+
+/*
+
 #include "lime/rand.h"
 
 namespace lime {
@@ -44,3 +52,4 @@ namespace lime {
 
     std::ostream& operator<< (std::ostream&, const BiasChoice&);
 }
+*/

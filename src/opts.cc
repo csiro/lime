@@ -568,6 +568,9 @@ Opts::process (int argc, const char* argv[], Config* config)
                 *ar.double_ptr = atof (argv[upto]);
                 break;
             }
+            if (ar.config_name != NULL && config != NULL) {
+                config->addItem (ar.config_name, argv[upto]);
+            }
         }
         else {
             usage ("Too many args: ", argv[upto]);

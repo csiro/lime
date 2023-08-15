@@ -541,17 +541,19 @@ Config::show (const char* sep) const
     stringstream str;
     const char* currsep = "";
     for (auto iter = map_.begin(); iter != map_.end(); ++iter) {
-        if (iter->second.length() > 0) {
-            str << currsep << iter->first << " ";
-            if (iter->second.find(" ") != string::npos) {
-                // there are spaces in the string.
-                // Enclose in quotes
-                str << "\"" << iter->second << "\"";
-            }
-            else
-                str << iter->second;
-            currsep = sep;
+        str << currsep << iter->first << " ";
+        if (iter->second.length() == 0) {
+            // Write empty string
+            str << "\"\"";
         }
+        else if (iter->second.find(" ") != string::npos) {
+            // there are spaces in the string.
+            // Enclose in quotes
+            str << "\"" << iter->second << "\"";
+        }
+        else
+            str << iter->second;
+        currsep = sep;
     }
     return str.str();
 }

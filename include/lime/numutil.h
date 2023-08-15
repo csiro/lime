@@ -71,6 +71,10 @@ bool limeIsZero (double a);
 bool limeIsNegative (double a);
 /** Is a +ve? (non-zero) */
 bool limeIsPositive (double a);
+/** less or equal for a double */
+bool limeLessEq (double a, double b);
+/** less or equal for a double */
+bool limeGreaterEq (double a, double b);
 
 /** The epsilon we use for "equality" */
 double limeEpsilon();

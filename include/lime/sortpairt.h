@@ -6,29 +6,24 @@
 */
 
 
-/** Sort an array with int and double by the double */
+/**
+   Templated version of 'SortPair'
+   Sort an array with <template type> val and double sort-key by the double */
 
 #include <iostream>
 #include <vector>
 #include <assert.h>
 #include <algorithm>
 
-#include "lime/sortpairt.h"
-
 namespace lime
 {
-    using SortPair = lime::SortPairT<int>;
-}
-
-/*
-namespace lime
-{
-    class SortPair
+    template<typename ValType>
+    class SortPairT
     {
     public:
-        SortPair() : valKey_(), sorted_(false) {}
+        SortPairT() : valKey_(), sorted_(false) {}
         
-        void add (int val, double key) {
+        void add (ValType val, double key) {
             valKey_.push_back (ValKey (val, key));
             sorted_ = false;
         }
@@ -44,15 +39,18 @@ namespace lime
 
         size_t size() const {return valKey_.size();}
         
-        int operator[](int i) {
+        ValType operator[](size_t i) {
             return get(i);
         }
-        int get (int i) {
+        ValType get (size_t i) {
+            return getVal(i);
+        }
+        ValType getVal (size_t i) {
             if (!sorted_)
                 doSort();
             return valKey_[i].val;
         }
-        double getKey (int i) {
+        double getKey (size_t i) {
             if (!sorted_)
                 doSort();
             return valKey_[i].key;
@@ -68,10 +66,10 @@ namespace lime
     private:
         struct ValKey
         {
-            int val;
+            ValType val;
             double key;
             
-            ValKey (int val_, double key_) : val(val_), key(key_) {}
+            ValKey (ValType val_, double key_) : val(val_), key(key_) {}
 
             
             bool operator< (const ValKey& other) const {
@@ -83,4 +81,3 @@ namespace lime
         bool sorted_;
     };
 } 
-*/

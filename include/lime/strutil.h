@@ -109,7 +109,10 @@ namespace lime {
         double modCost = 1.0, double transCost = 1.0
     );
 
-    enum EscSeqAction {CLRSCR_HOME, POS, CLR_LINE, UP, DOWN, LEFT, RIGHT};
+    enum EscSeqAction {
+        CLRSCR_HOME, CLR_REST_SCREEN, CLR_REST_LINE, POS, CLR_LINE,
+        UP, DOWN, LEFT, RIGHT
+    };
     // Note: rows UP and DOWN in row arg; cols LEF and RIGHT in col arg
     // Note also: row and col are 1-based.
     extern std::string escSeqCmd (

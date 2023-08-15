@@ -454,7 +454,11 @@ lime::escSeqCmd (EscSeqAction action, int row, int col)
 {
     switch (action) {
     case CLRSCR_HOME:
-        return "\e[2J\e[1;0H";
+        return "\e[2J\e[H";
+    case CLR_REST_SCREEN:
+        return "\e[0J";
+    case CLR_REST_LINE:
+        return "\e[K";
     case POS:
         return "\e[" + to_string(row) + ";" + to_string(col) + "H";
     case CLR_LINE:
