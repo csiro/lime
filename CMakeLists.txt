@@ -65,7 +65,6 @@ message(STATUS "PROJECT_TEST_DIR: ${PROJECT_TEST_DIR}")
 set(LIME_SOURCE_CFILES 
 	${PROJECT_SOURCE_DIR}/src/accessor.cc
 	${PROJECT_SOURCE_DIR}/src/adaptchoice.cc
-	${PROJECT_SOURCE_DIR}/src/biaschoice.cc
 	${PROJECT_SOURCE_DIR}/src/boundingbox.cc
 	${PROJECT_SOURCE_DIR}/src/box.cc
 	${PROJECT_SOURCE_DIR}/src/config.cc
