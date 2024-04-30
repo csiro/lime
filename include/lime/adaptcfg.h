@@ -29,13 +29,14 @@ namespace lime {
         */       
         AdaptCfg (
             double sigma1, double sigma2, double sigma3, double learnRate,
-            int segmentLen
+            int segmentLen, bool normalise = false
         ) :
             sigma1_(sigma1),
             sigma2_(sigma2),
             sigma3_(sigma3),
             learnRate_(learnRate),
-            segmentLen_(segmentLen)
+            segmentLen_(segmentLen),
+            normalise_(normalise)
         {
         }
         AdaptCfg (const AdaptCfg& other) :
@@ -67,6 +68,10 @@ namespace lime {
         void setSegmentLen (int segmentLen) {
             segmentLen_ = segmentLen;
         }
+        bool normalise() const {return normalise_;}
+        void set_normalise (bool normalise) {
+            normalise_ = normalise;
+        }
         
         void display (std::ostream& out) const override
         {
@@ -74,7 +79,8 @@ namespace lime {
                 "sigma2 " << sigma2_ << 
                 "sigma3 " << sigma3_ <<
                 "learnRate " << learnRate_ <<
-                "segmentLen " << segmentLen_;
+                "segmentLen " << segmentLen_ <<
+                "normalise " << normalise_;
         }
                 
                 
@@ -85,5 +91,7 @@ namespace lime {
         double sigma3_;
         double learnRate_;
         int segmentLen_;
+        /** Normalise the scores before updating? */
+        bool normalise_;
     };
 }

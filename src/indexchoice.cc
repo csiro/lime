@@ -73,6 +73,15 @@ IndexChoice::clear (double wgt)
     std::fill (weight_.begin(), weight_.end(), wgt);
 }
 
+void
+IndexChoice::normalise ()
+{
+    for (int i = 0; i < size_; i++) 
+        weight_[i] = weight_[i] / sumWeights_;
+    minWeight_ = minWeight_ / sumWeights_;
+    sumWeights_ = 1.0f;
+}
+
 int
 IndexChoice::choose () 
 {
@@ -144,7 +153,8 @@ IndexChoice::display (ostream& out) const
 {
     out << "IndexChoice";
     for (int i = 0; i < size_; i++)
-        out << " [" << i << "," << weight_[i] << "]";
+        out << " [" << i << "," << weight_[i] << "," <<
+            100.0f * weight_[i]/sumWeights_ << "%]";
 }
 
 // ------------------------

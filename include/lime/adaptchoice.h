@@ -36,9 +36,23 @@ namespace lime {
             Rebalances weights if segmentlen reached
         */
         int choose();
+
+        /** Choose an index, but doesn't update count.
+            Rebalances weights if segmentlen reached
+        */
+        int suggest ();
+        
+        /* We used this one. Update count */
+        void use(int choice)
+        {
+            count_[choice]++;
+            callCount_++;
+        }
+        
     
         /** What is the current weight (probability) for the method  */
         double weight(int idx) const {return chooser_.weight(idx);}
+        void setWeight(int idx, double wgt) {chooser_.setWeight(idx, wgt);}
     
         /** Clear memory */
         void clear();
@@ -55,6 +69,7 @@ namespace lime {
         void display (std::ostream& out) const override;
     
     protected:
+        
         /** The number of choices */
         int numChoice_;
         /** How many times have we been called? */

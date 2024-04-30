@@ -7,6 +7,7 @@
 #include <assert.h>
 
 #include "lime/adaptchoice.h"
+#include "lime/numutil.h"
 #include "lime/debug.h"
 
 using namespace std;
@@ -51,11 +52,13 @@ AdaptChoice::clear()
     }
 }
 
-/** Choose an index. Updates count */
+/** Choose an index, but don't update count
+    Rebalance if at interval len
+ */
 int 
-AdaptChoice::choose()
+AdaptChoice::suggest ()
 {
-    if (++callCount_ == cfg_.segmentLen()) {
+    if (callCount_ == cfg_.segmentLen()) {
         // Time to rebalance
         updateWeights();
     }
@@ -63,7 +66,17 @@ AdaptChoice::choose()
     int which = 0;
     if (numChoice_ > 1)
         which = chooser_.choose();
-    count_[which]++;
+    return which;
+}
+
+/** Choose an index. Updates count.
+    Rebalance if at interval len
+ */
+int 
+AdaptChoice::choose()
+{
+    int which = suggest();
+    use(which);
     return which;
 }
 
@@ -71,22 +84,33 @@ void AdaptChoice::updateWeights()
 {
     DEBUG ('l',"    updateWeights in AdaptChoice");
     DEBUG_ARR (
-        'l', "      scores are ", score_, (int)numChoice_
+        'l', "      scores are ", score_, numChoice_
     );
     DEBUG_ARR (
-        'l', "      counts are ", count_, (int)numChoice_
+        'l', "      counts are ", count_, numChoice_
     );
-    for (int i = 0; i < (int)numChoice_; i++) {
+    double normalise_wgt = 1.0f;
+    if (cfg_.normalise()) {
+        normalise_wgt = 0.0f;
+        for (int i = 0; i < numChoice_; i++) {
+            normalise_wgt += score_[i];
+        }
+        normalise_wgt /= cfg_.segmentLen();
+    }
+    for (int i = 0; i < numChoice_; i++) {
         double oldWeight = chooser_.weight(i);
         double newWeight = 0;
         if (count_[i] == 0)
             newWeight = oldWeight;
         else 
-            newWeight = score_[i] / count_[i];
+            newWeight = score_[i] / (normalise_wgt * count_[i]);
         // Replace the weight
         double w = 
             (1.0 - cfg_.learnRate()) * oldWeight +
             cfg_.learnRate() * newWeight;
+        DEBUG (
+            'l', "      i " << i << " old " << oldWeight << " new " << newWeight
+        );
         if (w < MIN_FEAT_WEIGHT)
             w = MIN_FEAT_WEIGHT;
         chooser_.setWeight (i, w);
