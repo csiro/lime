@@ -12,6 +12,8 @@
 #include <memory>
 #include <string.h>
 
+#include "lime/strutil.h"
+
 #ifdef _MSC_VER
 #include <io.h>
 #else
@@ -49,4 +51,12 @@ lime::unique_filename(string dir_name)
     // Now close the file, ready for use
     close (fd);
     return fn;
+}
+
+bool
+lime::isFilename (std::string filename)
+{
+    return 
+        filename.length() > 0 &&
+        !equal_ic (filename, "none");
 }

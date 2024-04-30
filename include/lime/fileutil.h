@@ -19,5 +19,8 @@ namespace lime {
        Note: Caller should remove file when no longer required.
     */
         
-    std::string unique_filename(std::string dir_name = std::string("."));
+    extern std::string unique_filename(std::string dir_name = std::string("."));
+
+    /** Check the filename is valid - ie. not empty and not "none" */
+    extern bool isFilename (std::string filename);
 }
