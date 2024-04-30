@@ -5,6 +5,9 @@
    as set out in the file ../../LICENCE.md
 */
 
+/* Handle command line args and switches
+   
+ */
 
 #include <map>
 #include <string>
@@ -14,10 +17,6 @@ namespace lime
 {
     class Config;
 
-    /** A class to read optsurations from file.
-        This opts is free-format: any key and value is allowed
-        (OptsReader demands keys are pre-declared)
-     */
     class Opts 
     {
     public:
@@ -250,6 +249,7 @@ namespace lime
             {
             }
         };
+
         bool switch_exists (const char* switch_str);
         void do_config_defaults (Config* config);
         
