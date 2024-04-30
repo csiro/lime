@@ -202,6 +202,13 @@ add_executable(opttest${EXE_EXT}
 )
 target_link_libraries(opttest${EXE_EXT} lime)
 
+## Pareto Test
+add_executable(paretotest${EXE_EXT}
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/paretotest.cc
+)
+target_link_libraries(paretotest${EXE_EXT} lime)
+
 ## Permutation Test
 add_executable(permtest${EXE_EXT}
 	EXCLUDE_FROM_ALL
