@@ -35,6 +35,8 @@ namespace lime {
         int numChoices() const {return size_;}
         bool empty() const {return sumWeights_ < 1e-3;}
         void clear (double weight = (double)1.0);
+        // Normalise the weights to sum to 1.0
+        void normalise ();
     
         int choose ();
         int inverseChoose ();
