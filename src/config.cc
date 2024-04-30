@@ -14,6 +14,7 @@
 #include <lime/reader.h>
 #include <lime/limetok.h>
 #include <lime/error.h>
+#include <lime/fileutil.h>
 #include <lime/debug.h>
 
 /** Give acccess to a config file */
@@ -52,6 +53,9 @@ void
 Config::read (string filename)
 {
     filename_ = filename;
+
+    if (!lime::isFilename (filename))
+        return;
 
     ifstream ifs (filename);
     if (!ifs.is_open())

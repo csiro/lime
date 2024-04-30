@@ -154,7 +154,10 @@ Opts::add_opt (
 )
 {
     if (switch_exists (switch_str))
-        limeCrash ("Config error: Switch already exists: " << help_str);
+        limeCrash (
+            "Config error: Switch already exists: " <<
+            switch_str << ": " << help_str
+        );
     switches_.push_back (Entry (switch_str, help_str, config_ptr));
 }
 
@@ -395,6 +398,7 @@ Opts::do_config_defaults (Config* config)
 {
     if (config == NULL)
         return;
+    DEBUG ('6', "  Do config defaults");
     // Do switches
     for (auto& sw : switches_)  {
         if (sw.config_name != NULL) {
@@ -403,6 +407,10 @@ Opts::do_config_defaults (Config* config)
             case FILENAME:
                 *(sw.str_ptr) =
                     config->getString (sw.config_name, *(sw.str_ptr));
+                DEBUG (
+                    '6', "      Set " << sw.switch_str <<
+                    " to " << *(sw.str_ptr)
+                );
                 break;
             case STR_VEC:
             case FILENAME_VEC: {
@@ -415,15 +423,27 @@ Opts::do_config_defaults (Config* config)
             case INT:
                 *(sw.int_ptr) =
                     config->getInt (sw.config_name, *(sw.int_ptr));
+                DEBUG (
+                    '6', "      Set " << sw.switch_str <<
+                    " to " << *(sw.int_ptr)
+                );
                 break;
             case DBL:
                 *(sw.double_ptr) =
                     config->getDouble (sw.config_name, *(sw.double_ptr));
+                DEBUG (
+                    '6', "      Set " << sw.switch_str <<
+                    " to " << *(sw.double_ptr)
+                );
                 break;
             case BOOL:
             case BOOL_W_ARG:
                 *(sw.bool_ptr) =
                     config->getBool (sw.config_name, *(sw.bool_ptr));
+                DEBUG (
+                    '6', "      Set " << sw.switch_str <<
+                    " to " << *(sw.bool_ptr)
+                );
                 break;
             }
         }
@@ -437,14 +457,26 @@ Opts::do_config_defaults (Config* config)
             case FILENAME:
                 *ar.str_ptr = 
                     config->getString (ar.config_name, *(ar.str_ptr));
+                DEBUG (
+                    '6', "      Set arg " << ar.switch_str <<
+                    " to " << *(ar.str_ptr)
+                );
                 break;
             case INT:
                 *ar.int_ptr = 
                     config->getInt (ar.config_name, *(ar.int_ptr));
+                DEBUG (
+                    '6', "      Set arg " << ar.switch_str <<
+                    " to " << *(ar.int_ptr)
+                );
                 break;
             case DBL:
                 *ar.double_ptr = 
                     config->getDouble (ar.config_name, *(ar.double_ptr));
+                DEBUG (
+                    '6', "      Set arg " << ar.switch_str <<
+                    " to " << *(ar.double_ptr)
+                );
                 break;
             }
         }
@@ -454,6 +486,7 @@ Opts::do_config_defaults (Config* config)
 bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
+    DEBUG ('6', "Process args");
     cmd_ = argv[0];
     uses_config_ = (config != NULL);
     size_t upto_arg = 0;
@@ -461,6 +494,7 @@ Opts::process (int argc, const char* argv[], Config* config)
     bool look_for_config = true;
     for (int upto = 1; upto < argc; upto++) {
         if (*argv[upto] == '-' && strlen(argv[upto]) > 1) {
+            DEBUG ('6', "  Process arg " << argv[upto]);
             bool found = false;
             for (auto& sw : switches_)  {
                 if (!strcmp (argv[upto], sw.switch_str)) {
@@ -472,10 +506,12 @@ Opts::process (int argc, const char* argv[], Config* config)
                     switch (sw.val_type) {
                     case STR:
                     case FILENAME:
+                        DEBUG ('6', "    Matched str/fn");
                         *(sw.str_ptr) = argv[++upto];
                         break;
                     case STR_VEC:
                     case FILENAME_VEC:
+                        DEBUG ('6', "    Matched str/fn vec");
                         while (upto+1 < argc) {
                             // See if we are up to next switch
                             if (*argv[upto+1] == '-')
@@ -484,22 +520,27 @@ Opts::process (int argc, const char* argv[], Config* config)
                         }
                         break;
                     case INT:
+                        DEBUG ('6', "    Matched int");
                         *sw.int_ptr = atoi (argv[++upto]);
                         break;
                     case DBL:
+                        DEBUG ('6', "    Matched float");
                         *sw.double_ptr = atof (argv[++upto]);
                         break;
                     case BOOL: 
                         // Set true if on of 0, t or T
+                        DEBUG ('6', "    Matched bool");
                         *sw.bool_ptr = !(*sw.bool_ptr);
                         break;
                     case BOOL_W_ARG: {
+                        DEBUG ('6', "    Matched bool (w/arg)");
                         auto val = argv[++upto];
                         // Set true if on of 0, t or T
                         *sw.bool_ptr = (strchr ("1tT", *val) != NULL);
                     }
                         break;
                     case CONFIG:
+                        DEBUG ('6', "    Matched config");
                         sw.config_ptr->read (argv[++upto]);
                         do_config_defaults (sw.config_ptr);
                         break;
@@ -520,6 +561,10 @@ Opts::process (int argc, const char* argv[], Config* config)
                     !strcmp (argv[upto], "--help")
                 ) {
                     usage ();
+                    if (config != nullptr) {
+                        cerr << "Default config is" << endl << "  ";
+                        cerr << config->show ("\n  ") << endl;
+                    }
                     return false;
                 }
                 else {
@@ -536,8 +581,8 @@ Opts::process (int argc, const char* argv[], Config* config)
             )
         ) {
             if (config != NULL) {
+                DEBUG ('6', "  Found config val setting: " << argv[upto]);
                 config->addItem (string(argv[upto]));
-                //  Parse the value now
                 Config tmp;
                 tmp.addItem (string(argv[upto]));
                 do_config_defaults (&tmp);
@@ -578,6 +623,11 @@ Opts::process (int argc, const char* argv[], Config* config)
         }
     }
 
+    if (config != nullptr) {
+        DEBUG ('6', "Config after arg pass is ");
+        DEBUG ('6', *config);
+    };
+
     // Set up config
     if (config != NULL) {
         for (auto& sw : switches_)  {
@@ -612,6 +662,12 @@ Opts::process (int argc, const char* argv[], Config* config)
             }
         }
     }
+
+    if (config != nullptr) {
+        DEBUG ('6', "Config after config setup is ");
+        DEBUG ('6', *config);
+    };
+    
     // See if all required argshave values
     size_t reqd_args = args_.size() - optional_args_;
     bool missing = false;
