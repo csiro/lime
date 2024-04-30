@@ -26,9 +26,12 @@ namespace lime
     template <typename ObjType>
     class SimAnneal : public AcceptMeth<ObjType>
     {
+    private:
+        constexpr static double frozen = 0.001f;
+        
     public:
         SimAnneal (
-            double targAccept, double targProb, int seed
+            double targAccept, double targProb, double fracNoChange, int seed
         ) :
             AcceptMeth<ObjType>(),
             iter_(0),
@@ -37,6 +40,7 @@ namespace lime
             tempMult_(0),
             targAccept_(targAccept),
             targProb_(targProb),
+            fracNoChange_(fracNoChange),
             initTemp_(0),
             restarts_(0),
             restartMod_(0),
@@ -45,8 +49,6 @@ namespace lime
             if (targAccept < 1)
                 limeWarning ("simanneal.h: targAccept should be > 1");
         }
-
-        enum {FRAC_NO_CHANGE = 20};
 
         double temp() const {return temp_;}
         void setTemp (double temp) {
@@ -59,21 +61,18 @@ namespace lime
 
         void init (ObjType objVal, long numIters, int restarts) override
         {
-            noChangeIter_ = 0;
-            if (numIters > FRAC_NO_CHANGE)
-                noChangeIter_ = numIters / FRAC_NO_CHANGE;
+            noChangeIter_ = numIters * fracNoChange_;
             initTemp_ = temp_ = calcTemp (objVal);
             restarts_ = restarts;
             restartMod_ = 1 + numIters / (restarts_ + 1);
-                                    // +1 so we don't restart on the last iter
             tempMult_ = calcTempMult (restartMod_);
             DEBUG (
-                'L', "SA: Using obj " << objVal <<
+                '3', "SA: Using obj " << objVal <<
                 " and numiters " << numIters <<
                 " initial temp " << temp_ <<
                 " mult " << tempMult_ <<
                 " restart every " << restartMod_ << " iters" <<
-                " no change for " << noChangeIter_
+                " no change for " << noChangeIter_ << " iters"
             )
         }
         
@@ -88,7 +87,7 @@ namespace lime
             else if (delta < limeEpsilon()) {
                 accept = rand_.coinToss();
             }
-            else if (temp_ < limeEpsilon()) {
+            else if (limeLessEq (temp_, frozen)) {
                 accept = false;
             }
             else if (iter_ < noChangeIter_) {
@@ -99,7 +98,7 @@ namespace lime
                 accept = (rand_.uniform01() < acceptThresh);
             }
             DEBUG (
-                'L', "SA: iter " << iter_ << " sol " << solCost <<
+                '3', "SA: iter " << iter_ << " sol " << solCost <<
                 " incumb " << incumbCost << " temp " << temp_ <<
                 " delta " << delta << 
                 " acceptThresh " << acceptThresh << 
@@ -108,20 +107,28 @@ namespace lime
             return accept;
         }
             
-        void iter (long iter, ObjType objVal) override
+        void iter (long callingIter, ObjType bestObjVal) override
         {
             iter_++;
-            if ((iter_ + 1) % restartMod_ == 0) {
-                temp_ = calcTemp (objVal);
+            if ((iter_) % restartMod_ == 0) {
+                DEBUG ('3', "    Restart");
+                temp_ = calcTemp (bestObjVal);
                 tempMult_ = calcTempMult (restartMod_);
+            }
+            else if (iter_ == noChangeIter_) {
+                // Set the temp based on the current obj
+                DEBUG ('3', "    Finished no-change period. Recalc temp");
+                temp_ = calcTemp (bestObjVal);
+                if (restartMod_> noChangeIter_) 
+                    tempMult_ = calcTempMult (restartMod_ - noChangeIter_);
             }
             else {
                 temp_ *= tempMult_;
-                if (temp_ < 1.0)
-                    temp_ = 1.0;
+                if (temp_ < frozen)
+                    temp_ = frozen;
             }
             DEBUG (
-                'l', "    SimAnneal iter " << iter_ << " temp now " << temp_
+                '3', "    SimAnneal iter " << iter_ << " temp now " << temp_
             );
         }
 
@@ -129,6 +136,8 @@ namespace lime
     protected:
         double calcTemp (ObjType objVal)
         {
+            if (limeIsZero(targProb_))
+                return frozen;
             double temp =
                 - (targAccept_ * objVal) / log (targProb_);
             if (temp < limeEpsilon())
@@ -137,10 +146,9 @@ namespace lime
         }
         double calcTempMult (long numIters)
         {
-            // Calc the mult that will get us to temp 1 in numIters_ iters
+            // Calc the mult that will get us to temp 0.001 in numIters iters
             // given a starting temperature of temp_
-            assert (numIters > noChangeIter_);
-            return exp (- log(temp_) / (numIters - noChangeIter_));
+            return exp (log(frozen/temp_) / numIters);
         }
 
     private:
@@ -150,6 +158,7 @@ namespace lime
         double tempMult_;
         double targAccept_;
         double targProb_;
+        double fracNoChange_;
         double initTemp_; 	
         int restarts_;
         int restartMod_;
