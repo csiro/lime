@@ -139,7 +139,7 @@ lime::strncasecmp (const char* a, const char*b, int n)
 string
 limeFormat(const char* format, ...)
 {
-    constexpr int buffer_len = 1024;
+    constexpr int buffer_len = 10240;
     char buffer[buffer_len];
     va_list argptr;
     va_start(argptr, format);
