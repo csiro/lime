@@ -63,7 +63,7 @@ namespace lime {
         ValType choose ()
         {
             if (choices_.size() == 0)
-                return 0;
+                return (ValType)0;
             double target = rand_.uniform01() * sumWeights_;
             ValType val{};
             for (
@@ -124,6 +124,14 @@ namespace lime {
             // Not supposed to fall through - probably a rounding error,
             // so just return the last one
             return choices_.back().second;
+        }
+
+        double weightFor (ValType val)
+        {
+            for (auto ch : choices_) 
+                if (ch.second == val)
+                    return ch.first;
+            return 0.0f;
         }
 
         void display (std::ostream& out) const override
