@@ -71,9 +71,10 @@ Splitter::split (string str, const char* delim, const char* commentChar)
             }
             else if (str[upto] == '\\') {
                 // Copy next thing without looking
-                upto++;
-                if (upto < str.length())
-                    *store++ = str[upto];
+                if (upto + 1 < str.length()) {
+                    upto++;
+                }
+                *store++ = str[upto];
             }
             else {
                 *store++ = str[upto];
