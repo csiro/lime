@@ -13,7 +13,7 @@
 using namespace std;
 using namespace lime;
 
-#define MIN_FEAT_WEIGHT 0.1
+#define MIN_FEAT_WEIGHT 0.05
 
 AdaptChoice::AdaptChoice (int numChoice, const AdaptCfg& cfg, int seed) :
     Displayable(),
@@ -89,21 +89,42 @@ void AdaptChoice::updateWeights()
     DEBUG_ARR (
         'l', "      counts are ", count_, numChoice_
     );
-    double normalise_wgt = 1.0f;
     if (cfg_.normalise()) {
-        normalise_wgt = 0.0f;
-        for (int i = 0; i < numChoice_; i++) {
-            normalise_wgt += score_[i];
+        // Relies on weights summing to 1.0
+        if (!limeDblEqual (chooser_.sumWeights(), 1.0f))
+            chooser_.normalise();
+    };
+    DEBUG ('l', "      Choice starts " << chooser_);
+    
+    double sum_score = 0.0f;
+    double sum_wgt = 0.0f;
+    for (int i = 0; i < numChoice_; i++) {
+        if (count_[i] > 0) {
+            // Always normalise by count
+            score_[i] /= count_[i];
+            if (score_[i] < MIN_FEAT_WEIGHT)
+                score_[i] = MIN_FEAT_WEIGHT;
+            sum_score += score_[i];
+            sum_wgt += chooser_.weight(i);
         }
-        normalise_wgt /= cfg_.segmentLen();
     }
+    
+    double normalise_wgt = 1.0f;
+    if (cfg_.normalise() && sum_wgt > 0.0f)
+        normalise_wgt = sum_score / sum_wgt;
+    DEBUG (
+        'l', "      sum_score " << sum_score <<
+        " sum_wgt " << sum_wgt <<
+        " normalise_wgt " << normalise_wgt
+    );
+
     for (int i = 0; i < numChoice_; i++) {
         double oldWeight = chooser_.weight(i);
         double newWeight = 0;
         if (count_[i] == 0)
             newWeight = oldWeight;
         else 
-            newWeight = score_[i] / (normalise_wgt * count_[i]);
+            newWeight = score_[i] / normalise_wgt;
         // Replace the weight
         double w = 
             (1.0 - cfg_.learnRate()) * oldWeight +
