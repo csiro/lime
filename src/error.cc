@@ -120,6 +120,19 @@ LimeError::_limeAssert (
     }
 }
 
+void
+LimeError::_limeAssert (
+    string descr, bool assertion, const char* file, int line
+)
+{
+    if (!assertion) {
+        limeCrash (
+            "Assertion failed in " << file << " at line " << line <<
+            ": " << descr
+        ); 
+    }
+}
+
 // Extra info in errorStream
 void
 LimeError::_limeAssert2 (

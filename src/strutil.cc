@@ -167,9 +167,16 @@ lime::todayStr (char* buffer, size_t bufferLen)
     return buffer;
 }
 
-/** Return a formated time string */
+/** Return a formatted time string */
 std::string
 lime::todayString ()
+{
+    return todayDate() + " " + todayTime();
+}
+
+/** Return a formatted time string */
+std::string
+lime::todayDate ()
 {
     time_t t = time(NULL);
     struct tm *tim;
@@ -182,7 +189,24 @@ lime::todayString ()
     str <<
         setw(2) << setfill('0') << tim->tm_mday << "/" <<
         setw(2) << setfill('0') << (tim->tm_mon + 1) << "/" <<
-        setw(2) << setfill('0') << 1900 + tim->tm_year << " " << 
+        setw(2) << setfill('0') << 1900 + tim->tm_year;
+
+    return str.str();
+}
+
+/** Return a formatted time string */
+std::string
+lime::todayTime()
+{
+    time_t t = time(NULL);
+    struct tm *tim;
+    tim = localtime(&t);
+
+    if (tim == NULL)
+        return string("Error obtaining time");
+
+    std::ostringstream str;
+    str <<
         setw(2) << setfill('0') << tim->tm_hour << ":" <<
         setw(2) << setfill('0') << tim->tm_min << ":" <<
         setw(2) << setfill('0') << tim->tm_sec;
