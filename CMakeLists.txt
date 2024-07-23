@@ -244,6 +244,13 @@ add_executable(filetest${EXE_EXT}
 )
 target_link_libraries(filetest${EXE_EXT} lime)
 
+## Stat Test
+add_executable(stattest${EXE_EXT}
+	EXCLUDE_FROM_ALL
+	${PROJECT_SOURCE_DIR}/test/stattest.cc
+)
+target_link_libraries(stattest${EXE_EXT} lime)
+
 ## Custom target for all tests
 add_custom_target(tests)
 add_dependencies(tests
@@ -253,6 +260,7 @@ add_dependencies(tests
 	accessortest${EXE_EXT}
 	pwltest${EXE_EXT}
 	filetest${EXE_EXT}
+	stattest${EXE_EXT}
 )
 
 #------------------------------------------------------------------------------#
