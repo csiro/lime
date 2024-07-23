@@ -34,8 +34,12 @@ namespace lime {
     int strncasecmp (const char* a, const char* b, int n);
 /** Return current time as a formated time string */
     char* todayStr (char* buffer, size_t bufferLen);
-/** Return current time as a formated time string */
-    std::string todayString ();
+/** Return current time as a formatted string dd/mm/yyy hh:mm:ss */
+    std::string todayString();
+/** Return current date as a formatted string dd/mm/yyyy */
+    std::string todayDate();
+/** Return current time as a formatted string hh:mm:ss */
+    std::string todayTime();
 /** Converts a string to upper case. Returns the str argument */
     std::string toUpper (std::string str);
 /** Converts a string to lower case. Returns the str argument */
