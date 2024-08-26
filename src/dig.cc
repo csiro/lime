@@ -44,7 +44,6 @@ void
 Dig::title (const char* title)
 {
     out << "H \"" << title << "\"" << endl;
-    out << "S 1" << endl;
     currStyle = 1;
 }
 
@@ -52,7 +51,6 @@ void
 Dig::title (string title)
 {
     out << "H \"" << title << "\"" << endl;
-    out << "S 1" << endl;
     currStyle = 1;
 }
 
@@ -410,6 +408,17 @@ Dig::box (const Box* box, int c)
         setprecision(prec) << box->width() << " " <<
         setprecision(prec) << box->height() << " " <<
         c << endl;
+}
+
+void
+Dig::boxScale (double x, double y, double wid, double hgt, double scale)
+{
+    if (scale < 0.0f)
+        scale = 0.0f;
+    else if (scale > 1.0f)
+        scale = 1.0f;
+    out << "BS " << x << " " << y << " " << wid << " " << hgt << " " <<
+        scale << endl;
 }
 
 void

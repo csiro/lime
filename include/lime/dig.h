@@ -107,6 +107,8 @@ namespace lime {
         void draw (const lime::Line* line);
         void box (double x1, double y1, double x2, double y2, int c);
         void box (const lime::Box* box, int c);
+        // Note: Scale is in range [0,1] - blue - yellow - red
+        void boxScale (double x, double y, double wid, double hgt, double scale);
         void boxOutline (const lime::Box* box);
         void fillPoly();
         void xTic (double x, const char* label);
