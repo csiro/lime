@@ -8,6 +8,7 @@
 
 #ifndef _MSC_VER
 #include <unistd.h>
+#include <sys/time.h>
 #endif
 
 #include <math.h>
@@ -20,12 +21,14 @@ using namespace lime;
 
 TimeKeeper::TimeKeeper () :
     start_(clock()),
+    wall_start_(currWallSecs()),
     timeLimitS_(0)
 {
 }
 
 TimeKeeper::TimeKeeper (int timeLimit) :
     start_(clock()),
+    wall_start_(currWallSecs()),
     timeLimitS_(timeLimit)
 {
 }
@@ -38,6 +41,7 @@ void
 TimeKeeper::reset(int newLimit) 
 {
     start_ = clock();
+    wall_start_ = currWallSecs();
     if (newLimit > 0)
         timeLimitS_ = newLimit;
 }
@@ -67,6 +71,16 @@ bool
 TimeKeeper::hasTimeLeft() const
 {
     return !hasTimeLimit() || elapsedTimeSecs() < (double)timeLimitS_;
+}
+
+double
+TimeKeeper::currWallSecs()
+{
+    struct timeval time;
+    if (gettimeofday (&time, NULL)) {
+        return 0;
+    }
+    return (double)time.tv_sec + (double)time.tv_usec * 0.000001f;    
 }
 
 void

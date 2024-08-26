@@ -55,10 +55,14 @@ namespace lime {
         int timeLimitS() const {return timeLimitS_;}
 	void setTimeLimitS(int timeLimitS) { timeLimitS_ = timeLimitS; }
 
+        double elapsedWallSecs() {return currWallSecs() - wall_start_;}
+        double currWallSecs();
+
         void display (std::ostream& os = std::cout) const override;
     
     protected:
         clock_t start_;
+        double wall_start_;
         int timeLimitS_;
     };
 
