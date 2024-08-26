@@ -82,19 +82,19 @@ AdaptChoice::choose()
 
 void AdaptChoice::updateWeights()
 {
-    DEBUG ('l',"    updateWeights in AdaptChoice");
+    DEBUG ('4',"    updateWeights in AdaptChoice");
     DEBUG_ARR (
-        'l', "      scores are ", score_, numChoice_
+        '4', "      scores are ", score_, numChoice_
     );
     DEBUG_ARR (
-        'l', "      counts are ", count_, numChoice_
+        '4', "      counts are ", count_, numChoice_
     );
     if (cfg_.normalise()) {
         // Relies on weights summing to 1.0
         if (!limeDblEqual (chooser_.sumWeights(), 1.0f))
             chooser_.normalise();
     };
-    DEBUG ('l', "      Choice starts " << chooser_);
+    DEBUG ('4', "      Choice starts " << chooser_);
     
     double sum_score = 0.0f;
     double sum_wgt = 0.0f;
@@ -113,7 +113,7 @@ void AdaptChoice::updateWeights()
     if (cfg_.normalise() && sum_wgt > 0.0f)
         normalise_wgt = sum_score / sum_wgt;
     DEBUG (
-        'l', "      sum_score " << sum_score <<
+        '4', "      sum_score " << sum_score <<
         " sum_wgt " << sum_wgt <<
         " normalise_wgt " << normalise_wgt
     );
@@ -130,16 +130,18 @@ void AdaptChoice::updateWeights()
             (1.0 - cfg_.learnRate()) * oldWeight +
             cfg_.learnRate() * newWeight;
         DEBUG (
-            'l', "      i " << i << " old " << oldWeight << " new " << newWeight
+            '4', "      i " << i << " old " << oldWeight << " new " << newWeight
         );
-        if (w < MIN_FEAT_WEIGHT)
+        // If wgt started at 0, leave it there...
+        // Otherwise, enforce min weight
+        if (!limeIsZero(oldWeight) && w < MIN_FEAT_WEIGHT)
             w = MIN_FEAT_WEIGHT;
         chooser_.setWeight (i, w);
     }
     callCount_ = 0;
     std::fill (score_.begin(), score_.end(), 0.0);
     std::fill (count_.begin(), count_.end(), 0);
-    DEBUG ('l', "      Choice is now " << chooser_);
+    DEBUG ('4', "      Choice is now " << chooser_);
 }
 
 void
