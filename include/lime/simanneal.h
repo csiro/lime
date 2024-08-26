@@ -132,6 +132,21 @@ namespace lime
             );
         }
 
+        void display(std::ostream& out) const
+        {
+            out << "SimAnneal: " << 
+                " iter " << iter_ <<
+                " noChangeIter " << noChangeIter_ <<
+                " temp " << temp_ <<
+                " tempMult " << tempMult_ <<
+                " targAccept " << targAccept_ <<
+                " targProb " << targProb_ <<
+                " fracNoChange " << fracNoChange_ <<
+                " initTemp " << initTemp_ <<
+                " restarts " << restarts_ <<
+                " restartMod " << restartMod_;
+        }
+
 
     protected:
         double calcTemp (ObjType objVal)
