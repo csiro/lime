@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lime/displayable.h"
+
 /* Use of this code is is subject to agreement to the
    CSIRO Open Source Software Licence Agreement
    as set out in the file ../../LICENCE.md
@@ -14,7 +16,7 @@
 namespace lime
 {
     template <typename ObjType>
-    class AcceptMeth
+    class AcceptMeth : public Displayable
     {
     public:
         AcceptMeth () {}
