@@ -53,6 +53,27 @@ lime::unique_filename(string dir_name)
     return fn;
 }
 
+string
+lime::unique_filename(const char* spec, int max_tries)
+{
+    int count = 1;
+
+    string fn = limeFormat (spec, count);
+    //cerr << "Try " << fn << endl;
+    int fd = open (fn.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
+    while (fd < 0 && errno == EEXIST && count < max_tries) {
+        // the file already exist, try another
+        fn = limeFormat (spec, ++count);
+        //cerr << "Try " << fn << endl;
+        fd = open (fn.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0666);
+    }
+    if (fd < 0)
+        return string("");
+    // Now close the file, ready for use
+    close (fd);
+    return fn;
+}
+
 bool
 lime::isFilename (std::string filename)
 {
