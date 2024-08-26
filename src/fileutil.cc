@@ -12,6 +12,8 @@
 #include <memory>
 #include <string.h>
 
+#include <sys/stat.h>
+
 #include "lime/strutil.h"
 
 #ifdef _MSC_VER
@@ -80,4 +82,11 @@ lime::isFilename (std::string filename)
     return 
         filename.length() > 0 &&
         !equal_ic (filename, "none");
+}
+
+bool
+lime::fileExists (std::string filename)
+{
+    struct stat buffer;   
+    return (stat (filename.c_str(), &buffer) == 0); 
 }

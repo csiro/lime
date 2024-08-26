@@ -32,4 +32,7 @@ namespace lime {
 
     /** Check the filename is valid - ie. not empty and not "none" */
     extern bool isFilename (std::string filename);
+
+    /** Check if the filename exists */
+    extern bool fileExists (std::string filename);
 }
