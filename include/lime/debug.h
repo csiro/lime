@@ -47,6 +47,13 @@ public:
     static bool doDebug (char);
     static std::ostream& debugFile();
     static int startTime() {return startTime_;}
+    static void close()
+    {
+        if (outfile_ != 0) {
+            outfile_->close();
+            delete outfile_;
+        }
+    };
 
 private:
     static char key_[];
