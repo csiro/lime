@@ -335,6 +335,8 @@ Opts::usage (
             cerr << *sw.double_ptr;
             break;
         case BOOL:
+            cerr << (*sw.bool_ptr ? "do" : "don't");
+            break;
         case BOOL_W_ARG:
             cerr << (*sw.bool_ptr ? "true" : "false");
             break;
@@ -365,6 +367,8 @@ Opts::usage (
                 cerr << *ar.double_ptr;
                 break;
             case BOOL:
+                cerr << (*ar.bool_ptr ? "do" : "don't");
+                break;
             case BOOL_W_ARG:
                 cerr << (*ar.bool_ptr ? "true" : "false");
                 break;
@@ -385,6 +389,7 @@ Opts::usage (
     }
     cerr << "This build: " << build_date_ << " " << build_time_ << endl;
     cerr << endl;
+    exit(1);
 }
             
 void
@@ -528,7 +533,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                         *sw.double_ptr = atof (argv[++upto]);
                         break;
                     case BOOL: 
-                        // Set true if on of 0, t or T
+                        // Flip for bool-without-arg
                         DEBUG ('6', "    Matched bool");
                         *sw.bool_ptr = !(*sw.bool_ptr);
                         break;
