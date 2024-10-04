@@ -15,6 +15,7 @@
 #include "lime/config.h"
 #include <lime/error.h>
 #include <lime/debug.h>
+#include <lime/fileutil.h>
 
 /** Give acccess to a config file */
 
@@ -174,6 +175,21 @@ Opts::add_arg (
         );
     
     args_.push_back (Entry (usage_str, help_str, STR, str_ptr, config_name));
+}
+
+void
+Opts::add_fn_arg (
+    const char* usage_str, std::string* str_ptr, std::string help_str,
+    const char* config_name
+)
+{
+    if (optional_args_ > 0)
+        limeCrash (
+            "Config error: Adding optional args after non-optional: " <<
+            help_str
+        );
+    
+    args_.push_back (Entry (usage_str, help_str, FILENAME, str_ptr, config_name));
 }
 
 void
@@ -677,20 +693,28 @@ Opts::process (int argc, const char* argv[], Config* config)
     size_t reqd_args = args_.size() - optional_args_;
     bool missing = false;
     for (size_t k = 0; k < reqd_args; k++) {
+        DEBUG ('6', "Check reqd arg " << k);
         auto& ar = args_[k];
         switch (ar.val_type) {
-        case STR:
         case FILENAME:
+            DEBUG ('6', "  Fn val " << *(ar.str_ptr));
+            if (!isFilename(*(ar.str_ptr)))
+                missing = true;
+            break;
+        case STR:
+            DEBUG ('6', "  str val " << *(ar.str_ptr));
             if (ar.str_ptr->length() == 0)
                 missing = true;
             break;
         case STR_VEC:
         case FILENAME_VEC:
+            DEBUG ('6', "  str vec len " << ar.strvec_ptr->size());
             if (ar.strvec_ptr->size() == 0)
                 missing = true;
             break;
         case INT:
         case DBL:
+            DEBUG ('6', "  numeric - upto " << upto_arg);
             if (upto_arg <= k)
                 missing = true;
             break;
