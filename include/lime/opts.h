@@ -84,6 +84,10 @@ namespace lime
             const char* usage_str, std::string* str_ptr, std::string help_str,
             const char* config_name = nullptr
         );
+        void add_fn_arg(
+            const char* usage_str, std::string* str_ptr, std::string help_str,
+            const char* config_name = nullptr
+        );
         void add_optional_arg (
             const char* usage_str, std::string* str_ptr, std::string help_str,
             const char* config_name = nullptr
