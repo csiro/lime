@@ -49,6 +49,20 @@ namespace lime {
         {
         }
 
+        // Clear, but keep num_nodes
+        void clear()
+        {
+            num_edges_ = 0;
+            fill (cost_to_.begin(), cost_to_.end(), (COST_T)0);
+            fill (parent_.begin(), parent_.end(), num_nodes_);
+            fill (parent_edge_.begin(), parent_edge_.end(), 0);
+            fill (out_edges_.begin(), out_edges_.end(), std::list<EdgePtr>());
+            fill (in_edges_.begin(), in_edges_.end(), std::list<EdgePtr>());
+            fill (num_in_edges_.begin(), num_in_edges_.end(), 0);
+            fill (num_out_edges_.begin(), num_out_edges_.end(), 0);
+            frontier_.clear();
+        }
+
         void setSize (size_t num_nodes)
         {
             num_nodes_ = num_nodes;
