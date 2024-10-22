@@ -48,7 +48,7 @@ LineReader::getLine (string& line, bool skipBlanks, bool skipComments)
         DEBUG ('D', currFrame_->lineNum_ << " >" << line << "<");
         // find first non-blank
         int k = 0;
-        while (k < line.length() && line[k] == ' ')
+        while (k < line.length() && isspace (line[k]))
             k++;
         if (k < line.length() && line[k] == '@') {
             // File redirection. Open a new file frame
@@ -74,7 +74,10 @@ LineReader::getLine (string& line, bool skipBlanks, bool skipComments)
                 }
             }
         }
-        DEBUG ('D', currFrame_->lineNum_ << " >" << line << "<");
+        DEBUG (
+            'D', currFrame_->lineNum_ << " >" << line << "<" <<
+            k << "/" << line.length()
+        );
         if (k < line.length() || !skipBlanks)
             return true;
     }
