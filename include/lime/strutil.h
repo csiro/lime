@@ -50,6 +50,13 @@ namespace lime {
 /** Converts a string to lower case IN SITU. Returns the str argument */
     char* toLower (char* str);
 
+/** In situ replace a string (if it is present) with another
+    Replaces substr by replstr in origstr. Updates and returns origstr
+ */
+    std::string replaceAll (
+        std::string& origstr, std::string substr, std::string replstr
+    );
+
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after
     the last "/" in filename (if present)
@@ -124,6 +131,8 @@ namespace lime {
     );
     enum EscSeqColour {RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};
     extern std::string escSeqColour (EscSeqColour c);
+    enum EscSeqEffect {NORMAL, BOLD, UNDERLINE, BLINK, REVERSE};
+    extern std::string escSeqEffect (EscSeqEffect effect);
 
     extern int kbhit(void);
 

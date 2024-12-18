@@ -250,6 +250,20 @@ lime::toLower (char* str)
     return str;
 }
 
+/** In situ replace a string (if it is present) with another
+    Replaces substr by replstr in origstr. Updates and returns origstr
+ */
+string
+lime::replaceAll (string& origstr, string substr, string replstr)
+{
+    size_t start_pos = origstr.find(substr);
+    while (start_pos != string::npos) {
+        origstr.replace(start_pos, substr.length(), replstr);
+        start_pos = origstr.find(substr);
+    }
+    return origstr;
+}
+
 /** Replace extension (if present) with given one.
     "Extension" is the what follows the last "." after
       the last "/" in filename (if present)
@@ -518,6 +532,19 @@ lime::escSeqColour (EscSeqColour col)
         "37" 	// WHITE
     };
     return string("\e[") + arr[(size_t)col] + "m";
+}
+
+string
+lime::escSeqEffect (EscSeqEffect effect)
+{
+    const char* arr[] = {
+        "0", // NORMAL
+        "1", // BOLD
+        "4", // UNDERLINE
+        "5", // BLINK
+        "7" // REVERSE
+    };
+    return string("\e[") + arr[(size_t)effect] + "m";
 }
 
 /** Test if keyboard has been hit */
