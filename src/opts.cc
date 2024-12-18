@@ -16,6 +16,7 @@
 #include <lime/error.h>
 #include <lime/debug.h>
 #include <lime/fileutil.h>
+#include <lime/numutil.h>
 
 /** Give acccess to a config file */
 
@@ -471,7 +472,7 @@ Opts::do_config_defaults (Config* config)
     }
 
     // Do args
-    for (auto ar :args_) {
+    for (auto ar : args_) {
         if (ar.config_name != NULL) {
             switch (ar.val_type) {
             case STR:
@@ -508,6 +509,22 @@ bool
 Opts::process (int argc, const char* argv[], Config* config)
 {
     DEBUG ('6', "Process args");
+
+    // Set up unlikely defaults for required args
+    constexpr int NOT_SET = -9876;
+    size_t reqd_args = args_.size() - optional_args_;
+    for (size_t k = 0; k < reqd_args; k++) {
+        auto& ar = args_[k];
+        switch (ar.val_type) {
+        case INT:
+            *ar.int_ptr = NOT_SET;
+            break;
+        case DBL:
+            *ar.double_ptr = NOT_SET;
+            break;
+        }
+    }
+    
     cmd_ = argv[0];
     uses_config_ = (config != NULL);
     size_t upto_arg = 0;
@@ -689,39 +706,53 @@ Opts::process (int argc, const char* argv[], Config* config)
         DEBUG ('6', *config);
     };
     
-    // See if all required argshave values
-    size_t reqd_args = args_.size() - optional_args_;
+    // See if all required args have values
     bool missing = false;
+    string missing_name = "";
     for (size_t k = 0; k < reqd_args; k++) {
         DEBUG ('6', "Check reqd arg " << k);
         auto& ar = args_[k];
         switch (ar.val_type) {
         case FILENAME:
             DEBUG ('6', "  Fn val " << *(ar.str_ptr));
-            if (!isFilename(*(ar.str_ptr)))
+            if (!isFilename(*(ar.str_ptr))) {
                 missing = true;
+                missing_name += string(" ") + ar.switch_str;
+            }
             break;
         case STR:
             DEBUG ('6', "  str val " << *(ar.str_ptr));
-            if (ar.str_ptr->length() == 0)
+            if (ar.str_ptr->length() == 0) {
                 missing = true;
+                missing_name += string(" ") + ar.switch_str;
+            }
             break;
         case STR_VEC:
         case FILENAME_VEC:
             DEBUG ('6', "  str vec len " << ar.strvec_ptr->size());
-            if (ar.strvec_ptr->size() == 0)
+            if (ar.strvec_ptr->size() == 0) {
                 missing = true;
+                missing_name += string(" ") + ar.switch_str;
+            }
             break;
         case INT:
-        case DBL:
-            DEBUG ('6', "  numeric - upto " << upto_arg);
-            if (upto_arg <= k)
+            DEBUG ('6', "  int val " << *(ar.int_ptr));
+            if (*(ar.int_ptr) == NOT_SET) {
                 missing = true;
+                missing_name += string(" ") + ar.switch_str;
+            }
+            break;
+        case DBL:
+            DEBUG ('6', "  double val " << *(ar.double_ptr));
+            if (limeDblEqual (*(ar.int_ptr),(double)NOT_SET)) {
+                missing = true;
+                missing_name += string(" ") + ar.switch_str;
+            }
             break;
         }
     }
     if (missing) {
-        usage (to_string (reqd_args) + " args required");
+        usage ("Missing value(s) for required arg" + missing_name);
         return false;
     }
     return true;    
