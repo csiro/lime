@@ -65,6 +65,8 @@ int limeRoundDown (int a, int r);
 int limeRoundDown (double a, int r);
 /** Is a within epsilon (= 1e-6) of b? */
 bool limeDblEqual (double a, double b);
+/** Is a within relative epsilon of b?  */
+bool limeDblRelEqual (double a, double b);
 /** Is a within epsilon (= 1e-6) of 0? */
 bool limeIsZero (double a);
 /** Is a -ve? (non-zero) */

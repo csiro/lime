@@ -107,23 +107,30 @@ limeRoundDown (double a, int r)
 bool
 limeDblEqual (double a, double b)
 {
-    return (fabs (a - b) < limeEpsilon());
+    return (fabs (a - b) <= limeEpsilon());
+}
+
+bool
+limeDblRelEqual (double a, double b)
+{
+    double base = limeMax (fabs(a), fabs(b));
+    return (fabs (a - b) <= limeEpsilon() * base);
 }
 
 bool
 limeIsZero (double a)
 {
-    return (fabs (a) < limeEpsilon());
+    return (fabs (a) <= limeEpsilon());
 }
 
 bool limeIsNegative (double a)
 {
-    return (a < -limeEpsilon());
+    return (a <= -limeEpsilon());
 }
 
 bool limeIsPositive (double a)
 {
-    return (a > limeEpsilon());
+    return (a >= limeEpsilon());
 }
 
 bool limeLessEq (double a, double b)
