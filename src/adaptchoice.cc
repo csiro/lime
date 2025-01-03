@@ -58,7 +58,7 @@ AdaptChoice::clear()
 int 
 AdaptChoice::suggest ()
 {
-    if (callCount_ == cfg_.segmentLen()) {
+    if (callCount_ >= cfg_.segmentLen()) {
         // Time to rebalance
         updateWeights();
     }
@@ -99,7 +99,7 @@ void AdaptChoice::updateWeights()
     double sum_score = 0.0f;
     double sum_wgt = 0.0f;
     for (int i = 0; i < numChoice_; i++) {
-        if (count_[i] > 0) {
+        if (count_[i] > 0 && !limeIsZero(chooser_.weight(i))) {
             // Always normalise by count
             score_[i] /= count_[i];
             if (score_[i] < MIN_FEAT_WEIGHT)
@@ -120,6 +120,10 @@ void AdaptChoice::updateWeights()
 
     for (int i = 0; i < numChoice_; i++) {
         double oldWeight = chooser_.weight(i);
+        // If wgt started at 0, leave it there...
+        if (limeIsZero(oldWeight))
+            continue;
+        
         double newWeight = 0;
         if (count_[i] == 0)
             newWeight = oldWeight;
@@ -132,9 +136,8 @@ void AdaptChoice::updateWeights()
         DEBUG (
             '4', "      i " << i << " old " << oldWeight << " new " << newWeight
         );
-        // If wgt started at 0, leave it there...
-        // Otherwise, enforce min weight
-        if (!limeIsZero(oldWeight) && w < MIN_FEAT_WEIGHT)
+        // Enforce min weight
+        if (w < MIN_FEAT_WEIGHT)
             w = MIN_FEAT_WEIGHT;
         chooser_.setWeight (i, w);
     }
@@ -147,7 +150,7 @@ void AdaptChoice::updateWeights()
 void
 AdaptChoice::display (std::ostream& out) const
 {
-    out << " callCount: " << callCount_;
+    out << " callCount " << callCount_;
     out << " score";
     for (int i = 0; i < numChoice_; i++)
         out << " " << score_[i];
