@@ -151,7 +151,9 @@ Config::addItem (string key, long val)
 void
 Config::addItem (string key, double val)
 {
-    map_[toLower (key)] = std::to_string(val);
+    stringstream str;
+    str << val;
+    map_[toLower (key)] = str.str();
 }
 
 void
