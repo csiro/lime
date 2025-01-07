@@ -609,7 +609,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                     !strcmp (argv[upto], "--version") ||
                     !strcmp (argv[upto], "-version")
                 ) {
-                    cerr << "Build " << build_date_ <<
+                    cout << "Build " << build_date_ <<
                         " " << build_time_ << endl;
                     return false;
                 }
