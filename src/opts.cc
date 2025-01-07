@@ -605,6 +605,14 @@ Opts::process (int argc, const char* argv[], Config* config)
                     }
                     return false;
                 }
+                else if (
+                    !strcmp (argv[upto], "--version") ||
+                    !strcmp (argv[upto], "-version")
+                ) {
+                    cerr << "Build " << build_date_ <<
+                        " " << build_time_ << endl;
+                    return false;
+                }
                 else {
                     usage ("Unrecognised option: ", argv[upto]);
                     return false;
