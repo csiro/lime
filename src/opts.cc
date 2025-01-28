@@ -541,11 +541,13 @@ Opts::process (int argc, const char* argv[], Config* config)
                         usage ("No value for switch ", sw.switch_str);
                         return false;
                     }
+                    string val = "";
+                        
                     switch (sw.val_type) {
                     case STR:
                     case FILENAME:
                         DEBUG ('6', "    Matched str/fn");
-                        *(sw.str_ptr) = argv[++upto];
+                        *(sw.str_ptr) = val = argv[++upto];
                         break;
                     case STR_VEC:
                     case FILENAME_VEC:
@@ -554,27 +556,33 @@ Opts::process (int argc, const char* argv[], Config* config)
                             // See if we are up to next switch
                             if (*argv[upto+1] == '-')
                                 break;
-                            sw.strvec_ptr->push_back (argv[++upto]);
+                            string this_val = argv[++upto];
+                            val += this_val + " ";
+                            sw.strvec_ptr->push_back (this_val);
                         }
                         break;
                     case INT:
                         DEBUG ('6', "    Matched int");
-                        *sw.int_ptr = atoi (argv[++upto]);
+                        val = argv[++upto];
+                        *sw.int_ptr = stoi (val);
                         break;
                     case DBL:
                         DEBUG ('6', "    Matched float");
-                        *sw.double_ptr = atof (argv[++upto]);
+                        val = argv[++upto];
+                        *sw.double_ptr = stof (argv[++upto]);
                         break;
                     case BOOL: 
                         // Flip for bool-without-arg
                         DEBUG ('6', "    Matched bool");
                         *sw.bool_ptr = !(*sw.bool_ptr);
+                        val = *sw.bool_ptr ? "true" : "false";
                         break;
                     case BOOL_W_ARG: {
                         DEBUG ('6', "    Matched bool (w/arg)");
-                        auto val = argv[++upto];
+                        auto strval = argv[++upto];
                         // Set true if on of 0, t or T
-                        *sw.bool_ptr = (strchr ("1tT", *val) != NULL);
+                        *sw.bool_ptr = (strchr ("1tT", *strval) != NULL);
+                        val = *sw.bool_ptr ? "true" : "false";
                     }
                         break;
                     case CONFIG:
@@ -582,9 +590,12 @@ Opts::process (int argc, const char* argv[], Config* config)
                         sw.config_ptr->read (argv[++upto]);
                         do_config_defaults (sw.config_ptr);
                         break;
+                    default:
+                        limeCrash ("Unhandled switch type");
+                        break;
                     }
                     if (sw.config_name != NULL && config != NULL) {
-                        config->addItem (sw.config_name, argv[upto]);
+                        config->addItem (sw.config_name, val);
                     }
                 }
             }
@@ -593,16 +604,22 @@ Opts::process (int argc, const char* argv[], Config* config)
                     // Toggle looking for '='/':' (e.g in filenames)
                     look_for_config = !look_for_config;
                 }
+                else if (!strcmp (argv[upto], "--config")) {
+                    if (config == nullptr) {
+                        cerr << "No config" << endl;
+                    }
+                    else {
+                        cerr << "Config is \n  " <<
+                            config->show ("\n  ") << endl;
+                    }
+                    return false;
+                }
                 else if (
                     !strcmp (argv[upto], "-?") ||
                     !strcmp (argv[upto], "-help") ||
                     !strcmp (argv[upto], "--help")
                 ) {
                     usage ();
-                    if (config != nullptr) {
-                        cerr << "Default config is" << endl << "  ";
-                        cerr << config->show ("\n  ") << endl;
-                    }
                     return false;
                 }
                 else if (
