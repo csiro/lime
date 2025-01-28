@@ -120,14 +120,14 @@ Config::read (string filename)
                 "Bad format in config file at line " << lineNum <<
                 " of " << filename
             );
-        map_[toLower(key)] = val;
+        setVal (key, val);
     }
 }
 
 void
 Config::addItem (string key, string val)
 {
-    map_[toLower (key)] = val;
+    setVal (key, val);
 }
 
 void
@@ -139,13 +139,13 @@ Config::addItem (const char* key, const char* val)
 void
 Config::addItem (string key, int val)
 {
-    map_[toLower (key)] = std::to_string(val);
+    setVal (key, std::to_string(val));
 }
 
 void
 Config::addItem (string key, long val)
 {
-    map_[toLower (key)] = std::to_string(val);
+    setVal (key, std::to_string(val));
 }
 
 void
@@ -153,13 +153,19 @@ Config::addItem (string key, double val)
 {
     stringstream str;
     str << val;
-    map_[toLower (key)] = str.str();
+    setVal (key, str.str());
+}
+
+void
+Config::addItem (string key, bool val)
+{
+    setVal (key, val ? "true" : "false");
 }
 
 void
 Config::addItem (string key, unsigned long val)
 {
-    map_[toLower (key)] = std::to_string(val);
+    setVal (key, std::to_string(val));
 }
 
 void
@@ -530,6 +536,12 @@ Config::keys()
     return keys;
 }
 
+
+void
+Config::setVal (std::string key, std::string val)
+{
+    map_[toLower (key)] = val;
+}
 
 string
 Config::valFor(string key) const

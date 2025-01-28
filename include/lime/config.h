@@ -42,6 +42,7 @@ namespace lime
         void addItem (std::string key, int val);
         void addItem (std::string key, long val);
         void addItem (std::string key, double val);
+        void addItem (std::string key, bool val);
         void addItem (std::string key, unsigned long val);
         void addItem (std::string key, std::vector<std::string> val);
         void addItem (std::string key, std::vector<int> val);
@@ -117,6 +118,7 @@ namespace lime
         }
         
     protected:
+        void setVal (std::string key, std::string val);
         std::string valFor(std::string key) const;
         
         using KeyMap = std::map<std::string,std::string>;
