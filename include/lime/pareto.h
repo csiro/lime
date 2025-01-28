@@ -27,13 +27,13 @@ namespace lime
     public:
         struct ParetoElt
         {
-            ParetoElt (std::vector<double> obj_, Solution solution_) :
+            ParetoElt (std::vector<double>& obj_, Solution solution_) :
                 obj(obj_),
                 solution(solution_)
             {
             }
 
-            bool dominates (const std::vector<double> other_obj) const
+            bool dominates (const std::vector<double>& other_obj) const
             {
                 if (obj.size() != other_obj.size())
                     return true;
