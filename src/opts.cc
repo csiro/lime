@@ -569,7 +569,7 @@ Opts::process (int argc, const char* argv[], Config* config)
                     case DBL:
                         DEBUG ('6', "    Matched float");
                         val = argv[++upto];
-                        *sw.double_ptr = stof (argv[++upto]);
+                        *sw.double_ptr = stof (val);
                         break;
                     case BOOL: 
                         // Flip for bool-without-arg
