@@ -138,9 +138,19 @@ bool limeLessEq (double a, double b)
     return a <= b + limeEpsilon();
 }
 
-bool limeIsGreaterEq (double a, double b)
+bool limeGreaterEq (double a, double b)
 {
     return limeLessEq (b, a);
+}
+
+bool limeLess (double a, double b)
+{
+    return a < b - limeEpsilon();
+}
+
+bool limeGreater (double a, double b)
+{
+    return limeLess (b, a);
 }
 
 double
