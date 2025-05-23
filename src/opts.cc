@@ -204,6 +204,16 @@ Opts::add_optional_arg (
 }
 
 void
+Opts::add_optional_fn_arg (
+    const char* usage_str, std::string* str_ptr, std::string help_str,
+    const char* config_name
+)
+{
+    optional_args_++;
+    args_.push_back (Entry (usage_str, help_str, FILENAME, str_ptr, config_name));
+}
+
+void
 Opts::add_arg (
     const char* usage_str, std::vector<std::string>* strvec_ptr,
     std::string help_str, const char* config_name
