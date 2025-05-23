@@ -32,6 +32,8 @@ namespace lime {
     bool equal_ic (const std::string& a, const std::string& b);
 /** strnicmp */
     int strncasecmp (const char* a, const char* b, int n);
+/** ends with string */
+    bool endsWith (std::string str, std::string ending);
 /** Return current time as a formated time string */
     char* todayStr (char* buffer, size_t bufferLen);
 /** Return current time as a formatted string dd/mm/yyy hh:mm:ss */
