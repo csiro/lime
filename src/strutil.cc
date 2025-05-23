@@ -150,6 +150,18 @@ limeFormat(const char* format, ...)
     return string (buffer);
 }
 
+/** Ends with */
+bool
+lime::endsWith (std::string str, std::string ending)
+{
+    if (str.length() >= ending.length()) 
+        return
+            str.compare (
+                str.length() - ending.length(), ending.length(), ending
+            ) == 0;
+    return false;
+}
+
 /** Return a formated time string */
 char*
 lime::todayStr (char* buffer, size_t bufferLen)
