@@ -11,28 +11,40 @@
 */
 
 #include "lime/rand.h"
+#include "lime/sortpairt.h"
 
 namespace lime
 {
     class Shuffle
     {
     public:
-        Shuffle(int seed = 0, int arraysSize = 0);
-        virtual ~Shuffle();
+        Shuffle(int seed = 0, int arraySize = 0) :
+            rand_(seed),
+            n_(arraySize),
+            order_(),
+            shuffled_(false)
+        {
+            if (n_ > 0)
+                shuffle (n_);
+        }
 
         /** Shuffle indices as set up at construction */
-        void shuffle();
+        void shuffle()
+        {
+            shuffle (n_);
+        }
+        
         /** Shuffle indices up to n */
         void shuffle(int n);
     
-        int operator[](int i) const {return index_[i];}
+        int operator[](int i) {return order_[i];}
 
-        int get (int i) const {return index_[i];}
+        int get (int i) {return order_.get(i);}
 
     private:
-        int arraySize_;
-        int* index_;
-        double* order_;
         Rand rand_;
+        size_t n_;
+        SortPairT<size_t> order_;
+        bool shuffled_;
     };
 } 

@@ -216,6 +216,13 @@ add_executable(permtest${EXE_EXT}
 )
 target_link_libraries(permtest${EXE_EXT} lime)
 
+## Shuffle Test
+add_executable(shufftest${EXE_EXT}
+	EXCLUDE_FROM_ALL
+	${PROJECT_TEST_DIR}/shufftest.cc
+)
+target_link_libraries(shufftest${EXE_EXT} lime)
+
 ## Splitter Test
 add_executable(splitest${EXE_EXT}
 	EXCLUDE_FROM_ALL
@@ -260,6 +267,7 @@ add_dependencies(tests
 	accessortest${EXE_EXT}
 	pwltest${EXE_EXT}
 	filetest${EXE_EXT}
+	shufftest${EXE_EXT}
 	stattest${EXE_EXT}
 )
 
