@@ -15,6 +15,7 @@
 #include <iostream>
 #include <list>
 
+#include "lime/debug.h"
 #include "lime/rand.h"
 
 namespace lime {
